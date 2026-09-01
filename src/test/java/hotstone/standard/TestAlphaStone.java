@@ -101,6 +101,14 @@ public class TestAlphaStone {
     // assertThat(card.getName(), is(GameConstants.TRES_CARD));
   }
 
+  @Test
+  public void shouldHave7CardsInitiallyForBothPlayers(){
+      int countFindus = game.getDeckSize(Player.FINDUS);
+      assertThat(countFindus, is(7));
+      int countPeddersen = game.getDeckSize(Player.PEDDERSEN);
+      assertThat(countPeddersen, is(7));
+  }
+
   /** REMOVE ME. Not a test of HotStone, just an example of the
    matchers that the hamcrest library has... */
   @Test
