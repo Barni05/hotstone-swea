@@ -107,6 +107,16 @@ public class TestAlphaStone {
   }
 
   @Test
+  public void shouldHandBeInactive(){
+    for(Card c : game.getHand(Player.FINDUS)){
+      assertThat(c.isActive(), is(false));
+    }
+    for(Card c : game.getHand(Player.PEDDERSEN)){
+      assertThat(c.isActive(), is(false));
+    }
+  }
+
+  @Test
   public void shouldHaveStats222ForDosCard(){
     //Game hasn't started, so we know that either player's card in hand of index 1 is Dos
     Card Dos = game.getCardInHand(Player.FINDUS, 1);

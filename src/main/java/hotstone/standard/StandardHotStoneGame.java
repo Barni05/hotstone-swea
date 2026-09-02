@@ -19,6 +19,7 @@ package hotstone.standard;
 import hotstone.framework.*;
 import java.util.Stack;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /** This is the 'temporary test stub' in TDD
  * terms: the initial empty but compilable implementation
@@ -43,16 +44,22 @@ import java.util.ArrayList;
  */
 
 public class StandardHotStoneGame implements Game {
-    private Stack<Card> FindusDeck = new Stack<>();
-    private Stack<Card> PeddersenDeck = new Stack<>();
-    private ArrayList<Card> FindusHand = new ArrayList<>();
-    private ArrayList<Card> PeddersenHand = new ArrayList<>();
+
+    private HashMap<Player, Stack<Card>> decks = new HashMap<>();
+    private HashMap<Player, ArrayList<Card>> hands = new HashMap<>();
     private int turnNum;
     private Player playerInTurn;
     public StandardHotStoneGame() {
+
+        decks.put(Player.FINDUS, new Stack<Card>());
+        decks.put(Player.PEDDERSEN, new Stack<Card>());
+
+        hands.put(Player.FINDUS, new ArrayList<Card>());
+        hands.put(Player.PEDDERSEN, new ArrayList<Card>());
+
         //Initializing both player's deck with the 7 cards
-        FindusDeck = createStandardDeck(Player.FINDUS) ;
-        PeddersenDeck = createStandardDeck(Player.PEDDERSEN);
+        decks.replace(Player.FINDUS, createStandardDeck(Player.FINDUS));
+        decks.replace(Player.PEDDERSEN, createStandardDeck(Player.PEDDERSEN));
 
         //Initializing game control variables
         turnNum = 0;
@@ -60,8 +67,8 @@ public class StandardHotStoneGame implements Game {
 
         //Draw 3 cards for each player
         for(int i = 0; i < 3; i ++){
-            FindusHand.add(FindusDeck.pop());
-            PeddersenHand.add(PeddersenDeck.pop());
+            hands.get(Player.FINDUS).add(decks.get(Player.FINDUS).pop());
+            hands.get(Player.PEDDERSEN).add(decks.get(Player.PEDDERSEN).pop());
         }
 
         //Initialize mana
@@ -110,22 +117,26 @@ public class StandardHotStoneGame implements Game {
 
   @Override
   public int getDeckSize(Player who) {
-    return who == Player.FINDUS ? FindusDeck.size() : PeddersenDeck.size();
+    return decks.get(who).size();
   }
 
+  /*
+  * It's unlucky that HashMap and ArrayList also has a get() method,
+  * but we don't always have to use the ternary operator for such calculations
+  * */
   @Override
   public Card getCardInHand(Player who, int indexInHand) {
-    return who == Player.FINDUS ? FindusHand.get(indexInHand) : PeddersenHand.get(indexInHand);
+    return hands.get(who).get(indexInHand);
   }
 
   @Override
   public Iterable<? extends Card> getHand(Player who) {
-    return who == Player.FINDUS ? FindusHand : PeddersenHand;
+    return hands.get(who);
   }
 
   @Override
   public int getHandSize(Player who) {
-      return who == Player.FINDUS ? FindusHand.size() : PeddersenHand.size();
+      return hands.get(who).size();
   }
 
   @Override
