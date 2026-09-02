@@ -106,6 +106,15 @@ public class TestAlphaStone {
       assertThat(countPeddersen, is(4));
   }
 
+  @Test
+  public void shouldHaveStats222ForDosCard(){
+    //Game hasn't started, so we know that either player's card in hand of index 1 is Dos
+    Card Dos = game.getCardInHand(Player.FINDUS, 1);
+    assertThat(Dos.getManaCost(), is(2));
+    assertThat(Dos.getHealth(), is(2));
+    assertThat(Dos.getAttack(), is(2));
+  }
+
   /** REMOVE ME. Not a test of HotStone, just an example of the
    matchers that the hamcrest library has... */
   @Test

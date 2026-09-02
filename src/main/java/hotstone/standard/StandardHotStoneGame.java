@@ -105,7 +105,7 @@ public class StandardHotStoneGame implements Game {
 
   @Override
   public int getTurnNumber() {
-    return 0;
+    return turnNum;
   }
 
   @Override
