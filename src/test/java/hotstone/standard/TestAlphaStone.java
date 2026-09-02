@@ -92,21 +92,18 @@ public class TestAlphaStone {
     // Given a game, Findus has 3 cards in hand
     int count = game.getHandSize(Player.FINDUS);
     assertThat(count, is(3));
-    // And these are ordered Tres, Dos, Uno in slot 0,1,2
+    // And these are ordered Tres, Dos, Uno in slot 2,1,0
 
-    // When I pick card 0
     Card card = game.getCardInHand(Player.FINDUS, 0);
-    // Then is it Tres
-    // ENABLE TO START TDD'ing
-    // assertThat(card.getName(), is(GameConstants.TRES_CARD));
+    assertThat(card.getName(), is(GameConstants.UNO_CARD));
   }
 
   @Test
-  public void shouldHave7CardsInitiallyForBothPlayers(){
+  public void shouldHave4CardsInDeckInitiallyForBothPlayers(){
       int countFindus = game.getDeckSize(Player.FINDUS);
-      assertThat(countFindus, is(7));
+      assertThat(countFindus, is(4));
       int countPeddersen = game.getDeckSize(Player.PEDDERSEN);
-      assertThat(countPeddersen, is(7));
+      assertThat(countPeddersen, is(4));
   }
 
   /** REMOVE ME. Not a test of HotStone, just an example of the

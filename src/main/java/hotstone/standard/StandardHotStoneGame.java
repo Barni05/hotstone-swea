@@ -45,46 +45,53 @@ import java.util.ArrayList;
 public class StandardHotStoneGame implements Game {
     private Stack<Card> FindusDeck = new Stack<>();
     private Stack<Card> PeddersenDeck = new Stack<>();
+    private ArrayList<Card> FindusHand = new ArrayList<>();
+    private ArrayList<Card> PeddersenHand = new ArrayList<>();
+    private int turnNum;
+    private Player playerInTurn;
     public StandardHotStoneGame() {
         //Initializing both player's deck with the 7 cards
-        StandardCard unoFindus = new StandardCard("Uno", "It's just One", 1, 1, 1, false, Player.FINDUS);
-        StandardCard dosFindus = new StandardCard("Dos", "It's just Two", 2, 2, 2, false, Player.FINDUS);
-        StandardCard tresFindus = new StandardCard("Tres", "It's just Three", 3, 3, 3, false, Player.FINDUS);
-        StandardCard cuatroFindus = new StandardCard("Cuatro", "It's just Four", 2, 3, 1, false, Player.FINDUS);
-        StandardCard cincoFindus = new StandardCard("Cinco", "It's just Five", 3, 5, 1, false, Player.FINDUS);
-        StandardCard seisFindus = new StandardCard("Seis", "It's just Six", 2, 1, 3, false, Player.FINDUS);
-        StandardCard sieteFindus = new StandardCard("Siete", "It's just Seven", 3, 2, 4, false, Player.FINDUS);
+        FindusDeck = createStandardDeck(Player.FINDUS) ;
+        PeddersenDeck = createStandardDeck(Player.PEDDERSEN);
 
-        FindusDeck.push(unoFindus);
-        FindusDeck.push(dosFindus);
-        FindusDeck.push(tresFindus);
-        FindusDeck.push(cuatroFindus);
-        FindusDeck.push(cincoFindus);
-        FindusDeck.push(seisFindus);
-        FindusDeck.push(sieteFindus);
+        //Initializing game control variables
+        turnNum = 0;
+        playerInTurn = Player.FINDUS;
 
-        StandardCard unoPeddersen = new StandardCard("Uno", "It's just One", 1, 1, 1, false, Player.PEDDERSEN);
-        StandardCard dosPeddersen = new StandardCard("Dos", "It's just Two", 2, 2, 2, false, Player.PEDDERSEN);
-        StandardCard tresPeddersen = new StandardCard("Tres", "It's just Three", 3, 3, 3, false, Player.PEDDERSEN);
-        StandardCard cuatroPeddersen = new StandardCard("Cuatro", "It's just Four", 2, 3, 1, false, Player.PEDDERSEN);
-        StandardCard cincoPeddersen = new StandardCard("Cinco", "It's just Five", 3, 5, 1, false, Player.PEDDERSEN);
-        StandardCard seisPeddersen = new StandardCard("Seis", "It's just Six", 2, 1, 3, false, Player.PEDDERSEN);
-        StandardCard sietePeddersen = new StandardCard("Siete", "It's just Seven", 3, 2, 4, false, Player.PEDDERSEN);
+        //Draw 3 cards for each player
+        for(int i = 0; i < 3; i ++){
+            FindusHand.add(FindusDeck.pop());
+            PeddersenHand.add(PeddersenDeck.pop());
+        }
 
-        PeddersenDeck.push(unoPeddersen);
-        PeddersenDeck.push(dosPeddersen);
-        PeddersenDeck.push(tresPeddersen);
-        PeddersenDeck.push(cuatroPeddersen);
-        PeddersenDeck.push(cincoPeddersen);
-        PeddersenDeck.push(seisPeddersen);
-        PeddersenDeck.push(sietePeddersen);
+        //Initialize mana
+
+        //Initialize hero
+
+        //Initialize health
+    }
+
+    public Stack<Card> createStandardDeck(Player owner){
+        Stack<Card> deck = new Stack<>();
+        //We have to put it in reversed order, so that the Uno card is drawn first
+        deck.push(new StandardCard("Siete", "It's just Seven", 3, 2, 4, false, owner));
+        deck.push(new StandardCard("Seis", "It's just Six", 2, 1, 3, false, owner));
+        deck.push(new StandardCard("Cinco", "It's just Five", 3, 5, 1, false, owner));
+        deck.push(new StandardCard("Cuatro", "It's just Four", 2, 3, 1, false, owner));
+        deck.push(new StandardCard("Tres", "It's just Three", 3, 3, 3, false, owner));
+        deck.push(new StandardCard("Dos", "It's just Two", 2, 2, 2, false, owner));
+        deck.push(new StandardCard("Uno", "It's just One", 1, 1, 1, false, owner));
+        return deck;
+    }
+
+    public void startTurn(){
 
     }
 
   @Override
   public Player getPlayerInTurn() {
-    return Player.FINDUS;
-  } // Fake-it
+    return playerInTurn;
+  }
 
   @Override
   public Hero getHero(Player who) {
@@ -108,18 +115,18 @@ public class StandardHotStoneGame implements Game {
 
   @Override
   public Card getCardInHand(Player who, int indexInHand) {
-    return null;
+    return who == Player.FINDUS ? FindusHand.get(indexInHand) : PeddersenHand.get(indexInHand);
   }
 
   @Override
   public Iterable<? extends Card> getHand(Player who) {
-    return null;
+    return who == Player.FINDUS ? FindusHand : PeddersenHand;
   }
 
   @Override
   public int getHandSize(Player who) {
-    return 3;
-  } // FAKE-IT
+      return who == Player.FINDUS ? FindusHand.size() : PeddersenHand.size();
+  }
 
   @Override
   public Card getCardInField(Player who, int indexInField) {
@@ -137,7 +144,10 @@ public class StandardHotStoneGame implements Game {
   }
 
   @Override
-  public void endTurn() { }
+  public void endTurn() {
+        turnNum++;
+        playerInTurn = playerInTurn == Player.FINDUS ? Player.PEDDERSEN : Player.FINDUS;
+  }
 
   @Override
   public Status playCard(Player who, Card card, int atIndex) {
