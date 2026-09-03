@@ -94,10 +94,14 @@ public class TestAlphaStone {
     // Given a game, Findus has 3 cards in hand
     int count = game.getHandSize(Player.FINDUS);
     assertThat(count, is(EXPECTED_INITIAL_HAND_SIZE));
-    // And these are ordered Tres, Dos, Uno in slot 2,1,0
+    // And these are ordered Tres, Dos, Uno in slot 0,1,2
 
-    Card card = game.getCardInHand(Player.FINDUS, 0);
-    assertThat(card.getName(), is(GameConstants.UNO_CARD));
+    Card cardTres = game.getCardInHand(Player.FINDUS, 0);
+    assertThat(cardTres.getName(), is(GameConstants.TRES_CARD));
+    Card cardDos = game.getCardInHand(Player.FINDUS, 1);
+    assertThat(cardDos.getName(), is(GameConstants.DOS_CARD));
+    Card cardUno = game.getCardInHand(Player.FINDUS, 2);
+    assertThat(cardUno.getName(), is(GameConstants.UNO_CARD));
   }
 
   @Test
