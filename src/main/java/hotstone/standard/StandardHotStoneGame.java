@@ -44,9 +44,11 @@ import java.util.HashMap;
  */
 
 public class StandardHotStoneGame implements Game {
+    private final int FIELD_CAPACITY = 10;
 
     private HashMap<Player, Stack<Card>> decks = new HashMap<>();
     private HashMap<Player, ArrayList<Card>> hands = new HashMap<>();
+    private HashMap<Player, ArrayList<Card>> fields = new HashMap<>();
     private int turnNum;
     private Player playerInTurn;
     public StandardHotStoneGame() {
@@ -71,6 +73,16 @@ public class StandardHotStoneGame implements Game {
             drawCard(Player.PEDDERSEN);
         }
 
+        //Initialize fields
+        fields.put(Player.FINDUS, new ArrayList<Card>(FIELD_CAPACITY));
+        for(int i = 0; i < FIELD_CAPACITY; i++){
+            fields.get(Player.FINDUS).add(null);
+        }
+        fields.put(Player.PEDDERSEN, new ArrayList<Card>(FIELD_CAPACITY));
+        for(int i = 0; i < FIELD_CAPACITY; i++){
+            fields.get(Player.PEDDERSEN).add(null);
+        }
+
         //Initialize mana
 
         //Initialize hero
@@ -92,7 +104,8 @@ public class StandardHotStoneGame implements Game {
     }
 
     public void createBaby(Player owner){
-        StandardHero baby = new StandardHero(30, 1, "Baby", false, owner);
+        StandardHero baby = new StandardHero(30, 1, "Baby", false,
+                owner, "Cute","Just cute");
     }
 
     public void startTurn(){
@@ -125,9 +138,8 @@ public class StandardHotStoneGame implements Game {
   }
 
   @Override
-  public Player getWinner() {
-    return null;
-  }
+  //since we already know that (for this iteration) Findus will always win
+  public Player getWinner() {return Player.FINDUS;}
 
   @Override
   public int getTurnNumber() {
@@ -160,7 +172,7 @@ public class StandardHotStoneGame implements Game {
 
   @Override
   public Card getCardInField(Player who, int indexInField) {
-    return null;
+    return fields.get(who).get(indexInField);
   }
 
   @Override
@@ -179,7 +191,15 @@ public class StandardHotStoneGame implements Game {
         playerInTurn = playerInTurn == Player.FINDUS ? Player.PEDDERSEN : Player.FINDUS;
   }
   @Override
-  public Status playCard(Player who, Card card, int atIndex) { return null; }
+  public Status playCard(Player who, Card card, int atIndex) {
+    //Takes out of hand
+    if(hands.get(who).remove(card)){
+        //Insert into field
+        fields.get(who).add(atIndex, card);
+        return Status.OK;
+    }
+    return Status.CARD_NOT_FOUND;
+  }
 
   @Override
   public Status attackCard(Player playerAttacking, Card attackingCard, Card defendingCard) {

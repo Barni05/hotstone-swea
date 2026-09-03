@@ -32,6 +32,8 @@ public enum Status {
   NOT_ENOUGH_MANA,
   /** No more cards to be drawn from deck*/
   NO_MORE_CARDS,
+  /** Card not found in the pile*/
+  CARD_NOT_FOUND,
   /** Trying to attack with a minion that is not active. */
   ATTACK_NOT_ALLOWED_FOR_NON_ACTIVE_MINION,
   /** Trying to 'fiddle' with a card or hero owned by opponent. */

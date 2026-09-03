@@ -144,6 +144,14 @@ public class TestAlphaStone {
     assertThat(standardGame.getDeckSize(Player.FINDUS), is(deckSizeBefore-1));
   }
 
+  @Test
+  public void shouldPlayedCardBeOnRightIndex(){
+    Card card = game.getCardInHand(Player.FINDUS, 0);
+    assertThat(card, not(nullValue()));
+    game.playCard(Player.FINDUS, card, 1);
+    assertThat(game.getCardInField(Player.FINDUS, 1), not(nullValue()));
+  }
+
   /** REMOVE ME. Not a test of HotStone, just an example of the
    matchers that the hamcrest library has... */
   @Test
@@ -177,7 +185,9 @@ public class TestAlphaStone {
 
   @Test
   public void shouldHaveFullHealth() {
-    //int healthBaby = game.
+    StandardHero baby = (StandardHero)game.getHero(Player.FINDUS);
+    int healthBaby = baby.getHealth();
+    assertThat(healthBaby, is(30));
   }
 
 }

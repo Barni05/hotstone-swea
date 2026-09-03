@@ -5,16 +5,19 @@ import hotstone.framework.Player;
 
 public class StandardHero implements Hero {
     private int health, mana;
-    private String type, effectdescription;
+    private String type, effectDescription, effectName;
     private boolean powerAbility;
     private Player owner;
 
-    public StandardHero (int health, int mana, String type, boolean powerAbility, Player owner) {
+    public StandardHero (int health, int mana, String type, boolean powerAbility, Player owner,
+                         String effectName, String effectDescription) {
         this.health = health;
         this.mana = mana;
         this.type = type;
         this.powerAbility = powerAbility;
         this.owner = owner;
+        this.effectName = effectName;
+        this.effectDescription = effectDescription;
     }
     @Override
     public int getHealth() {return health; }
@@ -32,5 +35,7 @@ public class StandardHero implements Hero {
     public Player getOwner() {return owner; }
 
     @Override
-    public String getEffectDescription() {return effectdescription; }
+    public String getEffectDescription() {return effectDescription; }
+
+    public String getEffectName() {return effectName; }
 }
