@@ -89,6 +89,9 @@ public class TestAlphaStone {
   // of the hand - always entered at position 0
   // and pushing the rest of the cards 1 position
   // 'down'
+
+  //---------------DECK TESTS------------
+
   @Test
   public void shouldHaveUnoDosTresCardsInitially() {
     // Given a game, Findus has 3 cards in hand
@@ -129,6 +132,12 @@ public class TestAlphaStone {
     assertThat(Dos.getManaCost(), is(2));
     assertThat(Dos.getHealth(), is(2));
     assertThat(Dos.getAttack(), is(2));
+  }
+
+  @Test
+  public void shouldDecreaseDeckSizeBy1AndIncreaseHand(){
+    int deckSizeBefore = game.getDeckSize(Player.FINDUS);
+    int handSizeBefore = game.getHandSize(Player.FINDUS);
   }
 
   /** REMOVE ME. Not a test of HotStone, just an example of the
