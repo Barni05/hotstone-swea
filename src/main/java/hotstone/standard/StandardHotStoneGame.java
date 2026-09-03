@@ -67,8 +67,8 @@ public class StandardHotStoneGame implements Game {
 
         //Draw 3 cards for each player
         for(int i = 0; i < 3; i ++){
-            hands.get(Player.FINDUS).add(decks.get(Player.FINDUS).pop());
-            hands.get(Player.PEDDERSEN).add(decks.get(Player.PEDDERSEN).pop());
+            drawCard(Player.FINDUS);
+            drawCard(Player.PEDDERSEN);
         }
 
         //Initialize mana
@@ -93,6 +93,21 @@ public class StandardHotStoneGame implements Game {
 
     public void startTurn(){
 
+    }
+
+    /**
+     * Draws one card from the given player's deck to his hand
+     * @param who the drawing player
+     * @return status of operation
+     */
+    public Status drawCard(Player who){
+        if(decks.get(who).size() > 0){
+            Card drawnCard = decks.get(who).pop();
+            hands.get(who).addFirst(drawnCard);
+            return Status.OK;
+        }else{
+            return Status.NO_MORE_CARDS;
+        }
     }
 
   @Override
@@ -161,9 +176,7 @@ public class StandardHotStoneGame implements Game {
   }
 
   @Override
-  public Status playCard(Player who, Card card, int atIndex) {
-    return null;
-  }
+  public Status playCard(Player who, Card card, int atIndex) { return null; }
 
   @Override
   public Status attackCard(Player playerAttacking, Card attackingCard, Card defendingCard) {
