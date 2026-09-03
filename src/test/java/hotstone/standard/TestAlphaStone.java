@@ -158,4 +158,10 @@ public class TestAlphaStone {
     assertThat(l.get(0), is(not("Bumse")));
   }
 
+  @Test
+  public void shouldHaveFullHealth() {
+    int healthBaby = game.getPl
+    assertThat(9, is);
+  }
+
 }

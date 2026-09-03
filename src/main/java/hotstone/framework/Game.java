@@ -148,7 +148,6 @@ public interface Game {
    * endTurn() is never called by the player which is NOT in turn.
    */
   void endTurn();
-
   /** Play a card from the hand to the field.
    *
    * PRECONDITION: 'who' is never null.

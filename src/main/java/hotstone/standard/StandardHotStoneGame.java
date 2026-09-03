@@ -159,7 +159,6 @@ public class StandardHotStoneGame implements Game {
         turnNum++;
         playerInTurn = playerInTurn == Player.FINDUS ? Player.PEDDERSEN : Player.FINDUS;
   }
-
   @Override
   public Status playCard(Player who, Card card, int atIndex) {
     return null;
