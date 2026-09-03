@@ -138,6 +138,10 @@ public class TestAlphaStone {
   public void shouldDecreaseDeckSizeBy1AndIncreaseHand(){
     int deckSizeBefore = game.getDeckSize(Player.FINDUS);
     int handSizeBefore = game.getHandSize(Player.FINDUS);
+    StandardHotStoneGame standardGame = (StandardHotStoneGame) game;
+    standardGame.drawCard(Player.FINDUS);
+    assertThat(standardGame.getHandSize(Player.FINDUS), is(handSizeBefore+1));
+    assertThat(standardGame.getDeckSize(Player.FINDUS), is(deckSizeBefore-1));
   }
 
   /** REMOVE ME. Not a test of HotStone, just an example of the
@@ -173,8 +177,7 @@ public class TestAlphaStone {
 
   @Test
   public void shouldHaveFullHealth() {
-    int healthBaby = game.getPl
-    assertThat(9, is);
+    //int healthBaby = game.
   }
 
 }

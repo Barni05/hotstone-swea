@@ -91,6 +91,10 @@ public class StandardHotStoneGame implements Game {
         return deck;
     }
 
+    public void createBaby(Player owner){
+        StandardHero baby = new StandardHero(30, 1, "Baby", false, owner);
+    }
+
     public void startTurn(){
 
     }
