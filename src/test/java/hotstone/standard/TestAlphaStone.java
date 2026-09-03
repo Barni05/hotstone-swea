@@ -48,6 +48,8 @@ import hotstone.framework.Game;
  */
 public class TestAlphaStone {
   private Game game;
+  private final int EXPECTED_INITIAL_DECK_SIZE = 4, EXPECTED_INITIAL_HAND_SIZE = 3;
+
 
   /** Fixture for AlphaStone testing. */
   @BeforeEach
@@ -91,7 +93,7 @@ public class TestAlphaStone {
   public void shouldHaveUnoDosTresCardsInitially() {
     // Given a game, Findus has 3 cards in hand
     int count = game.getHandSize(Player.FINDUS);
-    assertThat(count, is(3));
+    assertThat(count, is(EXPECTED_INITIAL_HAND_SIZE));
     // And these are ordered Tres, Dos, Uno in slot 2,1,0
 
     Card card = game.getCardInHand(Player.FINDUS, 0);
@@ -101,9 +103,9 @@ public class TestAlphaStone {
   @Test
   public void shouldHave4CardsInDeckInitiallyForBothPlayers(){
       int countFindus = game.getDeckSize(Player.FINDUS);
-      assertThat(countFindus, is(4));
+      assertThat(countFindus, is(EXPECTED_INITIAL_DECK_SIZE));
       int countPeddersen = game.getDeckSize(Player.PEDDERSEN);
-      assertThat(countPeddersen, is(4));
+      assertThat(countPeddersen, is(EXPECTED_INITIAL_DECK_SIZE));
   }
 
   @Test
