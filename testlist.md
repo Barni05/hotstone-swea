@@ -11,3 +11,10 @@
 - When a player draws a card from an empty deck, it returns a NO_MORE_CARDS status, and suffers 2 health penalty
 - Given a hands of 3 cards. When the player plays the card from index 0, the card on index 1 shifts to index 0
 - When a minion is placed onto the field, it remains inactive for the turn
+
+## HERO 
+- when deck is created, the hero has 30 health and 1 mana 
+- on the beginning of each round, the previous mana restores
+- if the hero is getting damage, then the health decreases
+- every time hero uses its power, it draws 2 crystals from available mana 
+- 
