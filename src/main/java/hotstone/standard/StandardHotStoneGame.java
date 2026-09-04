@@ -82,6 +82,8 @@ public class StandardHotStoneGame implements Game {
         //Initialize mana
 
         //Initialize hero
+        createBaby(Player.FINDUS);
+        createBaby(Player.PEDDERSEN);
 
         //Initialize health
     }
