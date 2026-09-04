@@ -210,10 +210,12 @@ public void shouldMinionBeInactive(){
   }
 
   @Test
-  public void shouldHaveFullHealth() {
-    StandardHero baby = (StandardHero)game.getHero(Player.FINDUS);
+  public void shouldHaveFullHealthAndOneMana() {
+    StandardHotStoneGame standardGame = (StandardHotStoneGame) game;
+    StandardHero baby = standardGame.createBaby(Player.FINDUS);
     int healthBaby = baby.getHealth();
+    int manaBaby = baby.getMana();
     assertThat(healthBaby, is(30));
+    assertThat(manaBaby, is(1));
   }
-
 }
