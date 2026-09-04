@@ -31,6 +31,7 @@ package hotstone.standard;
 
 import hotstone.framework.Card;
 import hotstone.framework.Player;
+import hotstone.framework.Status;
 import hotstone.utility.TestHelper;
 import org.junit.jupiter.api.*;
 
@@ -48,7 +49,7 @@ import hotstone.framework.Game;
  */
 public class TestAlphaStone {
   private Game game;
-  private final int EXPECTED_INITIAL_DECK_SIZE = 4, EXPECTED_INITIAL_HAND_SIZE = 3;
+  private final int EXPECTED_INITIAL_DECK_SIZE = 4, EXPECTED_INITIAL_HAND_SIZE = 3, MAXIMUM_DRAW = 4;
 
 
   /** Fixture for AlphaStone testing. */
@@ -151,7 +152,31 @@ public class TestAlphaStone {
     game.playCard(Player.FINDUS, card, 1);
     assertThat(game.getCardInField(Player.FINDUS, 1), not(nullValue()));
   }
+@Test
+public void shoudReturnNoMoreCards(){
+    StandardHotStoneGame standardGame = (StandardHotStoneGame) game;
+    for(int i = 0; i < MAXIMUM_DRAW; i++){
+      standardGame.drawCard(Player.FINDUS);
+    }
+    Status status = standardGame.drawCard(Player.FINDUS);
+    assertThat(status, is(Status.NO_MORE_CARDS));
+}
 
+@Test
+public void shouldBeNewCardOnOldPositionInHand(){
+    Card oldCard = game.getCardInHand(Player.FINDUS, 0);
+    game.playCard(Player.FINDUS, oldCard, 0);
+    Card newCard = game.getCardInHand(Player.FINDUS, 0);
+    assertThat(oldCard, not(newCard));
+}
+
+
+@Test
+public void shouldMinionBeInactive(){
+    game.playCard(Player.FINDUS, game.getCardInHand(Player.FINDUS, 0), 1);
+    boolean isActive = game.getCardInField(Player.FINDUS, 1).isActive();
+    assertThat(isActive, is(false));
+}
 
   /** REMOVE ME. Not a test of HotStone, just an example of the
    matchers that the hamcrest library has... */

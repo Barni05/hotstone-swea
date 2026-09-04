@@ -173,12 +173,12 @@ public class StandardHotStoneGame implements Game {
 
   @Override
   public Iterable<? extends Card> getField(Player who) {
-    return null;
+    return fields.get(who);
   }
 
   @Override
   public int getFieldSize(Player who) {
-    return 0;
+    return fields.get(who).size();
   }
 
   @Override
