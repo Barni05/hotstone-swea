@@ -22,6 +22,10 @@ public class StandardHero implements Hero {
     @Override
     public int getHealth() {return health; }
 
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
     @Override
     public int getMana() {return mana; }
 

@@ -225,4 +225,11 @@ public void shouldMinionBeInactive(){
     standardGame.afterCrystalDraw(Player.FINDUS);
     assertThat(standardGame.getHero(Player.FINDUS).getMana(), is(1));
   }
+
+  @Test
+  public void shouldTakeDamage() {
+    StandardHotStoneGame standardGame = (StandardHotStoneGame) game;
+    standardGame.takeDamage(Player.PEDDERSEN, 1);
+    assertThat(standardGame.getHero(Player.FINDUS).getHealth(), is(28));
+  }
 }

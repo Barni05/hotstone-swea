@@ -17,6 +17,8 @@
 package hotstone.standard;
 
 import hotstone.framework.*;
+
+import java.lang.foreign.PaddingLayout;
 import java.util.Stack;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,6 +54,7 @@ public class StandardHotStoneGame implements Game {
     private HashMap<Player, ArrayList<Card>> fields = new HashMap<>();
     private int turnNum;
     private Player playerInTurn;
+    //todo make 2 different babies
     private StandardHero baby;
 
     public StandardHotStoneGame() {
@@ -85,7 +88,6 @@ public class StandardHotStoneGame implements Game {
 
         //Initialize hero
         createBaby(Player.FINDUS);
-        createBaby(Player.PEDDERSEN);
 
         //Initialize health
     }
@@ -210,6 +212,14 @@ public class StandardHotStoneGame implements Game {
   @Override
   public Status attackHero(Player playerAttacking, Card attackingCard) {
     return null;
+  }
+
+  public void takeDamage (Player attacker, int indexOfCard) {
+      int health = baby.getHealth();
+      //todo the hero takes damage from an actual card that is actively set to attack
+      Card card = new StandardCard("", "", 3, 2, 3, true, Player.PEDDERSEN);
+      int cardsAttackPower = card.getAttack();
+      baby.setHealth(health - cardsAttackPower);
   }
 
   public void afterCrystalDraw (Player who) {
