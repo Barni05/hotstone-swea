@@ -20,6 +20,7 @@ import hotstone.framework.*;
 import java.util.Stack;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Collections;
 
 /** This is the 'temporary test stub' in TDD
  * terms: the initial empty but compilable implementation
@@ -74,13 +75,8 @@ public class StandardHotStoneGame implements Game {
         }
 
         //Initialize fields
-        fields.put(Player.FINDUS, new ArrayList<Card>(FIELD_CAPACITY));
-        for(int i = 0; i < FIELD_CAPACITY; i++){
-            fields.get(Player.FINDUS).add(null);
-        }
-        fields.put(Player.PEDDERSEN, new ArrayList<Card>(FIELD_CAPACITY));
-        for(int i = 0; i < FIELD_CAPACITY; i++){
-            fields.get(Player.PEDDERSEN).add(null);
+        for (Player player : Player.values()) {
+            fields.put(player, new ArrayList<>(Collections.nCopies(FIELD_CAPACITY, null)));
         }
 
         //Initialize mana
