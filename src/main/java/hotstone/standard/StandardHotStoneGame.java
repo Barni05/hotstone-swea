@@ -52,6 +52,8 @@ public class StandardHotStoneGame implements Game {
     private HashMap<Player, ArrayList<Card>> fields = new HashMap<>();
     private int turnNum;
     private Player playerInTurn;
+    private StandardHero baby;
+
     public StandardHotStoneGame() {
 
         decks.put(Player.FINDUS, new Stack<Card>());
@@ -102,7 +104,7 @@ public class StandardHotStoneGame implements Game {
     }
 
     public StandardHero createBaby(Player owner){
-        StandardHero baby = new StandardHero(30, 1, "Baby", false,
+        baby = new StandardHero(30, 3, "Baby", false,
                 owner, "Cute","Just cute");
         return baby;
     }
@@ -133,7 +135,7 @@ public class StandardHotStoneGame implements Game {
 
   @Override
   public Hero getHero(Player who) {
-    return null;
+      return baby;
   }
 
   @Override
@@ -210,8 +212,18 @@ public class StandardHotStoneGame implements Game {
     return null;
   }
 
+  public void afterCrystalDraw (Player who) {
+      Status usePower = usePower(who);
+      int totalMana = baby.getMana();
+      if (usePower == Status.OK) totalMana = totalMana -2;
+      baby.setMana(totalMana);
+  }
+
   @Override
   public Status usePower(Player who) {
-    return null;
+      Hero baby = getHero(who);
+      int mana = baby.getMana();
+      if (mana >= 2) return Status.OK;
+      return Status.NOT_ENOUGH_MANA;
   }
 }

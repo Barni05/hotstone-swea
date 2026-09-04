@@ -25,6 +25,10 @@ public class StandardHero implements Hero {
     @Override
     public int getMana() {return mana; }
 
+    public void setMana(int mana) {
+        this.mana = mana;
+    }
+
     @Override
     public String getType() {return type; }
 
