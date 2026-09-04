@@ -18,7 +18,7 @@ package hotstone.standard;
 
 import hotstone.framework.*;
 
-import java.lang.foreign.PaddingLayout;
+//import java.lang.foreign.PaddingLayout;
 import java.util.Stack;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,8 +54,7 @@ public class StandardHotStoneGame implements Game {
     private HashMap<Player, ArrayList<Card>> fields = new HashMap<>();
     private int turnNum;
     private Player playerInTurn;
-    //todo make 2 different babies
-    private StandardHero baby;
+    private HashMap<Player, StandardHero> babies = new HashMap<>();
 
     public StandardHotStoneGame() {
 
@@ -87,7 +86,7 @@ public class StandardHotStoneGame implements Game {
         //Initialize mana
 
         //Initialize hero
-        createBaby(Player.FINDUS);
+        createBabies();
 
         //Initialize health
     }
@@ -105,10 +104,12 @@ public class StandardHotStoneGame implements Game {
         return deck;
     }
 
-    public StandardHero createBaby(Player owner){
-        baby = new StandardHero(30, 3, "Baby", false,
-                owner, "Cute","Just cute");
-        return baby;
+    private Status createBabies(){
+        babies.put(Player.FINDUS,  new StandardHero(30, 3, "Baby", false,
+                Player.FINDUS, "Cute","Just cute"));
+        babies.put(Player.PEDDERSEN,  new StandardHero(30, 3, "Baby", false,
+                Player.PEDDERSEN, "Cute","Just cute"));
+        return Status.OK;
     }
 
     public void startTurn(){
@@ -137,7 +138,7 @@ public class StandardHotStoneGame implements Game {
 
   @Override
   public Hero getHero(Player who) {
-      return baby;
+      return babies.get(who);
   }
 
   @Override
@@ -214,19 +215,17 @@ public class StandardHotStoneGame implements Game {
     return null;
   }
 
-  public void takeDamage (Player attacker, int indexOfCard) {
-      int health = baby.getHealth();
-      //todo the hero takes damage from an actual card that is actively set to attack
-      Card card = new StandardCard("", "", 3, 2, 3, true, Player.PEDDERSEN);
-      int cardsAttackPower = card.getAttack();
-      baby.setHealth(health - cardsAttackPower);
+  public void heroTakeDamage (Player attacked, Card attackingCard) {
+      int health = babies.get(attacked).getHealth();
+      int cardsAttackPower = attackingCard.getAttack();
+      babies.get(attacked).setHealth(health - cardsAttackPower);
   }
 
   public void afterCrystalDraw (Player who) {
       Status usePower = usePower(who);
-      int totalMana = baby.getMana();
+      int totalMana = babies.get(who).getMana();
       if (usePower == Status.OK) totalMana = totalMana -2;
-      baby.setMana(totalMana);
+      babies.get(who).setMana(totalMana);
   }
 
   @Override

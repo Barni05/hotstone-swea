@@ -49,7 +49,7 @@ import hotstone.framework.Game;
  */
 public class TestAlphaStone {
   private Game game;
-  private final int EXPECTED_INITIAL_DECK_SIZE = 4, EXPECTED_INITIAL_HAND_SIZE = 3, MAXIMUM_DRAW = 4;
+  private final int EXPECTED_INITIAL_DECK_SIZE = 4, EXPECTED_INITIAL_HAND_SIZE = 3, MAXIMUM_DRAW = 4, EXPECTED_HEALTH = 30, EXPECTED_MANA = 3;
 
 
   /** Fixture for AlphaStone testing. */
@@ -178,45 +178,14 @@ public void shouldMinionBeInactive(){
     assertThat(isActive, is(false));
 }
 
-  /** REMOVE ME. Not a test of HotStone, just an example of the
-   matchers that the hamcrest library has... */
-  @Test
-  public void shouldDefinitelyBeRemoved() {
-    // Matching null and not null values
-    // 'is' require an exact match
-    // Hamcrest uses the 'equals()' method
-    String s = null;
-    assertThat(s, is(nullValue()));
-    s = "Ok";
-    assertThat(s, is(notNullValue()));
-    assertThat(s, is("Ok"));
-
-    // If you only validate substrings, use containsString
-    assertThat("This is a dummy test", containsString("dummy"));
-
-    // You can use is on any type
-    int answerToLifeUniverseAndEverything = 42;
-    assertThat(answerToLifeUniverseAndEverything, is(42));
-
-    // Match contents of Lists
-    List<String> l = new ArrayList<String>();
-    l.add("Bimse");
-    l.add("Bumse");
-    // Note - ordering is ignored when matching using hasItems
-    assertThat(l, hasItems(new String[] {"Bumse","Bimse"}));
-
-    // Matchers may be combined, like is-not
-    assertThat(l.get(0), is(not("Bumse")));
-  }
-
   @Test
   public void shouldHaveFullHealthAndMana() {
     StandardHotStoneGame standardGame = (StandardHotStoneGame) game;
-    StandardHero baby = standardGame.createBaby(Player.FINDUS);
+    StandardHero baby = (StandardHero) standardGame.getHero(Player.FINDUS);
     int healthBaby = baby.getHealth();
     int manaBaby = baby.getMana();
-    assertThat(healthBaby, is(30));
-    assertThat(manaBaby, is(3));
+    assertThat(healthBaby, is(EXPECTED_HEALTH));
+    assertThat(manaBaby, is(EXPECTED_MANA));
   }
 
   @Test
@@ -229,7 +198,10 @@ public void shouldMinionBeInactive(){
   @Test
   public void shouldTakeDamage() {
     StandardHotStoneGame standardGame = (StandardHotStoneGame) game;
-    standardGame.takeDamage(Player.PEDDERSEN, 1);
-    assertThat(standardGame.getHero(Player.FINDUS).getHealth(), is(28));
+    Card card = standardGame.getCardInHand(Player.FINDUS, 0);
+    int health = standardGame.getHero(Player.PEDDERSEN).getHealth();
+    standardGame.playCard(Player.FINDUS, card,0);
+    standardGame.heroTakeDamage(Player.PEDDERSEN, standardGame.getCardInField(Player.FINDUS, 0));
+    assertThat(standardGame.getHero(Player.PEDDERSEN).getHealth(), is(health - card.getAttack()));
   }
 }

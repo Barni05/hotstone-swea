@@ -14,6 +14,5 @@
 
 ## HERO 
 - when deck is created, the hero has 30 health and 1 mana 
-- on the beginning of each round, the previous mana restores
 - if the hero is getting damage, then the health decreases
 - every time hero uses its power, it draws 2 crystals from available mana

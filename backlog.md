@@ -5,3 +5,4 @@
 - [ ] When a minion dies, it's taken off the field
 - [ ] Attacking minions can also attack the hero, if there's no blocking minion in the corresponding field
 - [ ] Ending and switching turns
+- [ ] On the beginning of each round, the previous mana restores
