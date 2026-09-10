@@ -222,15 +222,15 @@ public class StandardHotStoneGame implements Game {
   public Status playCard(Player who, Card card, int atIndex) {
       if(who != playerInTurn)
           return Status.NOT_PLAYER_IN_TURN;
+      //Draw mana
+      int newManaValue = babies.get(who).getMana()-card.getManaCost();
+      if(newManaValue < 0)
+          return Status.NOT_ENOUGH_MANA;
+      babies.get(who).setMana(newManaValue);
     //Takes out of hand
     if(hands.get(who).remove(card)){
         //Insert into field
         fields.get(who).add(atIndex, card);
-        //Draw mana
-        int newManaValue = babies.get(who).getMana()-card.getManaCost();
-        if(newManaValue < 0)
-            return Status.NOT_ENOUGH_MANA;
-        babies.get(who).setMana(newManaValue);
         return Status.OK;
     }
     return Status.CARD_NOT_FOUND;

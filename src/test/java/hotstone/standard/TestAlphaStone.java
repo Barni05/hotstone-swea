@@ -228,7 +228,7 @@ public void shouldMinionBeInactive(){
   }
 
   @Test
-  public void shouldHandSizeSizeIncreaseAfterEndingTurn(){
+  public void shouldHandSizeIncreaseAfterEndingTurn(){
     int oldHandSizeFindus = game.getHandSize(Player.FINDUS);
     int oldHandSizePeddersen = game.getHandSize(Player.PEDDERSEN);
     game.endTurn();
@@ -238,6 +238,14 @@ public void shouldMinionBeInactive(){
     assertThat(newHandSizeFindus - oldHandSizeFindus, is(1));
     assertThat(newHandSizePeddersen - oldHandSizePeddersen, is(1));
 
+  }
+
+  @Test
+  public void cardShouldNotBePlayedWhenNotEnoughMana(){
+    game.playCard(Player.FINDUS, game.getCardInHand(Player.FINDUS, 0), 0);
+    Status status = game.playCard(Player.FINDUS, game.getCardInHand(Player.FINDUS, 0), 1);
+    assertThat(status, is(Status.NOT_ENOUGH_MANA));
+    assertThat(game.getCardInField(Player.FINDUS, 1), nullValue());
   }
 
 }
