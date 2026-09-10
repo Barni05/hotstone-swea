@@ -49,4 +49,6 @@ public enum Status {
 
   /** If attacking hero or non-taunt minion while taunt minion on field. */
   ATTACK_NOT_ALLOWED_ON_NON_TAUNT_MINION,
+
+  NO_MORE_HEALTH
 }

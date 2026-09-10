@@ -49,6 +49,7 @@ import java.util.Collections;
 public class StandardHotStoneGame implements Game {
     private final int FIELD_CAPACITY = 10;
     private final int INITIAL_MANA = 3;
+    private final int NO_MORE_CARD_PENALTY = 2;
 
     private HashMap<Player, Stack<Card>> decks = new HashMap<>();
     private HashMap<Player, ArrayList<Card>> hands = new HashMap<>();
@@ -113,9 +114,6 @@ public class StandardHotStoneGame implements Game {
         return Status.OK;
     }
 
-    public void startTurn(){
-
-    }
 
     /**
      * Draws one card from the given player's deck to his hand
@@ -128,6 +126,11 @@ public class StandardHotStoneGame implements Game {
             hands.get(who).addFirst(drawnCard);
             return Status.OK;
         }else{
+            StandardHero hero = (StandardHero) getHero(who);
+            int newHealth = hero.getHealth() - NO_MORE_CARD_PENALTY;
+            if(newHealth <= 0)
+                return Status.NO_MORE_HEALTH;
+            hero.setHealth(newHealth);
             return Status.NO_MORE_CARDS;
         }
     }
@@ -193,19 +196,27 @@ public class StandardHotStoneGame implements Game {
   @Override
   public void endTurn() {
         turnNum++;
-        playerInTurn = playerInTurn == Player.FINDUS ? Player.PEDDERSEN : Player.FINDUS;
+        //Resetting mana
         babies.get(Player.FINDUS).setMana(INITIAL_MANA);
         babies.get(Player.PEDDERSEN).setMana(INITIAL_MANA);
-        for(Card c :  fields.get(Player.FINDUS)){
+        //Setting cards active / inactive
+        for(Card c :  fields.get(playerInTurn)){
             StandardCard standardCard = (StandardCard) c;
             if(standardCard != null)
-                standardCard.setActive(false);
+                standardCard.setActive(true);
         }
-      for(Card c :  fields.get(Player.PEDDERSEN)){
-          StandardCard standardCard = (StandardCard) c;
-          if(standardCard != null)
+        //Change players, and then set their cards inactive
+        playerInTurn = playerInTurn == Player.FINDUS ? Player.PEDDERSEN : Player.FINDUS;
+        for(Card c :  fields.get(playerInTurn)){
+            StandardCard standardCard = (StandardCard) c;
+            if(standardCard != null)
             standardCard.setActive(false);
-      }
+        }
+
+        //Draw cards from deck
+      drawCard(Player.FINDUS);
+      drawCard(Player.PEDDERSEN);
+
   }
   @Override
   public Status playCard(Player who, Card card, int atIndex) {

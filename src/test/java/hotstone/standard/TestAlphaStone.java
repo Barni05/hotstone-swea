@@ -32,11 +32,7 @@ package hotstone.standard;
 import hotstone.framework.Card;
 import hotstone.framework.Player;
 import hotstone.framework.Status;
-import hotstone.utility.TestHelper;
 import org.junit.jupiter.api.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -229,6 +225,19 @@ public void shouldMinionBeInactive(){
     game.endTurn();
     assertThat(heroFindus.getMana(), is(EXPECTED_MANA));
     assertThat(heroPeddersen.getMana(), is(EXPECTED_MANA));
+  }
+
+  @Test
+  public void shouldHandSizeSizeIncreaseAfterEndingTurn(){
+    int oldHandSizeFindus = game.getHandSize(Player.FINDUS);
+    int oldHandSizePeddersen = game.getHandSize(Player.PEDDERSEN);
+    game.endTurn();
+    int newHandSizeFindus = game.getHandSize(Player.FINDUS);
+    int newHandSizePeddersen = game.getHandSize(Player.PEDDERSEN);
+
+    assertThat(newHandSizeFindus - oldHandSizeFindus, is(1));
+    assertThat(newHandSizePeddersen - oldHandSizePeddersen, is(1));
+
   }
 
 }
