@@ -13,6 +13,11 @@
 - When a minion is placed onto the field, it remains inactive for the turn✅
 
 ## HERO 
-- when deck is created, the hero has 30 health and 1 mana 
+- Given a new game, each player has 30 health and 3 mana
 - if the hero is getting damage, then the health decreases
 - every time hero uses its power, it draws 2 crystals from available mana
+
+## TURN MANAGEMENT
+- Given a new game, the player in turn should be FINDUS 
+- Given it is FINDUS'S turn, when endTurn() is called, PEDDERSEN becomes the active player
+- After finished turns, each Player's mana is set to exactly 3

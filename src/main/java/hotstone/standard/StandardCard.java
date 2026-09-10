@@ -47,6 +47,8 @@ public class StandardCard implements Card{
         return isActive;
     }
 
+    public void setActive(boolean newActive){ isActive = newActive;}
+
     @Override
     public Player getOwner() {
         return owner;

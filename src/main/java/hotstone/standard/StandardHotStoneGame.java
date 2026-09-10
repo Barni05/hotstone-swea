@@ -48,6 +48,7 @@ import java.util.Collections;
 
 public class StandardHotStoneGame implements Game {
     private final int FIELD_CAPACITY = 10;
+    private final int INITIAL_MANA = 3;
 
     private HashMap<Player, Stack<Card>> decks = new HashMap<>();
     private HashMap<Player, ArrayList<Card>> hands = new HashMap<>();
@@ -193,13 +194,32 @@ public class StandardHotStoneGame implements Game {
   public void endTurn() {
         turnNum++;
         playerInTurn = playerInTurn == Player.FINDUS ? Player.PEDDERSEN : Player.FINDUS;
+        babies.get(Player.FINDUS).setMana(INITIAL_MANA);
+        babies.get(Player.PEDDERSEN).setMana(INITIAL_MANA);
+        for(Card c :  fields.get(Player.FINDUS)){
+            StandardCard standardCard = (StandardCard) c;
+            if(standardCard != null)
+                standardCard.setActive(false);
+        }
+      for(Card c :  fields.get(Player.PEDDERSEN)){
+          StandardCard standardCard = (StandardCard) c;
+          if(standardCard != null)
+            standardCard.setActive(false);
+      }
   }
   @Override
   public Status playCard(Player who, Card card, int atIndex) {
+      if(who != playerInTurn)
+          return Status.NOT_PLAYER_IN_TURN;
     //Takes out of hand
     if(hands.get(who).remove(card)){
         //Insert into field
         fields.get(who).add(atIndex, card);
+        //Draw mana
+        int newManaValue = babies.get(who).getMana()-card.getManaCost();
+        if(newManaValue < 0)
+            return Status.NOT_ENOUGH_MANA;
+        babies.get(who).setMana(newManaValue);
         return Status.OK;
     }
     return Status.CARD_NOT_FOUND;

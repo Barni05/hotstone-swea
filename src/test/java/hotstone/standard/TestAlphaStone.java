@@ -108,6 +108,7 @@ public class TestAlphaStone {
     assertThat(cardUno.getName(), is(GameConstants.UNO_CARD));
   }
 
+
   @Test
   public void shouldHave4CardsInDeckInitiallyForBothPlayers(){
       int countFindus = game.getDeckSize(Player.FINDUS);
@@ -204,4 +205,30 @@ public void shouldMinionBeInactive(){
     standardGame.heroTakeDamage(Player.PEDDERSEN, standardGame.getCardInField(Player.FINDUS, 0));
     assertThat(standardGame.getHero(Player.PEDDERSEN).getHealth(), is(health - card.getAttack()));
   }
+
+  @Test
+  public void shouldPlayerInTurnBeFindusOnStart(){
+    assertThat(game.getPlayerInTurn(), is(Player.FINDUS));
+  }
+
+  @Test
+  public void shouldPlayerInTurnBePeddersenAfterEndturnFindus(){
+    game.endTurn();
+    assertThat(game.getPlayerInTurn(), is(Player.PEDDERSEN));
+  }
+
+  @Test
+  public void shouldManaResetWhenNewTurn(){
+    StandardHero heroFindus = (StandardHero) game.getHero(Player.FINDUS);
+    game.playCard(Player.FINDUS, game.getCardInHand(Player.FINDUS, 0), 0);
+    assertThat(heroFindus.getMana(), not(EXPECTED_MANA));
+    game.endTurn();
+    StandardHero heroPeddersen = (StandardHero) game.getHero(Player.PEDDERSEN);
+    game.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 0), 0);
+    assertThat(heroPeddersen.getMana(), not(EXPECTED_MANA));
+    game.endTurn();
+    assertThat(heroFindus.getMana(), is(EXPECTED_MANA));
+    assertThat(heroPeddersen.getMana(), is(EXPECTED_MANA));
+  }
+
 }
