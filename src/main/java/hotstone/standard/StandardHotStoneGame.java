@@ -49,6 +49,7 @@ import java.util.Collections;
 public class StandardHotStoneGame implements Game {
     private final int FIELD_CAPACITY = 10;
     private final int INITIAL_MANA = 3;
+    private final int INITIAL_HEALTH = 21;
     private final int NO_MORE_CARD_PENALTY = 2;
 
     private HashMap<Player, Stack<Card>> decks = new HashMap<>();
@@ -107,9 +108,9 @@ public class StandardHotStoneGame implements Game {
     }
 
     private Status createBabies(){
-        babies.put(Player.FINDUS,  new StandardHero(30, 3, "Baby", false,
+        babies.put(Player.FINDUS,  new StandardHero(INITIAL_HEALTH, 3, "Baby", false,
                 Player.FINDUS, "Cute","Just cute"));
-        babies.put(Player.PEDDERSEN,  new StandardHero(30, 3, "Baby", false,
+        babies.put(Player.PEDDERSEN,  new StandardHero(INITIAL_HEALTH, 3, "Baby", false,
                 Player.PEDDERSEN, "Cute","Just cute"));
         return Status.OK;
     }

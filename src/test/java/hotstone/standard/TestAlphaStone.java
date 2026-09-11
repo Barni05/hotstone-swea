@@ -45,7 +45,7 @@ import hotstone.framework.Game;
  */
 public class TestAlphaStone {
   private Game game;
-  private final int EXPECTED_INITIAL_DECK_SIZE = 4, EXPECTED_INITIAL_HAND_SIZE = 3, MAXIMUM_DRAW = 4, EXPECTED_HEALTH = 30, EXPECTED_MANA = 3;
+  private final int EXPECTED_INITIAL_DECK_SIZE = 4, EXPECTED_INITIAL_HAND_SIZE = 3, MAXIMUM_DRAW = 4, MAXIMUM_HEALTH = 21, EXPECTED_MANA = 3;
 
 
   /** Fixture for AlphaStone testing. */
@@ -181,7 +181,7 @@ public void shouldMinionBeInactive(){
     StandardHero baby = (StandardHero) standardGame.getHero(Player.FINDUS);
     int healthBaby = baby.getHealth();
     int manaBaby = baby.getMana();
-    assertThat(healthBaby, is(EXPECTED_HEALTH));
+    assertThat(healthBaby, is(MAXIMUM_HEALTH));
     assertThat(manaBaby, is(EXPECTED_MANA));
   }
 
@@ -276,6 +276,16 @@ public void shouldMinionBeInactive(){
     standardGame.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 0), 0);
     standardGame.endTurn();
     assertThat(game.getCardInField(Player.PEDDERSEN, 0), nullValue());
+  }
+
+  @Test
+  public void heroShouldTakeDamageWhenItDoesntHaveDefendingCard(){
+    StandardHotStoneGame standardGame = (StandardHotStoneGame) game;
+    standardGame.playCard(Player.FINDUS, game.getCardInHand(Player.FINDUS, 2), 1);
+    standardGame.endTurn();
+    standardGame.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 0), 0);
+    standardGame.endTurn();
+    assertThat(game.getHero(Player.PEDDERSEN).getHealth(), is(not(MAXIMUM_HEALTH)));
   }
 
 }
