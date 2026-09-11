@@ -23,3 +23,4 @@
 - Given it is FINDUS'S turn, when endTurn() is called, PEDDERSEN becomes the active player
 - After finished turns, each Player's mana is set to exactly 3
 - After turn switch, each player draws a card, meaning the deck size increased by 1
+- After at the start of Findus's fifth turn, game ends and Findus is the winner
