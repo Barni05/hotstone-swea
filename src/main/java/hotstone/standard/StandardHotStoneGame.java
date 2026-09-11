@@ -107,12 +107,11 @@ public class StandardHotStoneGame implements Game {
         return deck;
     }
 
-    private Status createBabies(){
+    private void createBabies(){
         babies.put(Player.FINDUS,  new StandardHero(INITIAL_HEALTH, 3, "Baby", false,
                 Player.FINDUS, "Cute","Just cute"));
         babies.put(Player.PEDDERSEN,  new StandardHero(INITIAL_HEALTH, 3, "Baby", false,
                 Player.PEDDERSEN, "Cute","Just cute"));
-        return Status.OK;
     }
 
 

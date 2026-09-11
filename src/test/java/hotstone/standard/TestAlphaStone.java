@@ -248,6 +248,7 @@ public void shouldMinionBeInactive(){
   }
 
 
+
   //This replaces duplicate code for making combat tests
   private void setupCombatInSlotZero(int findusHandIndex, int peddersenHandIndex) {
     game.playCard(Player.FINDUS, game.getCardInHand(Player.FINDUS, findusHandIndex), 0);
