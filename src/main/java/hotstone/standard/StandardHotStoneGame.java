@@ -147,7 +147,11 @@ public class StandardHotStoneGame implements Game {
 
   @Override
   //since we already know that (for this iteration) Findus will always win
-  public Player getWinner() {return Player.FINDUS;}
+  public Player getWinner() {
+      int turnNumber = getTurnNumber();
+      if (turnNumber < 4) return null;
+      return Player.FINDUS;
+    }
 
   @Override
   public int getTurnNumber() {
