@@ -14,7 +14,7 @@
 - Given Findus has 0 mana, and tries to play a card with >0 mana, the mana remains 0, and it doesn't get added to the field
 
 ## HERO 
-- Given a new game, each player has 30 health and 3 mana
+- Given a new game, each player has 21 health and 3 mana
 - if the hero is getting damage, then the health decreases
 - every time hero uses its power, it draws 2 crystals from available mana
 
