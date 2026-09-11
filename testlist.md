@@ -27,3 +27,5 @@
 
 ## COMBAT
 - Given Findus has an active card at index 0 with 1 attack, and Peddersen has an inactive card with 2 health, Peddersen's card's health decreases from 2 to 1
+- Given an attacking card has 3 health, and a defending card has 2 health and 2 attack. The defending card deals retaliation damage, and the attacking card's health will be 1
+- If a card on index 0 is finished, it gets removed from the field

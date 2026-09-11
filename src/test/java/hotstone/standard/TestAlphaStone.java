@@ -258,4 +258,24 @@ public void shouldMinionBeInactive(){
     assertThat(game.getCardInField(Player.PEDDERSEN, 0).getHealth(), is(1));
   }
 
+  @Test
+  public void attackingCardShouldTakeRetaliationDamageFromDefendingCardOnAttack(){
+    StandardHotStoneGame standardGame = (StandardHotStoneGame) game;
+    standardGame.playCard(Player.FINDUS, game.getCardInHand(Player.FINDUS, 0), 0);
+    standardGame.endTurn();
+    standardGame.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 2), 0);
+    standardGame.endTurn();
+    assertThat(game.getCardInField(Player.FINDUS, 0).getHealth(), is(1));
+  }
+
+  @Test
+  public void lethalDamageToCardShouldRemoveFromField(){
+    StandardHotStoneGame standardGame = (StandardHotStoneGame) game;
+    standardGame.playCard(Player.FINDUS, game.getCardInHand(Player.FINDUS, 2), 0);
+    standardGame.endTurn();
+    standardGame.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 0), 0);
+    standardGame.endTurn();
+    assertThat(game.getCardInField(Player.PEDDERSEN, 0), nullValue());
+  }
+
 }
