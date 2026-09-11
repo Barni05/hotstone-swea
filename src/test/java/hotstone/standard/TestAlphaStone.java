@@ -247,33 +247,33 @@ public void shouldMinionBeInactive(){
     assertThat(game.getCardInField(Player.FINDUS, 1), nullValue());
   }
 
+
+  //This replaces duplicate code for making combat tests
+  private void setupCombatInSlotZero(int findusHandIndex, int peddersenHandIndex) {
+    game.playCard(Player.FINDUS, game.getCardInHand(Player.FINDUS, findusHandIndex), 0);
+    game.endTurn();
+    game.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, peddersenHandIndex), 0);
+    game.endTurn();
+  }
+
   @Test
-  public void PeddersenCardHealthShouldDecreaseAfterFindusAttacks(){
-    StandardHotStoneGame standardGame = (StandardHotStoneGame) game;
-    standardGame.playCard(Player.FINDUS, game.getCardInHand(Player.FINDUS, 2), 0);
-    standardGame.endTurn();
-    standardGame.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 2), 0);
-    standardGame.endTurn();
+  public void defendingCardHealthShouldDecreaseAfterAttack(){
+    //Both player plays card Uno (1,1,1)
+    setupCombatInSlotZero(2, 2);
     assertThat(game.getCardInField(Player.PEDDERSEN, 0).getHealth(), is(1));
   }
 
   @Test
   public void attackingCardShouldTakeRetaliationDamageFromDefendingCardOnAttack(){
-    StandardHotStoneGame standardGame = (StandardHotStoneGame) game;
-    standardGame.playCard(Player.FINDUS, game.getCardInHand(Player.FINDUS, 0), 0);
-    standardGame.endTurn();
-    standardGame.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 2), 0);
-    standardGame.endTurn();
+    //Findus plays Tres (3,3,3), Peddersen plays Uno (1,1,1)
+    setupCombatInSlotZero(0, 2);
     assertThat(game.getCardInField(Player.FINDUS, 0).getHealth(), is(1));
   }
 
   @Test
   public void lethalDamageToCardShouldRemoveFromField(){
-    StandardHotStoneGame standardGame = (StandardHotStoneGame) game;
-    standardGame.playCard(Player.FINDUS, game.getCardInHand(Player.FINDUS, 2), 0);
-    standardGame.endTurn();
-    standardGame.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 0), 0);
-    standardGame.endTurn();
+    //Findus plays Uno (1,1,1), Peddersen plays Tres (3,3,3)
+    setupCombatInSlotZero(2, 0);
     assertThat(game.getCardInField(Player.PEDDERSEN, 0), nullValue());
   }
 
