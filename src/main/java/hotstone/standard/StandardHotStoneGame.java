@@ -196,28 +196,55 @@ public class StandardHotStoneGame implements Game {
   @Override
   public void endTurn() {
         turnNum++;
-        //Resetting mana
-        babies.get(Player.FINDUS).setMana(INITIAL_MANA);
-        babies.get(Player.PEDDERSEN).setMana(INITIAL_MANA);
-        //Setting cards active / inactive
+        //Setting the previous player's cards inactive
         for(Card c :  fields.get(playerInTurn)){
             StandardCard standardCard = (StandardCard) c;
             if(standardCard != null)
-                standardCard.setActive(true);
+                standardCard.setActive(false);
         }
-        //Change players, and then set their cards inactive
         playerInTurn = playerInTurn == Player.FINDUS ? Player.PEDDERSEN : Player.FINDUS;
-        for(Card c :  fields.get(playerInTurn)){
-            StandardCard standardCard = (StandardCard) c;
-            if(standardCard != null)
-            standardCard.setActive(false);
-        }
+        startTurn();
+  }
 
-        //Draw cards from deck
+  public void startTurn(){
+      //Set current players card active
+      for(Card c :  fields.get(playerInTurn)){
+          StandardCard standardCard = (StandardCard) c;
+          if(standardCard != null)
+              standardCard.setActive(true);
+      }
+
+
+      //Draw cards from deck
       drawCard(Player.FINDUS);
       drawCard(Player.PEDDERSEN);
 
+      //Resetting mana
+      babies.get(Player.FINDUS).setMana(INITIAL_MANA);
+      babies.get(Player.PEDDERSEN).setMana(INITIAL_MANA);
+
+      executeAttacks();
   }
+
+  public void executeAttacks(){
+    Player attackingPlayer = playerInTurn;
+    ArrayList<Card> defendingPlayerField = fields.get(Player.computeOpponent(playerInTurn));
+    int i = 0;
+    for(Card attackingCard : fields.get(attackingPlayer)){
+        if(attackingCard != null){
+            if(attackingCard.isActive()){
+                //If there's a card, attack that, if not, attack the hero
+                if(defendingPlayerField.get(i) != null){
+                    attackCard(attackingPlayer, attackingCard, defendingPlayerField.get(i));
+                }else{
+                    attackHero(attackingPlayer, attackingCard);
+                }
+            }
+        }
+        i++;
+    }
+  }
+
   @Override
   public Status playCard(Player who, Card card, int atIndex) {
       if(who != playerInTurn)
@@ -238,7 +265,34 @@ public class StandardHotStoneGame implements Game {
 
   @Override
   public Status attackCard(Player playerAttacking, Card attackingCard, Card defendingCard) {
-    return null;
+      StandardCard standardDefending = (StandardCard) defendingCard;
+      StandardCard standardAttacking = (StandardCard) attackingCard;
+    if(!standardAttacking.isActive())
+        return Status.ATTACK_NOT_ALLOWED_FOR_NON_ACTIVE_MINION;
+    //Attack Defending card
+    standardDefending.setHealth(standardDefending.getHealth()-standardAttacking.getAttack());
+
+    //Defending card attacks back
+      standardAttacking.setHealth(standardAttacking.getHealth()-standardDefending.getAttack());
+    //Check if either card has died
+    if(standardDefending.getHealth() <= 0){
+        //Remove card from existence
+        removeCardFromField(Player.computeOpponent(playerAttacking), defendingCard);
+    }
+    if(standardAttacking.getHealth() <= 0){
+      //Remove card from existence
+      removeCardFromField(playerAttacking, attackingCard);
+    }
+    return Status.OK;
+  }
+
+  public Status removeCardFromField(Player who, Card cardToRemove){
+      int index = fields.get(who).indexOf(cardToRemove);
+      if (index != -1) {
+          fields.get(who).set(index, null);
+          return Status.OK;
+      }
+      return Status.CARD_NOT_FOUND;
   }
 
   @Override

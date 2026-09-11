@@ -216,11 +216,11 @@ public void shouldMinionBeInactive(){
   @Test
   public void shouldManaResetWhenNewTurn(){
     StandardHero heroFindus = (StandardHero) game.getHero(Player.FINDUS);
-    game.playCard(Player.FINDUS, game.getCardInHand(Player.FINDUS, 0), 0);
+    game.playCard(Player.FINDUS, game.getCardInHand(Player.FINDUS, 2), 0);
     assertThat(heroFindus.getMana(), not(EXPECTED_MANA));
     game.endTurn();
     StandardHero heroPeddersen = (StandardHero) game.getHero(Player.PEDDERSEN);
-    game.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 0), 0);
+    game.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 2), 0);
     assertThat(heroPeddersen.getMana(), not(EXPECTED_MANA));
     game.endTurn();
     assertThat(heroFindus.getMana(), is(EXPECTED_MANA));
@@ -246,6 +246,16 @@ public void shouldMinionBeInactive(){
     Status status = game.playCard(Player.FINDUS, game.getCardInHand(Player.FINDUS, 0), 1);
     assertThat(status, is(Status.NOT_ENOUGH_MANA));
     assertThat(game.getCardInField(Player.FINDUS, 1), nullValue());
+  }
+
+  @Test
+  public void PeddersenCardHealthShouldDecreaseAfterFindusAttacks(){
+    StandardHotStoneGame standardGame = (StandardHotStoneGame) game;
+    standardGame.playCard(Player.FINDUS, game.getCardInHand(Player.FINDUS, 2), 0);
+    standardGame.endTurn();
+    standardGame.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 2), 0);
+    standardGame.endTurn();
+    assertThat(game.getCardInField(Player.PEDDERSEN, 0).getHealth(), is(1));
   }
 
 }

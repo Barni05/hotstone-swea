@@ -42,6 +42,8 @@ public class StandardCard implements Card{
         return health;
     }
 
+    public void setHealth(int newHealth) { this.health = newHealth;}
+
     @Override
     public boolean isActive() {
         return isActive;

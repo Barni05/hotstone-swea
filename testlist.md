@@ -24,3 +24,6 @@
 - After finished turns, each Player's mana is set to exactly 3
 - After turn switch, each player draws a card, meaning the deck size increased by 1
 - After at the start of Findus's fifth turn, game ends and Findus is the winner
+
+## COMBAT
+- Given Findus has an active card at index 0 with 1 attack, and Peddersen has an inactive card with 2 health, Peddersen's card's health decreases from 2 to 1
