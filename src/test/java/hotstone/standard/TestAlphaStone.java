@@ -46,7 +46,7 @@ import hotstone.framework.Game;
 public class TestAlphaStone {
   private Game game;
   private final int EXPECTED_INITIAL_DECK_SIZE = 4, EXPECTED_INITIAL_HAND_SIZE = 3, MAXIMUM_DRAW = 4,
-          MAXIMUM_HEALTH = 21, EXPECTED_MANA = 3, EXPECTED_ROUND_NUM_AT_WIN = 4;
+          MAXIMUM_HEALTH = 21, EXPECTED_MANA = 3;
 
 
   /** Fixture for AlphaStone testing. */
