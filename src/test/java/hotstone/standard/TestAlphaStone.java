@@ -197,8 +197,7 @@ public void shouldMinionBeInactive(){
     StandardHotStoneGame standardGame = (StandardHotStoneGame) game;
     Card card = standardGame.getCardInHand(Player.FINDUS, 0);
     int health = standardGame.getHero(Player.PEDDERSEN).getHealth();
-    standardGame.playCard(Player.FINDUS, card,0);
-    standardGame.heroTakeDamage(Player.PEDDERSEN, standardGame.getCardInField(Player.FINDUS, 0));
+    standardGame.attackHero(Player.FINDUS, card);
     assertThat(standardGame.getHero(Player.PEDDERSEN).getHealth(), is(health - card.getAttack()));
   }
 
