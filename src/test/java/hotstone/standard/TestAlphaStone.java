@@ -45,7 +45,8 @@ import hotstone.framework.Game;
  */
 public class TestAlphaStone {
   private Game game;
-  private final int EXPECTED_INITIAL_DECK_SIZE = 4, EXPECTED_INITIAL_HAND_SIZE = 3, MAXIMUM_DRAW = 4, MAXIMUM_HEALTH = 21, EXPECTED_MANA = 3;
+  private final int EXPECTED_INITIAL_DECK_SIZE = 4, EXPECTED_INITIAL_HAND_SIZE = 3, MAXIMUM_DRAW = 4,
+          MAXIMUM_HEALTH = 21, EXPECTED_MANA = 3, EXPECTED_ROUND_NUM_AT_WIN = 4;
 
 
   /** Fixture for AlphaStone testing. */
@@ -262,6 +263,13 @@ public void shouldMinionBeInactive(){
     //Both player plays card Uno (1,1,1)
     setupCombatInSlotZero(2, 2);
     assertThat(game.getCardInField(Player.PEDDERSEN, 0).getHealth(), is(1));
+  }
+
+  @Test
+  public void findusWinsAfter4Rounds() {
+    StandardHotStoneGame standardGame = (StandardHotStoneGame) game;
+    standardGame.endTurn(); standardGame.endTurn(); standardGame.endTurn(); standardGame.endTurn();
+    assertThat(standardGame.getWinner(), is(Player.FINDUS));
   }
 
   @Test
