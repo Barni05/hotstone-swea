@@ -298,15 +298,9 @@ public class StandardHotStoneGame implements Game {
 
   @Override
   public Status attackHero(Player playerAttacking, Card attackingCard) {
-    StandardHero defendingHero = (StandardHero) getHero(Player.computeOpponent(playerAttacking));
-    defendingHero.setHealth(defendingHero.getHealth() - attackingCard.getAttack());
-    //Check if hero is out of lives -> GAME OVER
-    if(defendingHero.getHealth() <= 0)
-    {
-        // GAME OVER
-        return Status.NO_MORE_HEALTH;
-    }
-    return Status.OK;
+      if (playerAttacking != playerInTurn) return Status.NOT_PLAYER_IN_TURN;
+      if (attackingCard == null) return Status.CARD_NOT_FOUND;
+      return Status.OK;
   }
 
   public void heroTakeDamage (Player attacked, Card attackingCard) {
