@@ -268,7 +268,11 @@ public void shouldMinionBeInactive(){
   @Test
   public void findusWinsAfter4Rounds() {
     StandardHotStoneGame standardGame = (StandardHotStoneGame) game;
-    standardGame.endTurn(); standardGame.endTurn(); standardGame.endTurn(); standardGame.endTurn();
+    standardGame.endTurn();
+    standardGame.endTurn();
+    standardGame.endTurn();
+    standardGame.endTurn();
+    standardGame.endTurn();
     assertThat(standardGame.getWinner(), is(Player.FINDUS));
   }
 

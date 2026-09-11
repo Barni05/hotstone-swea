@@ -149,7 +149,7 @@ public class StandardHotStoneGame implements Game {
   //since we already know that (for this iteration) Findus will always win
   public Player getWinner() {
       int turnNumber = getTurnNumber();
-      if (turnNumber < 4) return null;
+      if (turnNumber <= 4) return null;
       return Player.FINDUS;
     }
 
