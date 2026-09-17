@@ -48,7 +48,6 @@ import java.util.Collections;
 
 public class StandardHotStoneGame implements Game {
     private final int FIELD_CAPACITY = 10;
-    private final int INITIAL_MANA = 3;
     private final int INITIAL_HEALTH = 21;
     private final int NO_MORE_CARD_PENALTY = 2;
 
@@ -59,7 +58,13 @@ public class StandardHotStoneGame implements Game {
     private Player playerInTurn;
     private HashMap<Player, StandardHero> babies = new HashMap<>();
 
-    public StandardHotStoneGame() {
+    // Strategies
+    ManaProductionStrategy manaProductionStrategy;
+
+    public StandardHotStoneGame(ManaProductionStrategy manaProductionStrategy) {
+
+        // Assigning the strategies
+        this.manaProductionStrategy = manaProductionStrategy;
 
         decks.put(Player.FINDUS, new Stack<Card>());
         decks.put(Player.PEDDERSEN, new Stack<Card>());
@@ -108,9 +113,9 @@ public class StandardHotStoneGame implements Game {
     }
 
     private void createBabies(){
-        babies.put(Player.FINDUS,  new StandardHero(INITIAL_HEALTH, 3, "Baby", false,
+        babies.put(Player.FINDUS,  new StandardHero(INITIAL_HEALTH, manaProductionStrategy.calculateStartRoundMana(Player.FINDUS), "Baby", false,
                 Player.FINDUS, "Cute","Just cute"));
-        babies.put(Player.PEDDERSEN,  new StandardHero(INITIAL_HEALTH, 3, "Baby", false,
+        babies.put(Player.PEDDERSEN,  new StandardHero(INITIAL_HEALTH, manaProductionStrategy.calculateStartRoundMana(Player.PEDDERSEN), "Baby", false,
                 Player.PEDDERSEN, "Cute","Just cute"));
     }
 
@@ -224,10 +229,13 @@ public class StandardHotStoneGame implements Game {
       drawCard(Player.PEDDERSEN);
 
       //Resetting mana
-      babies.get(Player.FINDUS).setMana(INITIAL_MANA);
-      babies.get(Player.PEDDERSEN).setMana(INITIAL_MANA);
+      babies.get(Player.FINDUS).setMana(manaProductionStrategy.calculateStartRoundMana(Player.FINDUS));
+      babies.get(Player.PEDDERSEN).setMana(manaProductionStrategy.calculateStartRoundMana(Player.PEDDERSEN));
 
       executeAttacks();
+  }
+  public void setInitialMana(){
+
   }
 
   public void executeAttacks(){

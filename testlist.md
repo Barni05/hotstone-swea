@@ -10,7 +10,7 @@
 - When a player draws a card, their hand size increases by exactly 1✅
 - When a player draws a card from an empty deck, it returns a NO_MORE_CARDS status✅
 - Given a hands of 3 cards. When the player plays the card from index 0, the card on index 1 shifts to index 0✅
-- When a minion is placed onto the field, it remains inactive for the turn✅
+- When a minion is placed onto the field, it remains inactive for the turn
 - Given Findus has 0 mana, and tries to play a card with >0 mana, the mana remains 0, and it doesn't get added to the field
 
 ## HERO 

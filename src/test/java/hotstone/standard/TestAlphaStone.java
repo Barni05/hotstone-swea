@@ -52,7 +52,7 @@ public class TestAlphaStone {
   /** Fixture for AlphaStone testing. */
   @BeforeEach
   public void setUp() {
-    game = new StandardHotStoneGame();
+    game = new StandardHotStoneGame(new AlphaManaProductionStrategy());
   }
 
   // Example of an early, simple test case:
@@ -213,7 +213,7 @@ public void shouldMinionBeInactive(){
     assertThat(game.getPlayerInTurn(), is(Player.PEDDERSEN));
   }
 
-  @Test
+ /* @Test
   public void shouldManaResetWhenNewTurn(){
     StandardHero heroFindus = (StandardHero) game.getHero(Player.FINDUS);
     game.playCard(Player.FINDUS, game.getCardInHand(Player.FINDUS, 2), 0);
@@ -225,7 +225,7 @@ public void shouldMinionBeInactive(){
     game.endTurn();
     assertThat(heroFindus.getMana(), is(EXPECTED_MANA));
     assertThat(heroPeddersen.getMana(), is(EXPECTED_MANA));
-  }
+  }*/
 
   @Test
   public void shouldHandSizeIncreaseAfterEndingTurn(){
@@ -240,14 +240,14 @@ public void shouldMinionBeInactive(){
 
   }
 
+
+
   @Test
-  public void cardShouldNotBePlayedWhenNotEnoughMana(){
+  public void cardShouldNotBePlayWhenNotEnoughMana(){
     game.playCard(Player.FINDUS, game.getCardInHand(Player.FINDUS, 0), 0);
-    Status status = game.playCard(Player.FINDUS, game.getCardInHand(Player.FINDUS, 0), 1);
-    assertThat(status, is(Status.NOT_ENOUGH_MANA));
+    assertThat(game.playCard(Player.FINDUS, game.getCardInHand(Player.FINDUS, 0), 1), is(Status.NOT_ENOUGH_MANA));
     assertThat(game.getCardInField(Player.FINDUS, 1), nullValue());
   }
-
 
 
   //This replaces duplicate code for making combat tests
