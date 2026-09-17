@@ -60,11 +60,13 @@ public class StandardHotStoneGame implements Game {
 
     // Strategies
     ManaProductionStrategy manaProductionStrategy;
+    WinningStrategy winningStrategy;
 
-    public StandardHotStoneGame(ManaProductionStrategy manaProductionStrategy) {
+    public StandardHotStoneGame(ManaProductionStrategy manaProductionStrategy, WinningStrategy winningStrategy) {
 
         // Assigning the strategies
         this.manaProductionStrategy = manaProductionStrategy;
+        this.winningStrategy = winningStrategy;
 
         decks.put(Player.FINDUS, new Stack<Card>());
         decks.put(Player.PEDDERSEN, new Stack<Card>());
@@ -153,9 +155,7 @@ public class StandardHotStoneGame implements Game {
   @Override
   //since we already know that (for this iteration) Findus will always win
   public Player getWinner() {
-      int turnNumber = getTurnNumber();
-      if (turnNumber <= 4) return null;
-      return Player.FINDUS;
+        return winningStrategy.calculateWinner(getTurnNumber());
     }
 
   @Override
