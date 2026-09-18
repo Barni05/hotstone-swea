@@ -29,4 +29,22 @@ public class TestGammaStone {
     public void peddersenShouldHaveDanishChefWhenGameCreated(){
         assertThat(game.getHero(Player.PEDDERSEN).getType(), is("DanishChef"));
     }
+
+    @Test
+    public void findusPlaysHeroPowerPeddersenTakesDamage(){
+        int peddersenHealthBefore = game.getHero(Player.PEDDERSEN).getHealth();
+        game.usePower(Player.FINDUS);
+        int peddersenHealthAfter = game.getHero(Player.PEDDERSEN).getHealth();
+        assertThat(peddersenHealthBefore-2, is(peddersenHealthAfter));
+    }
+    @Test
+    public void playerCantUsePowerWhenNotTheirTurn(){
+        assertThat(game.usePower(Player.PEDDERSEN), is(not(Status.OK)));
+    }
+    @Test
+    public void sovsShouldBeOnFieldAfterPlayingDanishChef(){
+        game.endTurn();
+        game.usePower(Player.PEDDERSEN);
+        assertThat(game.getCardInField(Player.PEDDERSEN, 0).getName(), is("Sovs"));
+    }
 }

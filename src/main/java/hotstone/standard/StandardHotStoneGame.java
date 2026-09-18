@@ -268,10 +268,14 @@ public class StandardHotStoneGame implements Game {
     //Takes out of hand
     if(hands.get(who).remove(card)){
         //Insert into field
-        fields.get(who).add(atIndex, card);
+        insertCardIntoField(who, card, atIndex);
         return Status.OK;
     }
     return Status.CARD_NOT_FOUND;
+  }
+
+  public void insertCardIntoField(Player who, Card card, int atIndex) {
+      fields.get(who).add(atIndex, card);
   }
 
   @Override
@@ -308,16 +312,17 @@ public class StandardHotStoneGame implements Game {
 
   @Override
   public Status attackHero(Player playerAttacking, Card attackingCard) {
-      StandardHero defendingHero = (StandardHero) getHero(Player.computeOpponent(playerAttacking));
-      defendingHero.setHealth(defendingHero.getHealth() - attackingCard.getAttack());
-      //Check if hero is out of lives -> GAME OVER
-      if(defendingHero.getHealth() <= 0)
+      return takeDamage(Player.computeOpponent(playerAttacking), attackingCard.getAttack());
+  }
+
+  public Status takeDamage(Player who, int damageAmount){
+      StandardHero damagedHero = (StandardHero)getHero(who);
+      damagedHero.setHealth(damagedHero.getHealth() - damageAmount);
+      if(damagedHero.getHealth() <= 0)
       {
-          // GAME OVER
           return Status.NO_MORE_HEALTH;
       }
       return Status.OK;
-
   }
 
   public void afterCrystalDraw (Player who) {
