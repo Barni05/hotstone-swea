@@ -61,13 +61,15 @@ public class StandardHotStoneGame implements Game {
     ManaProductionStrategy manaProductionStrategy;
     WinningStrategy winningStrategy;
     HeroCreationStrategy heroCreationStrategy;
+    HeroPowerStrategy heroPowerStrategy;
 
-    public StandardHotStoneGame(ManaProductionStrategy manaProductionStrategy, WinningStrategy winningStrategy, HeroCreationStrategy heroCreationStrategy) {
+    public StandardHotStoneGame(ManaProductionStrategy manaProductionStrategy, WinningStrategy winningStrategy, HeroCreationStrategy heroCreationStrategy,  HeroPowerStrategy heroPowerStrategy) {
 
         // Assigning the strategies
         this.manaProductionStrategy = manaProductionStrategy;
         this.winningStrategy = winningStrategy;
         this.heroCreationStrategy = heroCreationStrategy;
+        this.heroPowerStrategy = heroPowerStrategy;
 
         decks.put(Player.FINDUS, new Stack<Card>());
         decks.put(Player.PEDDERSEN, new Stack<Card>());
@@ -330,9 +332,7 @@ public class StandardHotStoneGame implements Game {
 
   @Override
   public Status usePower(Player who) {
-      Hero baby = getHero(who);
-      int mana = baby.getMana();
-      if (mana >= 2) return Status.OK;
-      return Status.NOT_ENOUGH_MANA;
+    Status ret = heroPowerStrategy.usePower(this, who);
+    return ret;
   }
 }
