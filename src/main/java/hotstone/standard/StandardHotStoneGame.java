@@ -48,7 +48,6 @@ import java.util.Collections;
 
 public class StandardHotStoneGame implements Game {
     private final int FIELD_CAPACITY = 10;
-    private final int INITIAL_HEALTH = 21;
     private final int NO_MORE_CARD_PENALTY = 2;
 
     private HashMap<Player, Stack<Card>> decks = new HashMap<>();
@@ -56,17 +55,19 @@ public class StandardHotStoneGame implements Game {
     private HashMap<Player, ArrayList<Card>> fields = new HashMap<>();
     private int turnNum;
     private Player playerInTurn;
-    private HashMap<Player, StandardHero> babies = new HashMap<>();
+    private HashMap<Player, StandardHero> heroes = new HashMap<>();
 
     // Strategies
     ManaProductionStrategy manaProductionStrategy;
     WinningStrategy winningStrategy;
+    HeroCreationStrategy heroCreationStrategy;
 
-    public StandardHotStoneGame(ManaProductionStrategy manaProductionStrategy, WinningStrategy winningStrategy) {
+    public StandardHotStoneGame(ManaProductionStrategy manaProductionStrategy, WinningStrategy winningStrategy, HeroCreationStrategy heroCreationStrategy) {
 
         // Assigning the strategies
         this.manaProductionStrategy = manaProductionStrategy;
         this.winningStrategy = winningStrategy;
+        this.heroCreationStrategy = heroCreationStrategy;
 
         decks.put(Player.FINDUS, new Stack<Card>());
         decks.put(Player.PEDDERSEN, new Stack<Card>());
@@ -96,7 +97,7 @@ public class StandardHotStoneGame implements Game {
         //Initialize mana
 
         //Initialize hero
-        createBabies();
+        createHeroes();
 
         //Initialize health
     }
@@ -114,11 +115,10 @@ public class StandardHotStoneGame implements Game {
         return deck;
     }
 
-    private void createBabies(){
-        babies.put(Player.FINDUS,  new StandardHero(INITIAL_HEALTH, manaProductionStrategy.calculateStartRoundMana(Player.FINDUS), "Baby", false,
-                Player.FINDUS, "Cute","Just cute"));
-        babies.put(Player.PEDDERSEN,  new StandardHero(INITIAL_HEALTH, manaProductionStrategy.calculateStartRoundMana(Player.PEDDERSEN), "Baby", false,
-                Player.PEDDERSEN, "Cute","Just cute"));
+    private void createHeroes(){
+        Hero[] temp = heroCreationStrategy.createHeroes(manaProductionStrategy.calculateStartRoundMana(Player.FINDUS), manaProductionStrategy.calculateStartRoundMana(Player.PEDDERSEN));
+        heroes.put(Player.FINDUS, (StandardHero)temp[0]);
+        heroes.put(Player.PEDDERSEN, (StandardHero)temp[1]);
     }
 
 
@@ -149,7 +149,7 @@ public class StandardHotStoneGame implements Game {
 
   @Override
   public Hero getHero(Player who) {
-      return babies.get(who);
+      return heroes.get(who);
   }
 
   @Override
@@ -229,8 +229,8 @@ public class StandardHotStoneGame implements Game {
       drawCard(Player.PEDDERSEN);
 
       //Resetting mana
-      babies.get(Player.FINDUS).setMana(manaProductionStrategy.calculateStartRoundMana(Player.FINDUS));
-      babies.get(Player.PEDDERSEN).setMana(manaProductionStrategy.calculateStartRoundMana(Player.PEDDERSEN));
+      heroes.get(Player.FINDUS).setMana(manaProductionStrategy.calculateStartRoundMana(Player.FINDUS));
+      heroes.get(Player.PEDDERSEN).setMana(manaProductionStrategy.calculateStartRoundMana(Player.PEDDERSEN));
 
       executeAttacks();
   }
@@ -262,10 +262,10 @@ public class StandardHotStoneGame implements Game {
       if(who != playerInTurn)
           return Status.NOT_PLAYER_IN_TURN;
       //Draw mana
-      int newManaValue = babies.get(who).getMana()-card.getManaCost();
+      int newManaValue = heroes.get(who).getMana()-card.getManaCost();
       if(newManaValue < 0)
           return Status.NOT_ENOUGH_MANA;
-      babies.get(who).setMana(newManaValue);
+      heroes.get(who).setMana(newManaValue);
     //Takes out of hand
     if(hands.get(who).remove(card)){
         //Insert into field
@@ -323,9 +323,9 @@ public class StandardHotStoneGame implements Game {
 
   public void afterCrystalDraw (Player who) {
       Status usePower = usePower(who);
-      int totalMana = babies.get(who).getMana();
+      int totalMana = heroes.get(who).getMana();
       if (usePower == Status.OK) totalMana = totalMana -2;
-      babies.get(who).setMana(totalMana);
+      heroes.get(who).setMana(totalMana);
   }
 
   @Override
