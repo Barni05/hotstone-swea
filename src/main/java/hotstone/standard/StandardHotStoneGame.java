@@ -236,9 +236,6 @@ public class StandardHotStoneGame implements Game {
 
       executeAttacks();
   }
-  public void setInitialMana(){
-
-  }
 
   public void executeAttacks(){
     Player attackingPlayer = playerInTurn;

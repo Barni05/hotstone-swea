@@ -17,6 +17,8 @@
 - Given a new game, each player has 21 health and 3 mana
 - if the hero is getting damage, then the health decreases
 - every time hero uses its power, it draws 2 crystals from available mana
+- Given an initialized Gammastone game, Findus should have ThaiChef as starting hero
+- Given an initialized Gammastone game, Peddersen should have DanishChef as a starting hero
 
 ## TURN MANAGEMENT
 - Given a new game, the player in turn should be FINDUS 
