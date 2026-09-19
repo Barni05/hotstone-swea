@@ -1,7 +1,6 @@
 package hotstone.standard.strategies;
 
-import hotstone.framework.Player;
-import hotstone.framework.WinningStrategy;
+import hotstone.framework.*;
 
 public class AlphaWinningStrategy implements WinningStrategy {
     @Override

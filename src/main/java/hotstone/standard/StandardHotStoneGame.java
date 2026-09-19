@@ -47,7 +47,7 @@ import java.util.Collections;
  */
 
 public class StandardHotStoneGame implements Game {
-    private final int FIELD_CAPACITY = 10;
+    public int FIELD_CAPACITY = 10;
     private final int NO_MORE_CARD_PENALTY = 2;
 
     private HashMap<Player, Stack<Card>> decks = new HashMap<>();
@@ -157,7 +157,7 @@ public class StandardHotStoneGame implements Game {
   @Override
   //since we already know that (for this iteration) Findus will always win
   public Player getWinner() {
-        return winningStrategy.calculateWinner(getTurnNumber());
+        return winningStrategy.calculateWinner(this);
     }
 
   @Override

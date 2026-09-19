@@ -47,4 +47,51 @@ public class TestGammaStone {
         game.usePower(Player.PEDDERSEN);
         assertThat(game.getCardInField(Player.PEDDERSEN, 0).getName(), is("Sovs"));
     }
+
+    // Win condition tests
+    @Test
+    public void findusShouldWinWhenPeddersenFieldEmpty(){
+        for(int i = 0; i < 8; i++){
+            game.endTurn();
+        }
+        game.playCard(Player.FINDUS, game.getCardInHand(Player.FINDUS, 0), 0);
+        assertThat(game.getWinner(), is(Player.FINDUS));
+    }
+    @Test
+    public void noWinnerShouldBeDeclaredWhenRoundIsLessThanThree(){
+        game.playCard(Player.FINDUS, game.getCardInHand(Player.FINDUS, 0), 0);
+        game.endTurn();
+        game.endTurn();
+        game.endTurn();
+        assertThat(game.getWinner(), is(nullValue()));
+    }
+
+    @Test
+    public void noWinnerDuringRoundThree(){
+        game.playCard(Player.FINDUS, game.getCardInHand(Player.FINDUS, 0), 0);
+        for(int i = 0; i < 5; i++){
+            game.endTurn();
+        }
+        assertThat(game.getWinner(), is(nullValue()));
+    }
+
+    @Test
+    public void peddersenWinsWhenBothFieldsAreEmpty(){
+        for(int i = 0; i < 8; i++){
+            game.endTurn();
+        }
+        assertThat(game.getWinner(), is(Player.PEDDERSEN));
+    }
+
+    @Test
+    public void noWinnerIfBothPlayersHaveMinionsOnField(){
+        game.playCard(Player.FINDUS, game.getCardInHand(Player.FINDUS, 0), 1);
+        game.endTurn();
+        game.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 0), 0);
+        for(int i = 0; i < 7; i++){
+            game.endTurn();
+        }
+        assertThat(game.getWinner(), is(nullValue()));
+
+    }
 }
