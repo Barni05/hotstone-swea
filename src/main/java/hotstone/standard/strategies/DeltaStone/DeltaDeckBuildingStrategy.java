@@ -24,4 +24,11 @@ public class DeltaDeckBuildingStrategy implements DeckBuildingStrategy {
         }
         return deck;
     }
+
+    public Stack<Card> shufflingDeck(Player owner) {
+        Stack<Card> deck = createDeck(owner);
+        deck.sort();
+        Stack<Card> deckOf1s = new Stack<>();
+        deckOf1s.add;
+    }
 }
