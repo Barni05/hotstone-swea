@@ -1,4 +1,4 @@
-package hotstone.standard.strategies;
+package hotstone.standard.strategies.Alphastone;
 import hotstone.framework.Player;
 import hotstone.framework.ManaProductionStrategy;
 

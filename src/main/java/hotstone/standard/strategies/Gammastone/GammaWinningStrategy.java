@@ -1,11 +1,10 @@
-package hotstone.standard.strategies;
+package hotstone.standard.strategies.Gammastone;
 
 import hotstone.framework.WinningStrategy;
 import hotstone.framework.Player;
 import hotstone.framework.Game;
 import hotstone.standard.StandardHotStoneGame;
 
-import java.util.ArrayList;
 public class GammaWinningStrategy implements WinningStrategy {
     /*
     * The winner is the player that first manages to clear the opponent’s field

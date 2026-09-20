@@ -1,4 +1,4 @@
-package hotstone.standard.strategies;
+package hotstone.standard.strategies.Alphastone;
 import hotstone.framework.Hero;
 import hotstone.framework.HeroCreationStrategy;
 import hotstone.framework.Player;

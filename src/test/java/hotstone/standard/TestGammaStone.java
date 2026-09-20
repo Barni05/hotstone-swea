@@ -1,21 +1,23 @@
 package hotstone.standard;
 
-import hotstone.framework.Card;
 import hotstone.framework.Player;
 import hotstone.framework.Status;
+import hotstone.standard.strategies.Alphastone.AlphaDeckBuildingStrategy;
+import hotstone.standard.strategies.Alphastone.AlphaManaProductionStrategy;
+import hotstone.standard.strategies.Gammastone.GammaHeroCreationStrategy;
+import hotstone.standard.strategies.Gammastone.GammaHeroPowerStrategy;
+import hotstone.standard.strategies.Gammastone.GammaWinningStrategy;
 import org.junit.jupiter.api.*;
-import hotstone.standard.strategies.*;
+
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-
-import hotstone.framework.Game;
 
 public class TestGammaStone {
     private StandardHotStoneGame game;
 
     @BeforeEach
     public void setupGammaStone(){
-        game = new StandardHotStoneGame(new AlphaManaProductionStrategy(), new GammaWinningStrategy(), new GammaHeroCreationStrategy(), new GammaHeroPowerStrategy());
+        game = new StandardHotStoneGame(new AlphaManaProductionStrategy(), new GammaWinningStrategy(), new GammaHeroCreationStrategy(), new GammaHeroPowerStrategy(), new AlphaDeckBuildingStrategy());
     }
 
     // Hero tests

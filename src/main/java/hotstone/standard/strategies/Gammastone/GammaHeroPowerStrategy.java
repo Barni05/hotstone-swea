@@ -1,4 +1,4 @@
-package hotstone.standard.strategies;
+package hotstone.standard.strategies.Gammastone;
 
 import hotstone.framework.HeroPowerStrategy;
 import hotstone.framework.Game;

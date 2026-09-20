@@ -1,4 +1,4 @@
-package hotstone.standard.strategies;
+package hotstone.standard.strategies.Gammastone;
 
 import hotstone.framework.Hero;
 import hotstone.framework.Player;
