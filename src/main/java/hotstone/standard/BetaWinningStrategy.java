@@ -8,12 +8,7 @@ public class BetaWinningStrategy implements WinningStrategy {
     private Game game;
 
     @Override
-    public void setGame(Game game) {
-        this.game = game;
-    }
-
-    @Override
-    public Player calculateWinner(int turnNumber) {
+    public Player calculateWinner(Game game) {
         if (game == null) {
             throw new IllegalStateException("BetaWinningStrategy must be attached to a game");
         }

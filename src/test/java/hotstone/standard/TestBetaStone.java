@@ -6,6 +6,7 @@ import hotstone.framework.ManaProductionStrategy;
 import hotstone.framework.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import hotstone.standard.strategies.Alphastone.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -18,7 +19,7 @@ public class TestBetaStone {
     @BeforeEach
     public void setUp() {
         strategy = new BetaManaProductionStrategy();
-        game = new StandardHotStoneGame(strategy, new AlphaWinningStrategy(), new AlphaHeroCreationStrategy(), new AlphaHeroPowerStrategy());
+        game = new StandardHotStoneGame(strategy, new BetaWinningStrategy(), new AlphaHeroCreationStrategy(), new AlphaHeroPowerStrategy(), new AlphaDeckBuildingStrategy());
     }
 
     @Test

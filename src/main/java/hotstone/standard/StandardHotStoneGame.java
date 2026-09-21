@@ -102,7 +102,6 @@ public class StandardHotStoneGame implements Game {
 
         //Initialize hero
         manaProductionStrategy.setGame(this);
-        winningStrategy.setGame(this);
         createHeroes();
 
         //Initialize health
