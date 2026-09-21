@@ -47,7 +47,7 @@ import java.util.Collections;
  */
 
 public class StandardHotStoneGame implements Game {
-    private final int FIELD_CAPACITY = 10;
+    public int FIELD_CAPACITY = 10;
     private final int NO_MORE_CARD_PENALTY = 2;
 
     private HashMap<Player, Stack<Card>> decks = new HashMap<>();
@@ -62,14 +62,16 @@ public class StandardHotStoneGame implements Game {
     WinningStrategy winningStrategy;
     HeroCreationStrategy heroCreationStrategy;
     HeroPowerStrategy heroPowerStrategy;
+    DeckBuildingStrategy deckBuildingStrategy;
 
-    public StandardHotStoneGame(ManaProductionStrategy manaProductionStrategy, WinningStrategy winningStrategy, HeroCreationStrategy heroCreationStrategy,  HeroPowerStrategy heroPowerStrategy) {
+    public StandardHotStoneGame(ManaProductionStrategy manaProductionStrategy, WinningStrategy winningStrategy, HeroCreationStrategy heroCreationStrategy,  HeroPowerStrategy heroPowerStrategy, DeckBuildingStrategy deckBuildingStrategy) {
 
         // Assigning the strategies
         this.manaProductionStrategy = manaProductionStrategy;
         this.winningStrategy = winningStrategy;
         this.heroCreationStrategy = heroCreationStrategy;
         this.heroPowerStrategy = heroPowerStrategy;
+        this.deckBuildingStrategy = deckBuildingStrategy;
 
         decks.put(Player.FINDUS, new Stack<Card>());
         decks.put(Player.PEDDERSEN, new Stack<Card>());
@@ -78,8 +80,8 @@ public class StandardHotStoneGame implements Game {
         hands.put(Player.PEDDERSEN, new ArrayList<Card>());
 
         //Initializing both player's deck with the 7 cards
-        decks.replace(Player.FINDUS, createStandardDeck(Player.FINDUS));
-        decks.replace(Player.PEDDERSEN, createStandardDeck(Player.PEDDERSEN));
+        decks.replace(Player.FINDUS, deckBuildingStrategy.createDeck(Player.FINDUS));
+        decks.replace(Player.PEDDERSEN, deckBuildingStrategy.createDeck(Player.PEDDERSEN));
 
         //Initializing game control variables
         turnNum = 0;
@@ -104,19 +106,6 @@ public class StandardHotStoneGame implements Game {
         createHeroes();
 
         //Initialize health
-    }
-
-    public Stack<Card> createStandardDeck(Player owner){
-        Stack<Card> deck = new Stack<>();
-        //We have to put it in reversed order, so that the Uno card is drawn first
-        deck.push(new StandardCard("Siete", "It's just Seven", 3, 2, 4, false, owner));
-        deck.push(new StandardCard("Seis", "It's just Six", 2, 1, 3, false, owner));
-        deck.push(new StandardCard("Cinco", "It's just Five", 3, 5, 1, false, owner));
-        deck.push(new StandardCard("Cuatro", "It's just Four", 2, 3, 1, false, owner));
-        deck.push(new StandardCard("Tres", "It's just Three", 3, 3, 3, false, owner));
-        deck.push(new StandardCard("Dos", "It's just Two", 2, 2, 2, false, owner));
-        deck.push(new StandardCard("Uno", "It's just One", 1, 1, 1, false, owner));
-        return deck;
     }
 
     private void createHeroes(){
@@ -159,7 +148,7 @@ public class StandardHotStoneGame implements Game {
   @Override
   //since we already know that (for this iteration) Findus will always win
   public Player getWinner() {
-        return winningStrategy.calculateWinner(getTurnNumber());
+        return winningStrategy.calculateWinner(this);
     }
 
   @Override
@@ -238,9 +227,6 @@ public class StandardHotStoneGame implements Game {
 
       executeAttacks();
   }
-  public void setInitialMana(){
-
-  }
 
   public void executeAttacks(){
     Player attackingPlayer = playerInTurn;
@@ -273,10 +259,14 @@ public class StandardHotStoneGame implements Game {
     //Takes out of hand
     if(hands.get(who).remove(card)){
         //Insert into field
-        fields.get(who).add(atIndex, card);
+        insertCardIntoField(who, card, atIndex);
         return Status.OK;
     }
     return Status.CARD_NOT_FOUND;
+  }
+
+  public void insertCardIntoField(Player who, Card card, int atIndex) {
+      fields.get(who).add(atIndex, card);
   }
 
   @Override
@@ -313,16 +303,17 @@ public class StandardHotStoneGame implements Game {
 
   @Override
   public Status attackHero(Player playerAttacking, Card attackingCard) {
-      StandardHero defendingHero = (StandardHero) getHero(Player.computeOpponent(playerAttacking));
-      defendingHero.setHealth(defendingHero.getHealth() - attackingCard.getAttack());
-      //Check if hero is out of lives -> GAME OVER
-      if(defendingHero.getHealth() <= 0)
+      return takeDamage(Player.computeOpponent(playerAttacking), attackingCard.getAttack());
+  }
+
+  public Status takeDamage(Player who, int damageAmount){
+      StandardHero damagedHero = (StandardHero)getHero(who);
+      damagedHero.setHealth(damagedHero.getHealth() - damageAmount);
+      if(damagedHero.getHealth() <= 0)
       {
-          // GAME OVER
           return Status.NO_MORE_HEALTH;
       }
       return Status.OK;
-
   }
 
   public void afterCrystalDraw (Player who) {

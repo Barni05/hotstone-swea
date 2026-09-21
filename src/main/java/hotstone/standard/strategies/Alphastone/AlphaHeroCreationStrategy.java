@@ -1,7 +1,8 @@
-package hotstone.standard;
+package hotstone.standard.strategies.Alphastone;
 import hotstone.framework.Hero;
 import hotstone.framework.HeroCreationStrategy;
 import hotstone.framework.Player;
+import hotstone.standard.StandardHero;
 
 public class AlphaHeroCreationStrategy implements HeroCreationStrategy {
     private final int INITIAL_HEALTH = 21;

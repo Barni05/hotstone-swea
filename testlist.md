@@ -17,6 +17,11 @@
 - Given a new game, each player has 21 health and 3 mana
 - if the hero is getting damage, then the health decreases
 - every time hero uses its power, it draws 2 crystals from available mana
+- Given an initialized Gammastone game, Findus should have ThaiChef as starting hero
+- Given an initialized Gammastone game, Peddersen should have DanishChef as a starting hero
+- Given an initialized Gammastone game, Findus plays his hero power, Peddersen's health is decreased by 2
+- Given an initialized Gammastone game, Peddersen plays his hero power, his field will contain a Sovs card in the beginning
+- Player cannot play his/her hero power when its not his/her turn
 
 ## TURN MANAGEMENT
 - Given a new game, the player in turn should be FINDUS 
@@ -30,3 +35,9 @@
 - Given an attacking card has 3 health, and a defending card has 2 health and 2 attack. The defending card deals retaliation damage, and the attacking card's health will be 1
 - If a card on index 0 is finished, it gets removed from the field
 - An attacking card attacks the opponent's hero, when there's no card in the opponents respective field
+## WINNING
+- Given an initialized gammastone game, in round 4, Peddersen's field is empty and Findus's not, Finus wins
+- Given an initialized gammastone game in round 2, when Findus clears Peddersen’s field entirely then getWinner() returns null because the round number has not yet been passed.
+- EDGE CASE: Given the game is progressing through round 3 (turn 5 or 6), when Peddersen's field has 0 minions, getwinner still returns null
+- Given the game is in round 4, when both Findus and Peddersen have 0 minions on their field, Peddersen wins
+- Given the game is in round 4, when both Findus and Peddersen have at least 1 minion in their fields, getwinner is null
