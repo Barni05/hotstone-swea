@@ -6,4 +6,7 @@ public interface WinningStrategy {
      * @return returns the winner player, or null if none
      * */
     public Player calculateWinner(int turnNumber);
+
+    default void setGame(Game game) {
+    }
 }
