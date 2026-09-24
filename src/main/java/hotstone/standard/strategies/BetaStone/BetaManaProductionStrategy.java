@@ -1,4 +1,4 @@
-package hotstone.standard;
+package hotstone.standard.strategies.BetaStone;
 import hotstone.framework.Game;
 import hotstone.framework.Player;
 import hotstone.framework.ManaProductionStrategy;
