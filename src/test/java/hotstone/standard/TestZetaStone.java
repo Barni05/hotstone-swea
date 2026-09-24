@@ -1,7 +1,6 @@
 package hotstone.standard;
 
 import hotstone.framework.Player;
-import hotstone.framework.Status;
 import hotstone.standard.strategies.Alphastone.AlphaDeckBuildingStrategy;
 import hotstone.standard.strategies.Alphastone.AlphaManaProductionStrategy;
 import hotstone.standard.strategies.BetaStone.BetaWinningStrategy;

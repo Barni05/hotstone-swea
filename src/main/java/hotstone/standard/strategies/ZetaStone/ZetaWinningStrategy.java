@@ -7,21 +7,20 @@ import hotstone.standard.StandardCard;
 import hotstone.standard.StandardHotStoneGame;
 
 public class ZetaWinningStrategy implements WinningStrategy {
-    private WinningStrategy afterThreeRoundStrategy, afterSixRoundStrategy;
+    private WinningStrategy afterThreeRoundStrategy, afterSixRoundStrategy, currentStrategy;
 
     public ZetaWinningStrategy(WinningStrategy afterThreeRoundStrategy, WinningStrategy afterSixRoundStrategy){
         this.afterThreeRoundStrategy = afterThreeRoundStrategy;
         this.afterSixRoundStrategy = afterSixRoundStrategy;
+        this.currentStrategy = afterThreeRoundStrategy;
     }
 
     public Player calculateWinner(Game game){
         StandardHotStoneGame standardGame = (StandardHotStoneGame) game;
         int roundNumber = standardGame.getRoundNumber();
-        if(roundNumber > 3 && roundNumber <= 6){
-            return afterThreeRoundStrategy.calculateWinner(game);
-        }else if(roundNumber > 6){
-            return afterSixRoundStrategy.calculateWinner(game);
+        if(roundNumber > 6){
+            currentStrategy = afterSixRoundStrategy;
         }
-        return null;
+        return currentStrategy.calculateWinner(game);
     }
 }
