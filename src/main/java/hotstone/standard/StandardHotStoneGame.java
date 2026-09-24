@@ -155,6 +155,11 @@ public class StandardHotStoneGame implements Game {
     return turnNum;
   }
 
+
+  public int getRoundNumber(){
+        return getTurnNumber()/2+1;
+  }
+
   @Override
   public int getDeckSize(Player who) {
     return decks.get(who).size();
@@ -250,6 +255,8 @@ public class StandardHotStoneGame implements Game {
   public Status playCard(Player who, Card card, int atIndex) {
       if(who != playerInTurn)
           return Status.NOT_PLAYER_IN_TURN;
+      if(card.getOwner() != who)
+          return Status.NOT_OWNER;
       //Draw mana
       int newManaValue = heroes.get(who).getMana()-card.getManaCost();
       if(newManaValue < 0)

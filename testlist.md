@@ -42,5 +42,9 @@
 - Given the game is in round 4, when both Findus and Peddersen have 0 minions on their field, Peddersen wins
 - Given the game is in round 4, when both Findus and Peddersen have at least 1 minion in their fields, getwinner is null
 - Given an initialized ZetaStone game, in round 4, Findus clears Peddersen's field. Findus wins.
+- Given an initialized ZetaStone game, in round 4, Peddersen clears FIndus's field. Peddersen wins.
 - Given an initialized ZetaStone game, in round 7 Peddersen reduces Findus's health to 0. Peddersen wins.
 - EDGE CASE (Zetastone): In round 6, Peddersen clears Findus field, Peddersen wins.
+- Given a ZetaStone game, no winner is declared before round 3, even if fields are cleared
+- Given the ZetaStone game has advanced past round 6 (turn 13), no winner is declared when findus clears Peddersens field
+- 
