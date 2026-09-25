@@ -203,7 +203,7 @@ public class StandardHotStoneGame implements Game {
   public void endTurn() {
         turnNum++;
         //Setting the previous player's cards inactive
-        for(Card c :  fields.get(currentPlayer)){
+        for(Card c :  fields.get(playerInTurn)){
             StandardCard standardCard = (StandardCard) c;
             if(standardCard != null)
                 standardCard.setActive(false);
