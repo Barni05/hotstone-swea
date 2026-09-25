@@ -209,7 +209,6 @@ public class StandardHotStoneGame implements Game {
                 standardCard.setActive(false);
         }
         playerInTurn = playerInTurn == Player.FINDUS ? Player.PEDDERSEN : Player.FINDUS;
-        startTurn();
   }
 
   public void startTurn(){
