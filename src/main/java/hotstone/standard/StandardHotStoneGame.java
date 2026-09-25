@@ -208,8 +208,8 @@ public class StandardHotStoneGame implements Game {
             if(standardCard != null)
                 standardCard.setActive(false);
         }
-        //switching to the next player
-        playerInTurn = currentPlayer == Player.FINDUS ? Player.PEDDERSEN : Player.FINDUS;
+        playerInTurn = playerInTurn == Player.FINDUS ? Player.PEDDERSEN : Player.FINDUS;
+        startTurn();
   }
 
   public void startTurn(){
