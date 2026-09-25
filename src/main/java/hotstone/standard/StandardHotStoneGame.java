@@ -227,19 +227,27 @@ public class StandardHotStoneGame implements Game {
         executeAttacks();
     }
 
-  public void executeAttacks(){
-      Player attackingPlayer = playerInTurn;
-      ArrayList<Card> defendingPlayerField = fields.get(Player.computeOpponent(playerInTurn));
-      int currentCardIndex = 0;
-      for(Card attackingCard : fields.get(attackingPlayer)){
-          if(attackingCard != null && attackingCard.isActive()) {
-              if (defendingPlayerField.get(currentCardIndex) != null)
-                  attackCard(attackingPlayer, attackingCard, defendingPlayerField.get(currentCardIndex));
-              else attackHero(attackingPlayer, attackingCard);
-              currentCardIndex++;
-          }
-      }
-  }
+    private void setCurrentCardsActive() {
+        for (Card c : fields.get(playerInTurn)) {
+            StandardCard standardCard = (StandardCard) c;
+            if (standardCard != null)
+                standardCard.setActive(true);
+        }
+    }
+
+    public void executeAttacks() {
+        Player attackingPlayer = playerInTurn;
+        ArrayList<Card> defendingPlayerField = fields.get(Player.computeOpponent(playerInTurn));
+        int currentCardIndex = 0;
+        for (Card attackingCard : fields.get(attackingPlayer)) {
+            if (attackingCard != null && attackingCard.isActive()) {
+                if (defendingPlayerField.get(currentCardIndex) != null)
+                    attackCard(attackingPlayer, attackingCard, defendingPlayerField.get(currentCardIndex));
+                else attackHero(attackingPlayer, attackingCard);
+            }
+            currentCardIndex++;
+        }
+    }
 
     @Override
     public Status playCard(Player who, Card card, int atIndex) {
