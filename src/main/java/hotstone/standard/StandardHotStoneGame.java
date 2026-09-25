@@ -209,6 +209,7 @@ public class StandardHotStoneGame implements Game {
             if(standardCard != null)
                 standardCard.setActive(false);
         }
+        //Switching who the player in turn is
         playerInTurn = currentPlayer == Player.FINDUS ? Player.PEDDERSEN : Player.FINDUS;
   }
 
