@@ -29,7 +29,6 @@ public class DeltaDeckBuildingStrategy implements DeckBuildingStrategy {
                 {"Baked Salmon", 5, 8, 2}
         };
 
-
         for (Object[] stat : cardStats) {
             for (int i = 0; i < 2; i++) {
                 helperDeck.add(new StandardCard(

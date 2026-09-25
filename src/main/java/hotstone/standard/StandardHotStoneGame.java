@@ -234,22 +234,17 @@ public class StandardHotStoneGame implements Game {
   }
 
   public void executeAttacks(){
-    Player attackingPlayer = playerInTurn;
-    ArrayList<Card> defendingPlayerField = fields.get(Player.computeOpponent(playerInTurn));
-    int i = 0;
-    for(Card attackingCard : fields.get(attackingPlayer)){
-        if(attackingCard != null){
-            if(attackingCard.isActive()){
-                //If there's a card, attack that, if not, attack the hero
-                if(defendingPlayerField.get(i) != null){
-                    attackCard(attackingPlayer, attackingCard, defendingPlayerField.get(i));
-                }else{
-                    attackHero(attackingPlayer, attackingCard);
-                }
-            }
-        }
-        i++;
-    }
+      Player attackingPlayer = playerInTurn;
+      ArrayList<Card> defendingPlayerField = fields.get(Player.computeOpponent(playerInTurn));
+      int currentCardIndex = 0;
+      for(Card attackingCard : fields.get(attackingPlayer)){
+          if(attackingCard != null && attackingCard.isActive()) {
+              if (defendingPlayerField.get(currentCardIndex) != null)
+                  attackCard(attackingPlayer, attackingCard, defendingPlayerField.get(currentCardIndex));
+              else attackHero(attackingPlayer, attackingCard);
+              currentCardIndex++;
+          }
+      }
   }
 
   @Override
