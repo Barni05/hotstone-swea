@@ -4,6 +4,7 @@ import hotstone.framework.Game;
 import hotstone.framework.Card;
 import hotstone.framework.strategies.ManaProductionStrategy;
 import hotstone.framework.Player;
+import hotstone.standard.factories.BetaStoneFactory;
 import hotstone.standard.strategies.BetaStone.BetaManaProductionStrategy;
 import hotstone.standard.strategies.BetaStone.BetaWinningStrategy;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,15 +22,16 @@ public class TestBetaStone {
     @BeforeEach
     public void setUp() {
         strategy = new BetaManaProductionStrategy();
-        game = new StandardHotStoneGame(strategy, new BetaWinningStrategy(), new AlphaHeroCreationStrategy(), new AlphaHeroPowerStrategy(), new AlphaDeckBuildingStrategy());
+        game = new StandardHotStoneGame(new BetaStoneFactory());
     }
 
     @Test
     void shouldGiveManaEqualToTurnNumberUpToSeven() {
         Player player = game.getPlayerInTurn();
+        StandardHotStoneGame standardGame = (StandardHotStoneGame) game;
 
         for (int turn = 1; turn <= 8; turn++) {
-            int mana = strategy.calculateStartRoundMana(player);
+            int mana = standardGame.calculateStartRoundMana(player);
             int expectedMana = Math.min(turn, 7);
             assertEquals(expectedMana, mana);
 

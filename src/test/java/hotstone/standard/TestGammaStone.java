@@ -2,6 +2,8 @@ package hotstone.standard;
 
 import hotstone.framework.Player;
 import hotstone.framework.Status;
+import hotstone.standard.factories.AlphaStoneFactory;
+import hotstone.standard.factories.GammaStoneFactory;
 import hotstone.standard.strategies.Alphastone.AlphaDeckBuildingStrategy;
 import hotstone.standard.strategies.Alphastone.AlphaManaProductionStrategy;
 import hotstone.standard.strategies.Gammastone.GammaHeroCreationStrategy;
@@ -17,7 +19,7 @@ public class TestGammaStone {
 
     @BeforeEach
     public void setupGammaStone(){
-        game = new StandardHotStoneGame(new AlphaManaProductionStrategy(), new GammaWinningStrategy(), new GammaHeroCreationStrategy(), new GammaHeroPowerStrategy(), new AlphaDeckBuildingStrategy());
+        game = new StandardHotStoneGame(new GammaStoneFactory());
     }
 
     // Hero tests

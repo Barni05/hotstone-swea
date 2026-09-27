@@ -1,6 +1,7 @@
 package hotstone.standard;
 
 import hotstone.framework.Player;
+import hotstone.standard.factories.ZetaStoneFactory;
 import hotstone.standard.strategies.Alphastone.AlphaDeckBuildingStrategy;
 import hotstone.standard.strategies.Alphastone.AlphaManaProductionStrategy;
 import hotstone.standard.strategies.BetaStone.BetaWinningStrategy;
@@ -19,7 +20,7 @@ public class TestZetaStone {
 
     @BeforeEach
     public void setupZetaStone(){
-        game = new StandardHotStoneGame(new AlphaManaProductionStrategy(), new ZetaWinningStrategy(new GammaWinningStrategy(), new BetaWinningStrategy()), new GammaHeroCreationStrategy(), new GammaHeroPowerStrategy(), new AlphaDeckBuildingStrategy());
+        game = new StandardHotStoneGame(new ZetaStoneFactory());
     }
 
     @Test

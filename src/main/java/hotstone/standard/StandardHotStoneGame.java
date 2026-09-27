@@ -66,14 +66,14 @@ public class StandardHotStoneGame implements Game {
     HeroPowerStrategy heroPowerStrategy;
     DeckBuildingStrategy deckBuildingStrategy;
 
-    public StandardHotStoneGame(ManaProductionStrategy manaProductionStrategy, WinningStrategy winningStrategy, HeroCreationStrategy heroCreationStrategy, HeroPowerStrategy heroPowerStrategy, DeckBuildingStrategy deckBuildingStrategy) {
+    public StandardHotStoneGame(HotStoneFactory hotStoneFactory) {
 
         // Assigning the strategies
-        this.manaProductionStrategy = manaProductionStrategy;
-        this.winningStrategy = winningStrategy;
-        this.heroCreationStrategy = heroCreationStrategy;
-        this.heroPowerStrategy = heroPowerStrategy;
-        this.deckBuildingStrategy = deckBuildingStrategy;
+        this.manaProductionStrategy = hotStoneFactory.createManaProductionStrategy();
+        this.winningStrategy = hotStoneFactory.createWinningStrategy();
+        this.heroCreationStrategy = hotStoneFactory.createHeroCreationStrategy();
+        this.heroPowerStrategy = hotStoneFactory.createHeroPowerStrategy();
+        this.deckBuildingStrategy = hotStoneFactory.createDeckBuildingStrategy();
 
         decks.put(Player.FINDUS, new Stack<Card>());
         decks.put(Player.PEDDERSEN, new Stack<Card>());
@@ -113,6 +113,10 @@ public class StandardHotStoneGame implements Game {
         Hero[] temp = heroCreationStrategy.createHeroes(manaProductionStrategy.calculateStartRoundMana(Player.FINDUS), manaProductionStrategy.calculateStartRoundMana(Player.PEDDERSEN));
         heroes.put(Player.FINDUS, (StandardHero) temp[0]);
         heroes.put(Player.PEDDERSEN, (StandardHero) temp[1]);
+    }
+
+    public int calculateStartRoundMana(Player who){
+        return manaProductionStrategy.calculateStartRoundMana(who);
     }
 
 
