@@ -3,8 +3,11 @@ package hotstone.framework.strategies;
 import hotstone.framework.Hero;
 
 public interface HeroCreationStrategy {
+    int INITIAL_HEALTH = 21;
+
+
     /**
      * @return An array of 2 heroes, 1st is FINDUS's, 2nd is PEDDERSEN's
      * */
-    public Hero[] createHeroes(int manaFindus, int manaPeddersen);
+    Hero[] createHeroes(int manaFindus, int manaPeddersen);
 }
