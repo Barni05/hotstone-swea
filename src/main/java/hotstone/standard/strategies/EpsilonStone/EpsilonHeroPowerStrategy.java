@@ -27,7 +27,7 @@ public class EpsilonHeroPowerStrategy implements HeroPowerStrategy {
             return Status.POWER_USE_NOT_ALLOWED_TWICE_PR_ROUND;
         switch (hero.getType()) {
             case "FrenchChef":
-                ArrayList<Card> opponentMinions = standardGame.getPlayersMinions(who);
+                ArrayList<Card> opponentMinions = standardGame.getPlayersMinions(opponent);
                 if(opponentMinions.isEmpty()) return Status.NO_MORE_CARDS;
                 int targetIndex = indexSelector.selectIndex(opponentMinions.size());
                 StandardCard target = (StandardCard) opponentMinions.get(targetIndex);
