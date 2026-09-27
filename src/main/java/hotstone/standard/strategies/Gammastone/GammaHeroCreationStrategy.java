@@ -2,7 +2,7 @@ package hotstone.standard.strategies.Gammastone;
 
 import hotstone.framework.Hero;
 import hotstone.framework.Player;
-import hotstone.framework.HeroCreationStrategy;
+import hotstone.framework.strategies.HeroCreationStrategy;
 import hotstone.standard.StandardHero;
 
 public class GammaHeroCreationStrategy implements HeroCreationStrategy {

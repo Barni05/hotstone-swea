@@ -1,7 +1,7 @@
 package hotstone.standard.strategies.BetaStone;
 import hotstone.framework.Game;
 import hotstone.framework.Player;
-import hotstone.framework.ManaProductionStrategy;
+import hotstone.framework.strategies.ManaProductionStrategy;
 
 public class BetaManaProductionStrategy implements ManaProductionStrategy {
     private Game game;

@@ -2,8 +2,7 @@ package hotstone.standard.strategies.ZetaStone;
 
 import hotstone.framework.Game;
 import hotstone.framework.Player;
-import hotstone.framework.WinningStrategy;
-import hotstone.standard.StandardCard;
+import hotstone.framework.strategies.WinningStrategy;
 import hotstone.standard.StandardHotStoneGame;
 
 public class ZetaWinningStrategy implements WinningStrategy {

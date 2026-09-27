@@ -1,6 +1,6 @@
 package hotstone.standard.strategies.Gammastone;
 
-import hotstone.framework.WinningStrategy;
+import hotstone.framework.strategies.WinningStrategy;
 import hotstone.framework.Player;
 import hotstone.framework.Game;
 import hotstone.standard.StandardHotStoneGame;

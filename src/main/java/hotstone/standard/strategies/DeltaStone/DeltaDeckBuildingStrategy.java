@@ -1,7 +1,7 @@
 package hotstone.standard.strategies.DeltaStone;
 
 import hotstone.framework.Card;
-import hotstone.framework.DeckBuildingStrategy;
+import hotstone.framework.strategies.DeckBuildingStrategy;
 import hotstone.framework.Player;
 import hotstone.standard.StandardCard;
 

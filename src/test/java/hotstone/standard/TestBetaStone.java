@@ -2,7 +2,7 @@ package hotstone.standard;
 
 import hotstone.framework.Game;
 import hotstone.framework.Card;
-import hotstone.framework.ManaProductionStrategy;
+import hotstone.framework.strategies.ManaProductionStrategy;
 import hotstone.framework.Player;
 import hotstone.standard.strategies.BetaStone.BetaManaProductionStrategy;
 import hotstone.standard.strategies.BetaStone.BetaWinningStrategy;

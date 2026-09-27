@@ -17,6 +17,7 @@
 package hotstone.standard;
 
 import hotstone.framework.*;
+import hotstone.framework.strategies.*;
 
 //import java.lang.foreign.PaddingLayout;
 import java.util.Stack;

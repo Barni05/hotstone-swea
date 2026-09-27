@@ -1,5 +1,6 @@
-package hotstone.framework;
+package hotstone.framework.strategies;
 import hotstone.framework.Game;
+import hotstone.framework.Player;
 
 public interface ManaProductionStrategy {
     /**

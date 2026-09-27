@@ -2,7 +2,7 @@ package hotstone.standard.strategies.BetaStone;
 
 import hotstone.framework.Game;
 import hotstone.framework.Player;
-import hotstone.framework.WinningStrategy;
+import hotstone.framework.strategies.WinningStrategy;
 
 public class BetaWinningStrategy implements WinningStrategy {
     private Game game;

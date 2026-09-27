@@ -1,6 +1,7 @@
 package hotstone.standard.strategies.Alphastone;
 
 import hotstone.framework.*;
+import hotstone.framework.strategies.HeroPowerStrategy;
 
 public class AlphaHeroPowerStrategy implements HeroPowerStrategy {
     @Override
