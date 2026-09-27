@@ -20,5 +20,7 @@ public class EpsilonHeroPowerStrategy implements HeroPowerStrategy {
             case "ItalianChef":
                 break;
         }
+
+        return Status.OK;
     }
 }
