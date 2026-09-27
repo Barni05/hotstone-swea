@@ -1,6 +1,8 @@
 package hotstone.standard;
 import hotstone.framework.Player;
 import hotstone.framework.Card;
+import hotstone.framework.Status;
+
 public class StandardCard implements Card{
     private String name, effectDescription;
     private int manaCost, attack, health;
@@ -43,6 +45,14 @@ public class StandardCard implements Card{
     }
 
     public void setHealth(int newHealth) { this.health = newHealth;}
+
+    public Status takeDamage(int dmg){
+        int newHealth = getHealth()-dmg;
+        if(newHealth <= 0)
+            return Status.NO_MORE_HEALTH;
+        setHealth(newHealth);
+        return Status.OK;
+    }
 
     @Override
     public boolean isActive() {

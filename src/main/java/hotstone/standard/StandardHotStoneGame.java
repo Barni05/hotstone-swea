@@ -284,21 +284,26 @@ public class StandardHotStoneGame implements Game {
         StandardCard standardAttacking = (StandardCard) attackingCard;
         if (!standardAttacking.isActive())
             return Status.ATTACK_NOT_ALLOWED_FOR_NON_ACTIVE_MINION;
-        //Attack Defending card
-        standardDefending.setHealth(standardDefending.getHealth() - standardAttacking.getAttack());
 
-        //Defending card attacks back
-        standardAttacking.setHealth(standardAttacking.getHealth() - standardDefending.getAttack());
         //Check if either card has died
-        if (standardDefending.getHealth() <= 0) {
+        if (standardDefending.takeDamage(standardAttacking.getAttack()) == Status.NO_MORE_HEALTH) {
             //Remove card from existence
             removeCardFromField(Player.computeOpponent(playerAttacking), defendingCard);
         }
-        if (standardAttacking.getHealth() <= 0) {
+        if (standardAttacking.takeDamage(standardDefending.getAttack()) == Status.NO_MORE_HEALTH) {
             //Remove card from existence
             removeCardFromField(playerAttacking, attackingCard);
         }
         return Status.OK;
+    }
+
+    public ArrayList<Card> getPlayersMinions(Player who){
+        ArrayList<Card> ret = new ArrayList<Card>();
+        for(Card c : getField(who)){
+            if(c != null)
+                ret.add(c);
+        }
+        return ret;
     }
 
     public Status removeCardFromField(Player who, Card cardToRemove) {
