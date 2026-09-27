@@ -35,6 +35,27 @@ public class TestEpsilonStone {
         assertThat(game.getPlayersMinions(Player.PEDDERSEN).size(), is(0));
         assertThat(game.usePower(Player.FINDUS), is(Status.NO_MORE_CARDS));
     }
+    @Test
+    public void frenchChefShouldDamageTargetedMinionWhleLeavingOthersUntouched(){
+        game.endTurn();
+
+        for (int i = 0; i < 3; i++) {
+            game.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 0), i);
+            game.endTurn();
+            game.endTurn();
+        }
+        int initialHp0 = game.getCardInField(Player.PEDDERSEN, 0).getHealth();
+        int initialHp1 = game.getCardInField(Player.PEDDERSEN, 1).getHealth();
+        int initialHp2 = game.getCardInField(Player.PEDDERSEN, 2).getHealth();
+        stub.setIndex(2);
+        game.endTurn();
+        Status status = game.usePower(Player.FINDUS);
+
+        assertThat(status, is(Status.OK));
+        assertThat(game.getCardInField(Player.PEDDERSEN, 2).getHealth(), is(initialHp2 -2));
+        assertThat(game.getCardInField(Player.PEDDERSEN, 0).getHealth(), is(initialHp0));
+        assertThat(game.getCardInField(Player.PEDDERSEN, 1).getHealth(), is(initialHp1));
+    }
 
     @Test
     public void frenchChefShouldDamageSelectedMinionByTwo() {
