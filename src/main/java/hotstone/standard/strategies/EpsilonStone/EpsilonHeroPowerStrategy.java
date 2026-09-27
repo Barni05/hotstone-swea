@@ -4,8 +4,16 @@ import hotstone.framework.*;
 import hotstone.framework.strategies.HeroPowerStrategy;
 import hotstone.standard.StandardHero;
 import hotstone.standard.StandardHotStoneGame;
+import hotstone.standard.utils.IndexSelector;
+import hotstone.standard.utils.RandomIndexSelector;
 
 public class EpsilonHeroPowerStrategy implements HeroPowerStrategy {
+    public final IndexSelector indexSelector;
+
+    public EpsilonHeroPowerStrategy(IndexSelector indexSelector){
+        this.indexSelector = indexSelector;
+    }
+
     @Override
     public Status usePower(Game game, Player who) {
         if (game.getPlayerInTurn() != who)

@@ -22,6 +22,9 @@
 - Given an initialized Gammastone game, Findus plays his hero power, Peddersen's health is decreased by 2
 - Given an initialized Gammastone game, Peddersen plays his hero power, his field will contain a Sovs card in the beginning
 - Player cannot play his/her hero power when its not his/her turn
+- Given an initialized EpsilonStone game, when findus plays his hero power, a random minion of Peddersen will take damage
+- Given an initialized EpsilonStone game, when Findus plays his hero power while Peddersen's field is empty, nothing happens
+- Given an initialized EpsilonStone game, when Findus plays his power and deals dmg to Peddersen's card and it takes a lethal damage, it disappears from the field
 
 ## TURN MANAGEMENT
 - Given a new game, the player in turn should be FINDUS 
