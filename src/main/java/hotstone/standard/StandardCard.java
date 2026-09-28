@@ -54,6 +54,10 @@ public class StandardCard implements Card{
         return Status.OK;
     }
 
+    public void changeAttackBy(int change){
+        attack += change;
+    }
+
     @Override
     public boolean isActive() {
         return isActive;

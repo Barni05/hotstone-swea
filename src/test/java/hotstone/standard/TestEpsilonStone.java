@@ -80,4 +80,21 @@ public class TestEpsilonStone {
             game.endTurn();
         }
     }
+
+    @Test
+    public void italianChefShouldBuffSelectedMinion(){
+        game.endTurn();
+        game.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 0), 0);
+        game.endTurn();
+        game.endTurn();
+        game.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 0), 1);
+        stub.setIndex(0);
+        int attackBeforeAt0 = game.getCardInField(Player.PEDDERSEN, 0).getAttack();
+        int attackBeforeAt1 = game.getCardInField(Player.PEDDERSEN, 1).getAttack();
+        game.usePower(Player.PEDDERSEN);
+        int attackAfterAt0 = game.getCardInField(Player.PEDDERSEN, 0).getAttack();
+        int attackAfterAt1 = game.getCardInField(Player.PEDDERSEN, 1).getAttack();
+        assertThat(attackBeforeAt0+2, is(attackAfterAt0));
+        assertThat(attackAfterAt1, is(attackBeforeAt1));
+    }
 }
