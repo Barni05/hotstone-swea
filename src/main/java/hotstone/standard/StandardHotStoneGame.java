@@ -49,7 +49,7 @@ import java.util.Collections;
  */
 
 public class StandardHotStoneGame implements Game {
-    public int FIELD_CAPACITY = 10;
+    public static final int FIELD_CAPACITY = 10;
     private final int NO_MORE_CARD_PENALTY = 2;
 
     private HashMap<Player, Stack<Card>> decks = new HashMap<>();
@@ -75,15 +75,12 @@ public class StandardHotStoneGame implements Game {
         this.heroPowerStrategy = hotStoneFactory.createHeroPowerStrategy();
         this.deckBuildingStrategy = hotStoneFactory.createDeckBuildingStrategy();
 
-        decks.put(Player.FINDUS, new Stack<Card>());
-        decks.put(Player.PEDDERSEN, new Stack<Card>());
-
         hands.put(Player.FINDUS, new ArrayList<Card>());
         hands.put(Player.PEDDERSEN, new ArrayList<Card>());
 
         //Initializing both player's deck with the 7 cards
-        decks.replace(Player.FINDUS, deckBuildingStrategy.createDeck(Player.FINDUS));
-        decks.replace(Player.PEDDERSEN, deckBuildingStrategy.createDeck(Player.PEDDERSEN));
+        decks.put(Player.FINDUS, deckBuildingStrategy.createDeck(Player.FINDUS));
+        decks.put(Player.PEDDERSEN, deckBuildingStrategy.createDeck(Player.PEDDERSEN));
 
         //Initializing game control variables
         turnNum = 0;
@@ -103,20 +100,19 @@ public class StandardHotStoneGame implements Game {
         //Initialize mana
 
         //Initialize hero
-        manaProductionStrategy.setGame(this);
         createHeroes();
 
         //Initialize health
     }
 
     private void createHeroes() {
-        Hero[] temp = heroCreationStrategy.createHeroes(manaProductionStrategy.calculateStartRoundMana(Player.FINDUS), manaProductionStrategy.calculateStartRoundMana(Player.PEDDERSEN));
+        Hero[] temp = heroCreationStrategy.createHeroes(manaProductionStrategy.calculateStartRoundMana(Player.FINDUS, this), manaProductionStrategy.calculateStartRoundMana(Player.PEDDERSEN, this));
         heroes.put(Player.FINDUS, (StandardHero) temp[0]);
         heroes.put(Player.PEDDERSEN, (StandardHero) temp[1]);
     }
 
     public int calculateStartRoundMana(Player who){
-        return manaProductionStrategy.calculateStartRoundMana(who);
+        return manaProductionStrategy.calculateStartRoundMana(who, this);
     }
 
 
@@ -226,8 +222,8 @@ public class StandardHotStoneGame implements Game {
         drawCard(Player.PEDDERSEN);
 
         //Resetting mana
-        heroes.get(Player.FINDUS).setMana(manaProductionStrategy.calculateStartRoundMana(Player.FINDUS));
-        heroes.get(Player.PEDDERSEN).setMana(manaProductionStrategy.calculateStartRoundMana(Player.PEDDERSEN));
+        heroes.get(Player.FINDUS).setMana(manaProductionStrategy.calculateStartRoundMana(Player.FINDUS, this));
+        heroes.get(Player.PEDDERSEN).setMana(manaProductionStrategy.calculateStartRoundMana(Player.PEDDERSEN, this));
 
         executeAttacks();
     }
@@ -261,10 +257,8 @@ public class StandardHotStoneGame implements Game {
         if (card.getOwner() != who)
             return Status.NOT_OWNER;
         //Draw mana
-        int newManaValue = heroes.get(who).getMana() - card.getManaCost();
-        if (newManaValue < 0)
+        if(drawManaFromPlayer(who, card.getManaCost()) == Status.NOT_ENOUGH_MANA)
             return Status.NOT_ENOUGH_MANA;
-        heroes.get(who).setMana(newManaValue);
         //Takes out of hand
         if (hands.get(who).remove(card)) {
             //Insert into field
@@ -274,8 +268,16 @@ public class StandardHotStoneGame implements Game {
         return Status.CARD_NOT_FOUND;
     }
 
+    public Status drawManaFromPlayer(Player who, int manaToDraw){
+        int newManaValue = heroes.get(who).getMana() - manaToDraw;
+        if(newManaValue < 0)
+            return Status.NOT_ENOUGH_MANA;
+        heroes.get(who).setMana(newManaValue);
+        return Status.OK;
+    }
+
     public void insertCardIntoField(Player who, Card card, int atIndex) {
-        fields.get(who).add(atIndex, card);
+        fields.get(who).set(atIndex, card);
     }
 
     @Override
@@ -329,16 +331,8 @@ public class StandardHotStoneGame implements Game {
         return Status.OK;
     }
 
-    public void afterCrystalDraw(Player who) {
-        Status usePower = usePower(who);
-        int totalMana = heroes.get(who).getMana();
-        if (usePower == Status.OK) totalMana = totalMana - 2;
-        heroes.get(who).setMana(totalMana);
-    }
-
     @Override
     public Status usePower(Player who) {
-        Status ret = heroPowerStrategy.usePower(this, who);
-        return ret;
+        return heroPowerStrategy.usePower(this, who);
     }
 }

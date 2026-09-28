@@ -6,13 +6,9 @@ import hotstone.framework.strategies.ManaProductionStrategy;
 public class BetaManaProductionStrategy implements ManaProductionStrategy {
     private Game game;
 
-    @Override
-    public void setGame(Game game) {
-        this.game = game;
-    }
 
     @Override
-    public int calculateStartRoundMana(Player who) {
+    public int calculateStartRoundMana(Player who, Game game) {
         if (game == null) {
             throw new IllegalStateException("BetaManaProductionStrategy must be attached to a game");
         }
