@@ -22,6 +22,9 @@
 - Given an initialized Gammastone game, Findus plays his hero power, Peddersen's health is decreased by 2
 - Given an initialized Gammastone game, Peddersen plays his hero power, his field will contain a Sovs card in the beginning
 - Player cannot play his/her hero power when its not his/her turn
+- Given an initialized EpsilonStone game, when findus plays his hero power, a random minion of Peddersen will take damage
+- Given an initialized EpsilonStone game, when Findus plays his hero power while Peddersen's field is empty, nothing happens
+- Given an initialized EpsilonStone game, when Findus plays his power and deals dmg to Peddersen's card and it takes a lethal damage, it disappears from the field
 
 ## TURN MANAGEMENT
 - Given a new game, the player in turn should be FINDUS 
@@ -41,3 +44,10 @@
 - EDGE CASE: Given the game is progressing through round 3 (turn 5 or 6), when Peddersen's field has 0 minions, getwinner still returns null
 - Given the game is in round 4, when both Findus and Peddersen have 0 minions on their field, Peddersen wins
 - Given the game is in round 4, when both Findus and Peddersen have at least 1 minion in their fields, getwinner is null
+- Given an initialized ZetaStone game, in round 4, Findus clears Peddersen's field. Findus wins.
+- Given an initialized ZetaStone game, in round 4, Peddersen clears FIndus's field. Peddersen wins.
+- Given an initialized ZetaStone game, in round 7 Peddersen reduces Findus's health to 0. Peddersen wins.
+- EDGE CASE (Zetastone): In round 6, Peddersen clears Findus field, Peddersen wins.
+- Given a ZetaStone game, no winner is declared before round 3, even if fields are cleared
+- Given the ZetaStone game has advanced past round 6 (turn 13), no winner is declared when findus clears Peddersens field
+- 

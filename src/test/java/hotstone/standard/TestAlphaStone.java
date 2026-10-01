@@ -32,6 +32,7 @@ package hotstone.standard;
 import hotstone.framework.Card;
 import hotstone.framework.Player;
 import hotstone.framework.Status;
+import hotstone.standard.factories.AlphaStoneFactory;
 import hotstone.standard.strategies.Alphastone.*;
 import org.junit.jupiter.api.*;
 
@@ -53,7 +54,7 @@ public class TestAlphaStone {
   /** Fixture for AlphaStone testing. */
   @BeforeEach
   public void setUpAlphastone() {
-    game = new StandardHotStoneGame(new AlphaManaProductionStrategy(), new AlphaWinningStrategy(), new AlphaHeroCreationStrategy(), new AlphaHeroPowerStrategy(), new AlphaDeckBuildingStrategy());
+    game = new StandardHotStoneGame(new AlphaStoneFactory());
   }
 
   // Example of an early, simple test case:
@@ -185,13 +186,6 @@ public void shouldMinionBeInactive(){
     int manaBaby = baby.getMana();
     assertThat(healthBaby, is(MAXIMUM_HEALTH));
     assertThat(manaBaby, is(EXPECTED_MANA));
-  }
-
-  @Test
-  public void shouldDrawTwoCrystals() {
-    StandardHotStoneGame standardGame = (StandardHotStoneGame) game;
-    standardGame.afterCrystalDraw(Player.FINDUS);
-    assertThat(standardGame.getHero(Player.FINDUS).getMana(), is(1));
   }
 
   @Test

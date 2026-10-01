@@ -2,11 +2,10 @@ package hotstone.standard.strategies.Gammastone;
 
 import hotstone.framework.Hero;
 import hotstone.framework.Player;
-import hotstone.framework.HeroCreationStrategy;
+import hotstone.framework.strategies.HeroCreationStrategy;
 import hotstone.standard.StandardHero;
 
 public class GammaHeroCreationStrategy implements HeroCreationStrategy {
-    private final int INITIAL_HEALTH = 21;
     @Override
     public Hero[] createHeroes(int manaFindus, int manaPeddersen){
         Hero[] ret = new Hero[2];

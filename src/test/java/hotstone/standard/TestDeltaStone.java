@@ -1,5 +1,6 @@
 package hotstone.standard;
 import hotstone.framework.*;
+import hotstone.standard.factories.DeltaStoneFactory;
 import hotstone.standard.strategies.Alphastone.AlphaDeckBuildingStrategy;
 import hotstone.standard.strategies.Alphastone.AlphaManaProductionStrategy;
 import hotstone.standard.strategies.DeltaStone.DeltaDeckBuildingStrategy;
@@ -25,7 +26,7 @@ public class TestDeltaStone {
 
     @BeforeEach
     public void setupDeltaStone(){
-        game = new StandardHotStoneGame(new DeltaManaProductionStrategy(), new GammaWinningStrategy(), new GammaHeroCreationStrategy(), new GammaHeroPowerStrategy(), new DeltaDeckBuildingStrategy());
+        game = new StandardHotStoneGame(new DeltaStoneFactory());
     }
 
     // Mana production tests

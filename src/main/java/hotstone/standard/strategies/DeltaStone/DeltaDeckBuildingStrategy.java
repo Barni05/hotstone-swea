@@ -1,7 +1,7 @@
 package hotstone.standard.strategies.DeltaStone;
 
 import hotstone.framework.Card;
-import hotstone.framework.DeckBuildingStrategy;
+import hotstone.framework.strategies.DeckBuildingStrategy;
 import hotstone.framework.Player;
 import hotstone.standard.StandardCard;
 
@@ -28,7 +28,6 @@ public class DeltaDeckBuildingStrategy implements DeckBuildingStrategy {
                 {"Spring Rolls", 5, 3, 7},
                 {"Baked Salmon", 5, 8, 2}
         };
-
 
         for (Object[] stat : cardStats) {
             for (int i = 0; i < 2; i++) {

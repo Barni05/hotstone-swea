@@ -1,6 +1,6 @@
 package hotstone.standard.strategies.Gammastone;
 
-import hotstone.framework.HeroPowerStrategy;
+import hotstone.framework.strategies.HeroPowerStrategy;
 import hotstone.framework.Game;
 import hotstone.framework.Player;
 import hotstone.framework.Status;
