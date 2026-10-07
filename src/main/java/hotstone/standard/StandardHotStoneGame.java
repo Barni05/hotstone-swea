@@ -131,11 +131,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
             return Status.OK;
         } else {
             StandardHero hero = (StandardHero) getHero(who);
-            int newHealth = hero.getHealth() - NO_MORE_CARD_PENALTY;
-            if (newHealth <= 0)
-                return Status.NO_MORE_HEALTH;
-            hero.setHealth(newHealth);
-            return Status.NO_MORE_CARDS;
+            return hero.deltaHealth(NO_MORE_CARD_PENALTY);
         }
     }
 
@@ -320,11 +316,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
     @Override
     public Status heroTakeDamage(Player who, int damageAmount) {
         StandardHero damagedHero = (StandardHero) getHero(who);
-        damagedHero.setHealth(damagedHero.getHealth() - damageAmount);
-        if (damagedHero.getHealth() <= 0) {
-            return Status.NO_MORE_HEALTH;
-        }
-        return Status.OK;
+        return damagedHero.deltaHealth(damageAmount);
     }
     @Override
     public Status usePower(Player who) {

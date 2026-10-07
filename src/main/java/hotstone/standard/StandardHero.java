@@ -1,9 +1,11 @@
 package hotstone.standard;
 
 import hotstone.framework.Hero;
+import hotstone.framework.MutableHero;
 import hotstone.framework.Player;
+import hotstone.framework.Status;
 
-public class StandardHero implements Hero {
+public class StandardHero implements Hero, MutableHero {
     private int health, mana;
     private String type, effectDescription, effectName;
     private boolean powerAbility;
@@ -21,16 +23,28 @@ public class StandardHero implements Hero {
     }
     @Override
     public int getHealth() {return health; }
-
-    public void setHealth(int health) {
-        this.health = health;
+    @Override
+    public Status deltaHealth(int damage) {
+        int newHealth = getHealth()-damage;
+        if(newHealth <= 0)
+            return Status.NO_MORE_HEALTH;
+        this.health = newHealth;
+        return Status.OK;
     }
 
     @Override
     public int getMana() {return mana; }
 
-    public void setMana(int mana) {
-        this.mana = mana;
+    @Override
+    public void setMana(int mana){this.mana = mana;}
+
+    @Override
+    public Status deltaMana(int mana) {
+        int newMana = getMana()-mana;
+        if(newMana <= 0)
+            return Status.NO_MORE_HEALTH;
+        this.mana = newMana   ;
+        return Status.OK;
     }
 
     @Override
