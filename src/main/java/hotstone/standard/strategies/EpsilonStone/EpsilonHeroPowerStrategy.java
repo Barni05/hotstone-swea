@@ -27,13 +27,13 @@ public class EpsilonHeroPowerStrategy implements HeroPowerStrategy {
             return Status.POWER_USE_NOT_ALLOWED_TWICE_PR_ROUND;
 
         int targetIndex;
-        StandardCard targetCard;
+        MutableCard targetCard;
         switch (hero.getType()) {
             case "FrenchChef":
                 ArrayList<MutableCard> opponentMinions = game.getPlayersMinions(opponent);
                 if (opponentMinions.isEmpty()) return Status.NO_MORE_CARDS;
                 targetIndex = indexSelector.selectIndex(opponentMinions.size());
-                targetCard = (StandardCard) opponentMinions.get(targetIndex);
+                targetCard = opponentMinions.get(targetIndex);
                 if (targetCard.deltaHealth(2) == Status.NO_MORE_HEALTH)
                     game.removeCardFromField(opponent, targetCard);
                 break;
@@ -41,7 +41,7 @@ public class EpsilonHeroPowerStrategy implements HeroPowerStrategy {
                 ArrayList<MutableCard> ownMinions = game.getPlayersMinions(who);
                 if (ownMinions.isEmpty()) return Status.NO_MORE_CARDS;
                 targetIndex = indexSelector.selectIndex(ownMinions.size());
-                targetCard = (StandardCard) ownMinions.get(targetIndex);
+                targetCard = ownMinions.get(targetIndex);
                 targetCard.deltaAttack(2);
                 break;
         }

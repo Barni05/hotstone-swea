@@ -229,10 +229,9 @@ public class StandardHotStoneGame implements Game, MutableGame {
     }
 
     private void setCurrentCardsActive() {
-        for (Card c : fields.get(playerInTurn)) {
-            StandardCard standardCard = (StandardCard) c;
-            if (standardCard != null)
-                standardCard.setActive(true);
+        for (MutableCard c : fields.get(playerInTurn)) {
+            if (c != null)
+                c.setActive(true);
         }
     }
     @Override
