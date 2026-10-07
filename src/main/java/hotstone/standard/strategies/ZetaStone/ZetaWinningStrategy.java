@@ -16,8 +16,7 @@ public class ZetaWinningStrategy implements WinningStrategy {
     }
 
     public Player calculateWinner(MutableGame game){
-        StandardHotStoneGame standardGame = (StandardHotStoneGame) game;
-        int roundNumber = standardGame.getRoundNumber();
+        int roundNumber = game.getTurnNumber() / 2 + 1;
         if(roundNumber > 6){
             currentStrategy = afterSixRoundStrategy;
         }

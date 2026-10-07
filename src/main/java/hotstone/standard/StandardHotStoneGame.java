@@ -49,7 +49,6 @@ import java.util.Collections;
  */
 
 public class StandardHotStoneGame implements Game, MutableGame {
-    public int FIELD_CAPACITY = 10;
     private final int NO_MORE_CARD_PENALTY = 2;
 
     private HashMap<Player, Stack<Card>> decks = new HashMap<>();
@@ -159,11 +158,6 @@ public class StandardHotStoneGame implements Game, MutableGame {
     @Override
     public int getTurnNumber() {
         return turnNum;
-    }
-
-
-    public int getRoundNumber() {
-        return getTurnNumber() / 2 + 1;
     }
 
     @Override
@@ -295,7 +289,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
         }
         return Status.OK;
     }
-
+    @Override
     public ArrayList<Card> getPlayersMinions(Player who){
         ArrayList<Card> ret = new ArrayList<Card>();
         for(Card c : getField(who)){

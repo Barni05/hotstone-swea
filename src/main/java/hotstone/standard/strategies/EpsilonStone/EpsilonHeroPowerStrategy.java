@@ -20,19 +20,18 @@ public class EpsilonHeroPowerStrategy implements HeroPowerStrategy {
     public Status usePower(MutableGame game, Player who) {
         if (game.getPlayerInTurn() != who)
             return Status.NOT_PLAYER_IN_TURN;
-        StandardHotStoneGame standardGame = (StandardHotStoneGame) game;
         StandardHero hero = (StandardHero) game.getHero(who);
         Player opponent = Player.computeOpponent(who);
         if (!hero.canUsePower())
             return Status.POWER_USE_NOT_ALLOWED_TWICE_PR_ROUND;
         switch (hero.getType()) {
             case "FrenchChef":
-                ArrayList<Card> opponentMinions = standardGame.getPlayersMinions(who);
+                ArrayList<Card> opponentMinions = game.getPlayersMinions(who);
                 if(opponentMinions.isEmpty()) return Status.NO_MORE_CARDS;
                 int targetIndex = indexSelector.selectIndex(opponentMinions.size());
                 StandardCard target = (StandardCard) opponentMinions.get(targetIndex);
                 if(target.takeDamage(2) == Status.NO_MORE_HEALTH)
-                    standardGame.removeCardFromField(opponent, target);
+                    game.removeCardFromField(opponent, target);
                 break;
             case "ItalianChef":
                 break;

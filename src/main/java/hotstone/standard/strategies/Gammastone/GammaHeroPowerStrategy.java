@@ -15,16 +15,15 @@ public class GammaHeroPowerStrategy implements HeroPowerStrategy {
         if(game.getPlayerInTurn() != who){
             return Status.NOT_PLAYER_IN_TURN;
         }
-        StandardHotStoneGame standardGame = (StandardHotStoneGame)game;
-        StandardHero hero = (StandardHero)standardGame.getHero(who);
+        StandardHero hero = (StandardHero)game.getHero(who);
         if(hero.canUsePower()){
             switch(hero.getType()){
                 case "ThaiChef":
-                    standardGame.heroTakeDamage(Player.computeOpponent(who), 2);
+                    game.heroTakeDamage(Player.computeOpponent(who), 2);
                     return Status.OK;
                 case "DanishChef":
                     StandardCard sovs = new StandardCard("Sovs", "It's a special minion", 0, 1, 1, false, who);
-                    standardGame.insertCardIntoField(who, sovs, 0);
+                    game.insertCardIntoField(who, sovs, 0);
                     return Status.OK;
             }
         }
