@@ -125,7 +125,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
      */
     @Override
     public Status drawCard(Player who) {
-        if (decks.get(who).size() > 0) {
+        if (!decks.get(who).isEmpty()) {
             Card drawnCard = decks.get(who).pop();
             hands.get(who).addFirst(drawnCard);
             return Status.OK;
