@@ -1,16 +1,15 @@
 package hotstone.standard;
-import hotstone.framework.MutableCard;
-import hotstone.framework.Player;
-import hotstone.framework.Card;
-import hotstone.framework.Status;
+import hotstone.framework.*;
+import hotstone.framework.strategies.CardEffectStrategy;
 
 public class StandardCard implements Card, MutableCard {
     private String name, effectDescription;
     private int manaCost, attack, health;
     private boolean isActive;
     private Player owner;
+    private final CardEffectStrategy cardEffectStrategy;
 
-    public StandardCard(String name, String effectDescription, int manaCost, int attack, int health, boolean isActive, Player owner) {
+    public StandardCard(String name, String effectDescription, int manaCost, int attack, int health, boolean isActive, Player owner, CardEffectStrategy cardEffectStrategy) {
         this.name = name;
         this.effectDescription = effectDescription;
         this.manaCost = manaCost;
@@ -18,6 +17,7 @@ public class StandardCard implements Card, MutableCard {
         this.health = health;
         this.isActive = isActive;
         this.owner = owner;
+        this.cardEffectStrategy = cardEffectStrategy;
     }
 
     @Override
@@ -47,10 +47,10 @@ public class StandardCard implements Card, MutableCard {
 
     @Override
     public Status deltaHealth(int damage){
-        int newHealth = getHealth()-damage;
-        if(newHealth <= 0)
+        this.health += damage;
+        if(health <= 0){
             return Status.NO_MORE_HEALTH;
-        this.health = newHealth;
+        }
         return Status.OK;
     }
 
@@ -70,5 +70,10 @@ public class StandardCard implements Card, MutableCard {
     public void deltaAttack(int amount){
         if(attack+amount > 0)
             attack+=amount;
+    }
+
+    @Override
+    public void useEffect(MutableGame game, Player who){
+        cardEffectStrategy.execute(game, who, this);
     }
 }

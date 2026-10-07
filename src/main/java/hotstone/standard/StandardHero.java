@@ -60,4 +60,9 @@ public class StandardHero implements Hero, MutableHero {
     public String getEffectDescription() {return effectDescription; }
 
     public String getEffectName() {return effectName; }
+
+    @Override
+    public void setCanUsePower(boolean canUsePower){
+        this.powerAbility = canUsePower;
+    }
 }

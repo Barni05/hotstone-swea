@@ -2,6 +2,7 @@ package hotstone.standard.strategies.EpsilonStone;
 
 import hotstone.framework.*;
 import hotstone.framework.strategies.HeroPowerStrategy;
+import hotstone.standard.GameConstants;
 import hotstone.standard.StandardHero;
 import hotstone.standard.StandardHotStoneGame;
 import hotstone.standard.utils.IndexSelector;
@@ -19,8 +20,6 @@ public class EpsilonHeroPowerStrategy implements HeroPowerStrategy {
 
     @Override
     public Status usePower(MutableGame game, Player who) {
-        if (game.getPlayerInTurn() != who)
-            return Status.NOT_PLAYER_IN_TURN;
         MutableHero hero = game.getMutableHero(who);
         Player opponent = Player.computeOpponent(who);
         if (!hero.canUsePower())
@@ -29,15 +28,15 @@ public class EpsilonHeroPowerStrategy implements HeroPowerStrategy {
         int targetIndex;
         MutableCard targetCard;
         switch (hero.getType()) {
-            case "FrenchChef":
+            case GameConstants.FRENCH_CHEF_HERO_TYPE:
                 ArrayList<MutableCard> opponentMinions = game.getPlayersMinions(opponent);
                 if (opponentMinions.isEmpty()) return Status.NO_MORE_CARDS;
                 targetIndex = indexSelector.selectIndex(opponentMinions.size());
                 targetCard = opponentMinions.get(targetIndex);
-                if (targetCard.deltaHealth(2) == Status.NO_MORE_HEALTH)
+                if (targetCard.deltaHealth(-2) == Status.NO_MORE_HEALTH)
                     game.removeCardFromField(opponent, targetCard);
                 break;
-            case "ItalianChef":
+            case GameConstants.ITALIAN_CHEF_HERO_TYPE:
                 ArrayList<MutableCard> ownMinions = game.getPlayersMinions(who);
                 if (ownMinions.isEmpty()) return Status.NO_MORE_CARDS;
                 targetIndex = indexSelector.selectIndex(ownMinions.size());
@@ -45,7 +44,7 @@ public class EpsilonHeroPowerStrategy implements HeroPowerStrategy {
                 targetCard.deltaAttack(2);
                 break;
         }
-
+        //hero.setCanUsePower(false);
         return Status.OK;
     }
 }

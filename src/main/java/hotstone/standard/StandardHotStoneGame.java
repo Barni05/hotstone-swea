@@ -203,15 +203,14 @@ public class StandardHotStoneGame implements Game, MutableGame {
     @Override
     public void endTurn() {
         turnNum++;
-        Player currentPlayer = playerInTurn;
         //Setting the previous player's cards inactive
-        for (MutableCard c : fields.get(currentPlayer)) {
+        for (MutableCard c : fields.get(playerInTurn)) {
             if(c != null)
                 c.setActive(false);
         }
         //Switching who the player in turn is
-        playerInTurn = currentPlayer == Player.FINDUS ? Player.PEDDERSEN : Player.FINDUS;
-
+        playerInTurn = Player.computeOpponent(playerInTurn);
+        heroes.get(playerInTurn).setCanUsePower(true);
         setCurrentCardsActive();
 
         //Draw cards from deck
@@ -321,7 +320,8 @@ public class StandardHotStoneGame implements Game, MutableGame {
     }
     @Override
     public Status usePower(Player who) {
-        Status ret = heroPowerStrategy.usePower(this, who);
-        return ret;
+        if (this.getPlayerInTurn() != who)
+            return Status.NOT_PLAYER_IN_TURN;
+        return heroPowerStrategy.usePower(this, who);
     }
 }
