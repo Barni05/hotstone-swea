@@ -189,13 +189,6 @@ public void shouldMinionBeInactive(){
   }
 
   @Test
-  public void shouldDrawTwoCrystals() {
-    StandardHotStoneGame standardGame = (StandardHotStoneGame) game;
-    standardGame.afterCrystalDraw(Player.FINDUS);
-    assertThat(standardGame.getHero(Player.FINDUS).getMana(), is(1));
-  }
-
-  @Test
   public void shouldTakeDamage() {
     StandardHotStoneGame standardGame = (StandardHotStoneGame) game;
     Card card = standardGame.getCardInHand(Player.FINDUS, 0);

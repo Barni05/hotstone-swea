@@ -19,7 +19,7 @@ public class GammaHeroPowerStrategy implements HeroPowerStrategy {
         if(hero.canUsePower()){
             switch(hero.getType()){
                 case "ThaiChef":
-                    standardGame.takeDamage(Player.computeOpponent(who), 2);
+                    standardGame.heroTakeDamage(Player.computeOpponent(who), 2);
                     return Status.OK;
                 case "DanishChef":
                     StandardCard sovs = new StandardCard("Sovs", "It's a special minion", 0, 1, 1, false, who);

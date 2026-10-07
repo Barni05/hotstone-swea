@@ -48,7 +48,7 @@ import java.util.Collections;
  * why it is not called 'AlphaGame'.
  */
 
-public class StandardHotStoneGame implements Game {
+public class StandardHotStoneGame implements Game, MutableGame {
     public int FIELD_CAPACITY = 10;
     private final int NO_MORE_CARD_PENALTY = 2;
 
@@ -66,7 +66,7 @@ public class StandardHotStoneGame implements Game {
     HeroPowerStrategy heroPowerStrategy;
     DeckBuildingStrategy deckBuildingStrategy;
 
-    public StandardHotStoneGame(HotStoneFactory hotStoneFactory) {
+    public StandardHotStoneGame(HotStoneFactory hotStoneFactory)    {
 
         // Assigning the strategies
         this.manaProductionStrategy = hotStoneFactory.createManaProductionStrategy();
@@ -119,13 +119,13 @@ public class StandardHotStoneGame implements Game {
         return manaProductionStrategy.calculateStartRoundMana(who);
     }
 
-
     /**
      * Draws one card from the given player's deck to his hand
      *
      * @param who the drawing player
      * @return status of operation
      */
+    @Override
     public Status drawCard(Player who) {
         if (decks.get(who).size() > 0) {
             Card drawnCard = decks.get(who).pop();
@@ -231,7 +231,7 @@ public class StandardHotStoneGame implements Game {
 
         executeAttacks();
     }
-
+    @Override
     private void setCurrentCardsActive() {
         for (Card c : fields.get(playerInTurn)) {
             StandardCard standardCard = (StandardCard) c;
@@ -239,7 +239,7 @@ public class StandardHotStoneGame implements Game {
                 standardCard.setActive(true);
         }
     }
-
+    @Override
     public void executeAttacks() {
         Player attackingPlayer = playerInTurn;
         ArrayList<Card> defendingPlayerField = fields.get(Player.computeOpponent(playerInTurn));
@@ -273,9 +273,9 @@ public class StandardHotStoneGame implements Game {
         }
         return Status.CARD_NOT_FOUND;
     }
-
+    @Override
     public void insertCardIntoField(Player who, Card card, int atIndex) {
-        fields.get(who).add(atIndex, card);
+        fields.get(who).set(atIndex, card);
     }
 
     @Override
@@ -306,6 +306,7 @@ public class StandardHotStoneGame implements Game {
         return ret;
     }
 
+    @Override
     public Status removeCardFromField(Player who, Card cardToRemove) {
         int index = fields.get(who).indexOf(cardToRemove);
         if (index != -1) {
@@ -317,10 +318,11 @@ public class StandardHotStoneGame implements Game {
 
     @Override
     public Status attackHero(Player playerAttacking, Card attackingCard) {
-        return takeDamage(Player.computeOpponent(playerAttacking), attackingCard.getAttack());
+        return heroTakeDamage(Player.computeOpponent(playerAttacking), attackingCard.getAttack());
     }
 
-    public Status takeDamage(Player who, int damageAmount) {
+    @Override
+    public Status heroTakeDamage(Player who, int damageAmount) {
         StandardHero damagedHero = (StandardHero) getHero(who);
         damagedHero.setHealth(damagedHero.getHealth() - damageAmount);
         if (damagedHero.getHealth() <= 0) {
@@ -328,14 +330,6 @@ public class StandardHotStoneGame implements Game {
         }
         return Status.OK;
     }
-
-    public void afterCrystalDraw(Player who) {
-        Status usePower = usePower(who);
-        int totalMana = heroes.get(who).getMana();
-        if (usePower == Status.OK) totalMana = totalMana - 2;
-        heroes.get(who).setMana(totalMana);
-    }
-
     @Override
     public Status usePower(Player who) {
         Status ret = heroPowerStrategy.usePower(this, who);
