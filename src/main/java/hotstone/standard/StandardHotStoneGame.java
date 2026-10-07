@@ -185,10 +185,13 @@ public class StandardHotStoneGame implements Game, MutableGame {
     }
 
     @Override
-    public MutableCard getCardInField(Player who, int indexInField) {
+    public Card getCardInField(Player who, int indexInField) {
         return fields.get(who).get(indexInField);
     }
 
+
+    @Override
+    public MutableCard getMutableCardInField(Player who, int indexInField ){return fields.get(who).get(indexInField);}
     @Override
     public Iterable<? extends MutableCard> getField(Player who) {
         return fields.get(who);
@@ -222,6 +225,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
         heroes.get(Player.PEDDERSEN).setMana(manaProductionStrategy.calculateStartRoundMana(this, Player.PEDDERSEN));
 
         executeAttacks();
+
     }
 
     private void setCurrentCardsActive() {
@@ -247,20 +251,21 @@ public class StandardHotStoneGame implements Game, MutableGame {
     }
 
     @Override
-    public Status playCard(Player who, MutableCard card, int atIndex) {
+    public Status playCard(Player who, Card card, int atIndex) {
+        MutableCard mutableCard = (MutableCard) card;
         if (who != playerInTurn)
             return Status.NOT_PLAYER_IN_TURN;
-        if (card.getOwner() != who)
+        if (mutableCard.getOwner() != who)
             return Status.NOT_OWNER;
         //Draw mana
-        int newManaValue = heroes.get(who).getMana() - card.getManaCost();
+        int newManaValue = heroes.get(who).getMana() - mutableCard.getManaCost();
         if (newManaValue < 0)
             return Status.NOT_ENOUGH_MANA;
         heroes.get(who).setMana(newManaValue);
         //Takes out of hand
-        if (hands.get(who).remove(card)) {
+        if (hands.get(who).remove(mutableCard)) {
             //Insert into field
-            insertCardIntoField(who, card, atIndex);
+            insertCardIntoField(who, mutableCard, atIndex);
             return Status.OK;
         }
         return Status.CARD_NOT_FOUND;
@@ -271,18 +276,20 @@ public class StandardHotStoneGame implements Game, MutableGame {
     }
 
     @Override
-    public Status attackCard(Player playerAttacking, MutableCard attackingCard, MutableCard defendingCard) {
+    public Status attackCard(Player playerAttacking, Card attackingCard, Card defendingCard) {
+        MutableCard mutableAttacking = (MutableCard) attackingCard;
+        MutableCard mutableDefending = (MutableCard) defendingCard;
         if (!attackingCard.isActive())
             return Status.ATTACK_NOT_ALLOWED_FOR_NON_ACTIVE_MINION;
 
         //Check if either card has died
-        if (defendingCard.deltaHealth(attackingCard.getAttack()) == Status.NO_MORE_HEALTH) {
+        if (mutableDefending.deltaHealth(mutableAttacking.getAttack()) == Status.NO_MORE_HEALTH) {
             //Remove card from existence
-            removeCardFromField(Player.computeOpponent(playerAttacking), defendingCard);
+            removeCardFromField(Player.computeOpponent(playerAttacking), mutableDefending);
         }
-        if (attackingCard.deltaHealth(defendingCard.getAttack()) == Status.NO_MORE_HEALTH) {
+        if (mutableAttacking.deltaHealth(mutableDefending.getAttack()) == Status.NO_MORE_HEALTH) {
             //Remove card from existence
-            removeCardFromField(playerAttacking, attackingCard);
+            removeCardFromField(playerAttacking, mutableAttacking);
         }
         return Status.OK;
     }
@@ -297,7 +304,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
     }
 
     @Override
-    public Status removeCardFromField(Player who, MutableCard cardToRemove) {
+    public Status removeCardFromField(Player who, Card cardToRemove) {
         int index = fields.get(who).indexOf(cardToRemove);
         if (index != -1) {
             fields.get(who).set(index, null);
@@ -307,7 +314,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
     }
 
     @Override
-    public Status attackHero(Player playerAttacking, MutableCard attackingCard) {
+    public Status attackHero(Player playerAttacking, Card attackingCard) {
         return heroTakeDamage(Player.computeOpponent(playerAttacking), attackingCard.getAttack());
     }
 
