@@ -1,9 +1,10 @@
 package hotstone.standard;
+import hotstone.framework.MutableCard;
 import hotstone.framework.Player;
 import hotstone.framework.Card;
 import hotstone.framework.Status;
 
-public class StandardCard implements Card{
+public class StandardCard implements Card, MutableCard {
     private String name, effectDescription;
     private int manaCost, attack, health;
     private boolean isActive;
@@ -44,13 +45,12 @@ public class StandardCard implements Card{
         return health;
     }
 
-    public void setHealth(int newHealth) { this.health = newHealth;}
-
-    public Status takeDamage(int dmg){
-        int newHealth = getHealth()-dmg;
+    @Override
+    public Status deltaHealth(int damage){
+        int newHealth = getHealth()-damage;
         if(newHealth <= 0)
             return Status.NO_MORE_HEALTH;
-        setHealth(newHealth);
+        this.health = newHealth;
         return Status.OK;
     }
 
@@ -58,11 +58,17 @@ public class StandardCard implements Card{
     public boolean isActive() {
         return isActive;
     }
-
+    @Override
     public void setActive(boolean newActive){ isActive = newActive;}
 
     @Override
     public Player getOwner() {
         return owner;
+    }
+
+    @Override
+    public void deltaAttack(int amount){
+        if(attack+amount > 0)
+            attack+=amount;
     }
 }

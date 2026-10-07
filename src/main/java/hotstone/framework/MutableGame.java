@@ -6,9 +6,9 @@ public interface MutableGame extends Game{
 
     Status drawCard(Player who);
     void executeAttacks();
-    void insertCardIntoField(Player who, Card card, int atIndex);
-    Status removeCardFromField(Player who, Card cardToRemove);
+    void insertCardIntoField(Player who, MutableCard card, int atIndex);
+    Status removeCardFromField(Player who, MutableCard cardToRemove);
     Status heroTakeDamage(Player who, int damageAmount);
-    ArrayList<Card> getPlayersMinions(Player who);
+    ArrayList<MutableCard> getPlayersMinions(Player who);
 
 }

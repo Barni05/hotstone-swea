@@ -45,6 +45,8 @@ public interface Game {
    */
   Player getWinner();
 
+  int calculateStartRoundMana(Player who);
+
   /** Get the number of turns played. Starts at turn 0 for Findus,
    * then 1 for Peddersen, 2 for Findus, and so on.
    *
@@ -76,7 +78,7 @@ public interface Game {
    *                    0..handsize-1.
    * @return the card in the hand at that position.
    */
-  Card getCardInHand(Player who, int indexInHand);
+  MutableCard getCardInHand(Player who, int indexInHand);
 
   /** Get an iterable over the cards in the hand. Convenience method
    * to allow writing code ala 
@@ -91,7 +93,7 @@ public interface Game {
    * @param who the player owning the hand
    * @return an iterable over the cards in the hand
    */
-  Iterable<? extends Card> getHand(Player who);
+  Iterable<? extends MutableCard> getHand(Player who);
 
   /** Get the number of cards in the hand.
    *
@@ -115,7 +117,7 @@ public interface Game {
    *                    0..fieldsize-1.
    * @return the card on the field at that position.
    */
-  Card getCardInField(Player who, int indexInField);
+  MutableCard getCardInField(Player who, int indexInField);
   
   /** Get an iterable over the cards on the field. Convenience method
    * to allow writing code ala 
@@ -129,7 +131,7 @@ public interface Game {
    * @param who the player owning the field
    * @return an iterable over the cards on the field
    */
-  Iterable<? extends Card> getField(Player who);
+  Iterable<? extends MutableCard> getField(Player who);
   
   /** Get the number of cards on the field.
    *
@@ -163,7 +165,7 @@ public interface Game {
    *                and second minion, etc.
    * @return Status of operation
    */
-  public Status playCard(Player who, Card card, int atIndex);
+  public Status playCard(Player who, MutableCard card, int atIndex);
 
   /** Attack one card with another on the fields.
    *
@@ -178,7 +180,7 @@ public interface Game {
    *    either OK or some value explaining why the action was invalid.
    */
   Status attackCard(Player playerAttacking,
-                    Card attackingCard, Card defendingCard);
+                    MutableCard attackingCard, MutableCard defendingCard);
 
   /** Attack a hero with a card in the field.
    *
@@ -191,7 +193,7 @@ public interface Game {
    * @return a status identifying the outcome of the attack, which is
    *    either OK or some value explaining why the action was invalid.
    */
-  Status attackHero(Player playerAttacking, Card attackingCard);
+  Status attackHero(Player playerAttacking, MutableCard attackingCard);
 
   /** Use a hero's special power/effect.
    *

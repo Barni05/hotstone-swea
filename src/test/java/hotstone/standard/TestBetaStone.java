@@ -2,6 +2,7 @@ package hotstone.standard;
 
 import hotstone.framework.Game;
 import hotstone.framework.Card;
+import hotstone.framework.MutableCard;
 import hotstone.framework.strategies.ManaProductionStrategy;
 import hotstone.framework.Player;
 import hotstone.standard.factories.BetaStoneFactory;
@@ -43,7 +44,7 @@ public class TestBetaStone {
 
     @Test
     void shouldDeclareAttackingPlayerWinnerWhenOpponentHeroHealthReachesZero() {
-        Card lethalCard = new StandardCard(
+        MutableCard lethalCard = new StandardCard(
                 "Lethal",
                 "Deals lethal damage",
                 0,

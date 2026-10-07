@@ -8,8 +8,8 @@ import java.util.Stack;
 
 public class AlphaDeckBuildingStrategy implements DeckBuildingStrategy {
     @Override
-    public Stack<Card> createDeck(Player owner){
-        Stack<Card> deck = new Stack<>();
+    public Stack<MutableCard> createDeck(Player owner){
+        Stack<MutableCard> deck = new Stack<>();
         //We have to put it in reversed order, so that the Uno card is drawn first
         deck.push(new StandardCard("Siete", "It's just Seven", 3, 2, 4, false, owner));
         deck.push(new StandardCard("Seis", "It's just Six", 2, 1, 3, false, owner));

@@ -142,7 +142,7 @@ public class TestAlphaStone {
 
   @Test
   public void shouldPlayedCardBeOnRightIndex(){
-    Card card = game.getCardInHand(Player.FINDUS, 0);
+    MutableCard card = game.getCardInHand(Player.FINDUS, 0);
     assertThat(card, not(nullValue()));
     game.playCard(Player.FINDUS, card, 1);
     assertThat(game.getCardInField(Player.FINDUS, 1), not(nullValue()));
@@ -158,9 +158,9 @@ public void shoudReturnNoMoreCards(){
 
 @Test
 public void shouldBeNewCardOnOldPositionInHand(){
-    Card oldCard = game.getCardInHand(Player.FINDUS, 0);
+    MutableCard oldCard = game.getCardInHand(Player.FINDUS, 0);
     game.playCard(Player.FINDUS, oldCard, 0);
-    Card newCard = game.getCardInHand(Player.FINDUS, 0);
+    MutableCard newCard = game.getCardInHand(Player.FINDUS, 0);
     assertThat(oldCard, not(newCard));
 }
 
@@ -183,7 +183,7 @@ public void shouldMinionBeInactive(){
 
   @Test
   public void shouldTakeDamage() {
-    Card card = game.getCardInHand(Player.FINDUS, 0);
+    MutableCard card = game.getCardInHand(Player.FINDUS, 0);
     int health = game.getHero(Player.PEDDERSEN).getHealth();
     game.attackHero(Player.FINDUS, card);
     assertThat(game.getHero(Player.PEDDERSEN).getHealth(), is(health - card.getAttack()));

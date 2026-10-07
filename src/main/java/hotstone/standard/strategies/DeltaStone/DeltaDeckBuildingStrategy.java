@@ -1,6 +1,6 @@
 package hotstone.standard.strategies.DeltaStone;
 
-import hotstone.framework.Card;
+import hotstone.framework.MutableCard;
 import hotstone.framework.strategies.DeckBuildingStrategy;
 import hotstone.framework.Player;
 import hotstone.standard.StandardCard;
@@ -12,11 +12,11 @@ import java.util.Random;
 
 public class DeltaDeckBuildingStrategy implements DeckBuildingStrategy {
     @Override
-    public Stack<Card> createDeck(Player owner) {
-        Stack<Card> deck = new Stack<>();
-        Stack<Card> firstThree = new Stack<>();
+    public Stack<MutableCard> createDeck(Player owner) {
+        Stack<MutableCard> deck = new Stack<>();
+        Stack<MutableCard> firstThree = new Stack<>();
         Random random = new Random();
-        ArrayList<Card> helperDeck = new ArrayList<>();
+        ArrayList<MutableCard> helperDeck = new ArrayList<>();
         Object[][] cardStats = {
                 {"Brown Rice", 1, 1, 2},
                 {"French Fries", 1, 2, 1},
@@ -58,7 +58,7 @@ public class DeltaDeckBuildingStrategy implements DeckBuildingStrategy {
         firstThree.push(helperDeck.remove(index3));
 
         Collections.shuffle(helperDeck);
-        for(Card card : helperDeck){
+        for(MutableCard card : helperDeck){
             deck.push(card);
         }
         deck.push(firstThree.pop());
