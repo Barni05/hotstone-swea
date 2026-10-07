@@ -21,7 +21,7 @@ public class EpsilonHeroPowerStrategy implements HeroPowerStrategy {
     public Status usePower(MutableGame game, Player who) {
         if (game.getPlayerInTurn() != who)
             return Status.NOT_PLAYER_IN_TURN;
-        StandardHero hero = (StandardHero) game.getHero(who);
+        MutableHero hero = game.getMutableHero(who);
         Player opponent = Player.computeOpponent(who);
         if (!hero.canUsePower())
             return Status.POWER_USE_NOT_ALLOWED_TWICE_PR_ROUND;

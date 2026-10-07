@@ -56,7 +56,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
     private HashMap<Player, ArrayList<MutableCard>> fields = new HashMap<>();
     private int turnNum;
     private Player playerInTurn;
-    private HashMap<Player, StandardHero> heroes = new HashMap<>();
+    private HashMap<Player, MutableHero> heroes = new HashMap<>();
 
     // Strategies
     ManaProductionStrategy manaProductionStrategy;
@@ -108,9 +108,9 @@ public class StandardHotStoneGame implements Game, MutableGame {
     }
 
     private void createHeroes() {
-        Hero[] temp = heroCreationStrategy.createHeroes(manaProductionStrategy.calculateStartRoundMana(this, Player.FINDUS), manaProductionStrategy.calculateStartRoundMana(this,Player.PEDDERSEN));
-        heroes.put(Player.FINDUS, (StandardHero) temp[0]);
-        heroes.put(Player.PEDDERSEN, (StandardHero) temp[1]);
+        MutableHero[] temp = heroCreationStrategy.createHeroes(manaProductionStrategy.calculateStartRoundMana(this, Player.FINDUS), manaProductionStrategy.calculateStartRoundMana(this,Player.PEDDERSEN));
+        heroes.put(Player.FINDUS,  temp[0]);
+        heroes.put(Player.PEDDERSEN, temp[1]);
     }
     @Override
     public int calculateStartRoundMana(Player who){
@@ -130,8 +130,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
             hands.get(who).addFirst(drawnCard);
             return Status.OK;
         } else {
-            StandardHero hero = (StandardHero) getHero(who);
-            return hero.deltaHealth(NO_MORE_CARD_PENALTY);
+            return Status.NO_MORE_CARDS;
         }
     }
 
@@ -144,6 +143,9 @@ public class StandardHotStoneGame implements Game, MutableGame {
     public Hero getHero(Player who) {
         return heroes.get(who);
     }
+
+    @Override
+    public MutableHero getMutableHero(Player who) {return heroes.get(who);}
 
     @Override
     //since we already know that (for this iteration) Findus will always win
@@ -315,8 +317,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
     @Override
     public Status heroTakeDamage(Player who, int damageAmount) {
-        StandardHero damagedHero = (StandardHero) getHero(who);
-        return damagedHero.deltaHealth(damageAmount);
+        return getMutableHero(who).deltaHealth(damageAmount);
     }
     @Override
     public Status usePower(Player who) {

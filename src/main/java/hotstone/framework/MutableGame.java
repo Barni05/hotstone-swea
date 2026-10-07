@@ -11,5 +11,6 @@ public interface MutableGame extends Game{
     Status heroTakeDamage(Player who, int damageAmount);
     ArrayList<MutableCard> getPlayersMinions(Player who);
     MutableCard getMutableCardInField(Player who, int indexInField);
+    MutableHero getMutableHero(Player who);
 
 }
