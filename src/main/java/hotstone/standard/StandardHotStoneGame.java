@@ -103,20 +103,19 @@ public class StandardHotStoneGame implements Game, MutableGame {
         //Initialize mana
 
         //Initialize hero
-        manaProductionStrategy.setGame(this);
         createHeroes();
 
         //Initialize health
     }
 
     private void createHeroes() {
-        Hero[] temp = heroCreationStrategy.createHeroes(manaProductionStrategy.calculateStartRoundMana(Player.FINDUS), manaProductionStrategy.calculateStartRoundMana(Player.PEDDERSEN));
+        Hero[] temp = heroCreationStrategy.createHeroes(manaProductionStrategy.calculateStartRoundMana(this, Player.FINDUS), manaProductionStrategy.calculateStartRoundMana(this,Player.PEDDERSEN));
         heroes.put(Player.FINDUS, (StandardHero) temp[0]);
         heroes.put(Player.PEDDERSEN, (StandardHero) temp[1]);
     }
 
     public int calculateStartRoundMana(Player who){
-        return manaProductionStrategy.calculateStartRoundMana(who);
+        return manaProductionStrategy.calculateStartRoundMana(this, who);
     }
 
     /**
@@ -226,12 +225,12 @@ public class StandardHotStoneGame implements Game, MutableGame {
         drawCard(Player.PEDDERSEN);
 
         //Resetting mana
-        heroes.get(Player.FINDUS).setMana(manaProductionStrategy.calculateStartRoundMana(Player.FINDUS));
-        heroes.get(Player.PEDDERSEN).setMana(manaProductionStrategy.calculateStartRoundMana(Player.PEDDERSEN));
+        heroes.get(Player.FINDUS).setMana(manaProductionStrategy.calculateStartRoundMana(this, Player.FINDUS));
+        heroes.get(Player.PEDDERSEN).setMana(manaProductionStrategy.calculateStartRoundMana(this, Player.PEDDERSEN));
 
         executeAttacks();
     }
-    @Override
+
     private void setCurrentCardsActive() {
         for (Card c : fields.get(playerInTurn)) {
             StandardCard standardCard = (StandardCard) c;

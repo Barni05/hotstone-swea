@@ -1,5 +1,6 @@
 package hotstone.standard.strategies.Gammastone;
 
+import hotstone.framework.MutableGame;
 import hotstone.framework.strategies.WinningStrategy;
 import hotstone.framework.Player;
 import hotstone.framework.Game;
@@ -13,7 +14,7 @@ winning condition only applies after the game has passed round 3. If both
 player’s field is empty after round 3, Peddersen wins
     * */
     @Override
-    public Player calculateWinner(Game game) {
+    public Player calculateWinner(MutableGame game) {
         StandardHotStoneGame standardGame = (StandardHotStoneGame) game;
         int roundNumber = standardGame.getTurnNumber() / 2;
         if(roundNumber <= 3)

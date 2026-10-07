@@ -1,6 +1,7 @@
 package hotstone.standard.strategies.ZetaStone;
 
 import hotstone.framework.Game;
+import hotstone.framework.MutableGame;
 import hotstone.framework.Player;
 import hotstone.framework.strategies.WinningStrategy;
 import hotstone.standard.StandardHotStoneGame;
@@ -14,7 +15,7 @@ public class ZetaWinningStrategy implements WinningStrategy {
         this.currentStrategy = afterThreeRoundStrategy;
     }
 
-    public Player calculateWinner(Game game){
+    public Player calculateWinner(MutableGame game){
         StandardHotStoneGame standardGame = (StandardHotStoneGame) game;
         int roundNumber = standardGame.getRoundNumber();
         if(roundNumber > 6){

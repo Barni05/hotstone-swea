@@ -5,7 +5,7 @@ import hotstone.framework.strategies.HeroPowerStrategy;
 
 public class AlphaHeroPowerStrategy implements HeroPowerStrategy {
     @Override
-    public Status usePower(Game game, Player who){
+    public Status usePower(MutableGame game, Player who){
         Hero baby = game.getHero(who);
         int mana = baby.getMana();
         if (mana >= 2) return Status.OK;

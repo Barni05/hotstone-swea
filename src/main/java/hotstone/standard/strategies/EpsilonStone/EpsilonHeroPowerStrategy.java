@@ -17,7 +17,7 @@ public class EpsilonHeroPowerStrategy implements HeroPowerStrategy {
     }
 
     @Override
-    public Status usePower(Game game, Player who) {
+    public Status usePower(MutableGame game, Player who) {
         if (game.getPlayerInTurn() != who)
             return Status.NOT_PLAYER_IN_TURN;
         StandardHotStoneGame standardGame = (StandardHotStoneGame) game;

@@ -1,5 +1,6 @@
 package hotstone.standard.strategies.Gammastone;
 
+import hotstone.framework.MutableGame;
 import hotstone.framework.strategies.HeroPowerStrategy;
 import hotstone.framework.Game;
 import hotstone.framework.Player;
@@ -10,7 +11,7 @@ import hotstone.standard.StandardCard;
 
 public class GammaHeroPowerStrategy implements HeroPowerStrategy {
     @Override
-    public Status usePower(Game game, Player who){
+    public Status usePower(MutableGame game, Player who){
         if(game.getPlayerInTurn() != who){
             return Status.NOT_PLAYER_IN_TURN;
         }

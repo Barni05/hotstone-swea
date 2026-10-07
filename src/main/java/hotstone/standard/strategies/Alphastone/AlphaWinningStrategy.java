@@ -5,7 +5,7 @@ import hotstone.framework.strategies.WinningStrategy;
 
 public class AlphaWinningStrategy implements WinningStrategy {
     @Override
-    public Player calculateWinner(Game game){
+    public Player calculateWinner(MutableGame game){
         if (game.getTurnNumber() <= 4) return null;
         return Player.FINDUS;
     }
