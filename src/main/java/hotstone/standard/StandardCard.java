@@ -73,7 +73,7 @@ public class StandardCard implements Card, MutableCard {
     }
 
     @Override
-    public void useEffect(MutableGame game, Player who){
-        cardEffectStrategy.execute(game);
+    public Effect getEffect(){
+        return cardEffectStrategy;
     }
 }

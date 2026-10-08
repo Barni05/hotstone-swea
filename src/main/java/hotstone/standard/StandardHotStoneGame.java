@@ -256,6 +256,10 @@ public class StandardHotStoneGame implements Game, MutableGame {
         if (newManaValue < 0)
             return Status.NOT_ENOUGH_MANA;
         heroes.get(who).setMana(newManaValue);
+
+        //Executes effect
+        mutableCard.getEffect().execute(this);
+
         //Takes out of hand
         if (hands.get(who).remove(mutableCard)) {
             //Insert into field

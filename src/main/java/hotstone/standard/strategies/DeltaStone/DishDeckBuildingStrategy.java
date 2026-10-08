@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.Stack;
 import java.util.Random;
 
-public class DeltaDeckBuildingStrategy implements DeckBuildingStrategy {
+public class DishDeckBuildingStrategy implements DeckBuildingStrategy {
     @Override
     public Stack<MutableCard> createDeck(Player owner) {
         Stack<MutableCard> deck = new Stack<>();
@@ -71,4 +71,6 @@ public class DeltaDeckBuildingStrategy implements DeckBuildingStrategy {
 
         return deck;
     }
+
+
 }

@@ -3,13 +3,13 @@ package hotstone.standard.factories;
 import hotstone.framework.HotStoneFactory;
 import hotstone.framework.strategies.*;
 import hotstone.standard.strategies.Alphastone.*;
-import hotstone.standard.strategies.DeltaStone.DeltaDeckBuildingStrategy;
+import hotstone.standard.strategies.DeltaStone.DishDeckBuildingStrategy;
 import hotstone.standard.strategies.DeltaStone.DeltaManaProductionStrategy;
 
 public class DeltaStoneFactory implements HotStoneFactory {
     @Override
     public DeckBuildingStrategy createDeckBuildingStrategy(){
-        return new DeltaDeckBuildingStrategy();
+        return new DishDeckBuildingStrategy();
     }
 
     @Override
