@@ -14,12 +14,7 @@ public class DeltaStoneFactory implements HotStoneFactory {
 
     @Override
     public HeroCreationStrategy createHeroCreationStrategy(){
-        return new AlphaHeroCreationStrategy();
-    }
-
-    @Override
-    public HeroPowerStrategy createHeroPowerStrategy(){
-        return new AlphaHeroPowerStrategy();
+        return new BabyHeroCreationStrategy();
     }
 
     @Override

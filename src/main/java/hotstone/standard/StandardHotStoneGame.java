@@ -62,7 +62,6 @@ public class StandardHotStoneGame implements Game, MutableGame {
     ManaProductionStrategy manaProductionStrategy;
     WinningStrategy winningStrategy;
     HeroCreationStrategy heroCreationStrategy;
-    HeroPowerStrategy heroPowerStrategy;
     DeckBuildingStrategy deckBuildingStrategy;
 
     public StandardHotStoneGame(HotStoneFactory hotStoneFactory)    {
@@ -71,7 +70,6 @@ public class StandardHotStoneGame implements Game, MutableGame {
         this.manaProductionStrategy = hotStoneFactory.createManaProductionStrategy();
         this.winningStrategy = hotStoneFactory.createWinningStrategy();
         this.heroCreationStrategy = hotStoneFactory.createHeroCreationStrategy();
-        this.heroPowerStrategy = hotStoneFactory.createHeroPowerStrategy();
         this.deckBuildingStrategy = hotStoneFactory.createDeckBuildingStrategy();
 
         decks.put(Player.FINDUS, new Stack<>());
@@ -279,11 +277,11 @@ public class StandardHotStoneGame implements Game, MutableGame {
             return Status.ATTACK_NOT_ALLOWED_FOR_NON_ACTIVE_MINION;
 
         //Check if either card has died
-        if (mutableDefending.deltaHealth(mutableAttacking.getAttack()) == Status.NO_MORE_HEALTH) {
+        if (mutableDefending.deltaHealth(-mutableAttacking.getAttack()) == Status.NO_MORE_HEALTH) {
             //Remove card from existence
             removeCardFromField(Player.computeOpponent(playerAttacking), mutableDefending);
         }
-        if (mutableAttacking.deltaHealth(mutableDefending.getAttack()) == Status.NO_MORE_HEALTH) {
+        if (mutableAttacking.deltaHealth(-mutableDefending.getAttack()) == Status.NO_MORE_HEALTH) {
             //Remove card from existence
             removeCardFromField(playerAttacking, mutableAttacking);
         }
@@ -316,12 +314,15 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
     @Override
     public Status heroTakeDamage(Player who, int damageAmount) {
-        return getMutableHero(who).deltaHealth(damageAmount);
+        return getMutableHero(who).deltaHealth(-damageAmount);
     }
     @Override
     public Status usePower(Player who) {
         if (this.getPlayerInTurn() != who)
             return Status.NOT_PLAYER_IN_TURN;
-        return heroPowerStrategy.usePower(this, who);
+        MutableHero hero = (MutableHero) getHero(who);
+        if (!hero.canUsePower()) return Status.POWER_USE_NOT_ALLOWED_TWICE_PR_ROUND;
+        hero.setCanUsePower(false);
+        return hero.getEffect().execute(this);
     }
 }

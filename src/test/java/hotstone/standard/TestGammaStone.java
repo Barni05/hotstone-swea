@@ -2,13 +2,7 @@ package hotstone.standard;
 
 import hotstone.framework.Player;
 import hotstone.framework.Status;
-import hotstone.standard.factories.AlphaStoneFactory;
 import hotstone.standard.factories.GammaStoneFactory;
-import hotstone.standard.strategies.Alphastone.AlphaDeckBuildingStrategy;
-import hotstone.standard.strategies.Alphastone.AlphaManaProductionStrategy;
-import hotstone.standard.strategies.Gammastone.GammaHeroCreationStrategy;
-import hotstone.standard.strategies.Gammastone.GammaHeroPowerStrategy;
-import hotstone.standard.strategies.Gammastone.GammaWinningStrategy;
 import org.junit.jupiter.api.*;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -26,12 +20,12 @@ public class TestGammaStone {
 
     @Test
     public void findusShouldHaveThaiChefWhenGameCreated(){
-        assertThat(game.getHero(Player.FINDUS).getType(), is("ThaiChef"));
+        assertThat(game.getHero(Player.FINDUS).getType(), is(GameConstants.THAI_CHEF_HERO_TYPE));
     }
 
     @Test
     public void peddersenShouldHaveDanishChefWhenGameCreated(){
-        assertThat(game.getHero(Player.PEDDERSEN).getType(), is("DanishChef"));
+        assertThat(game.getHero(Player.PEDDERSEN).getType(), is(GameConstants.DANISH_CHEF_HERO_TYPE));
     }
 
     @Test

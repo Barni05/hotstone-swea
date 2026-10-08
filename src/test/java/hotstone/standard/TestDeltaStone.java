@@ -1,13 +1,6 @@
 package hotstone.standard;
 import hotstone.framework.*;
 import hotstone.standard.factories.DeltaStoneFactory;
-import hotstone.standard.strategies.Alphastone.AlphaDeckBuildingStrategy;
-import hotstone.standard.strategies.Alphastone.AlphaManaProductionStrategy;
-import hotstone.standard.strategies.DeltaStone.DeltaDeckBuildingStrategy;
-import hotstone.standard.strategies.DeltaStone.DeltaManaProductionStrategy;
-import hotstone.standard.strategies.Gammastone.GammaHeroCreationStrategy;
-import hotstone.standard.strategies.Gammastone.GammaHeroPowerStrategy;
-import hotstone.standard.strategies.Gammastone.GammaWinningStrategy;
 import org.junit.jupiter.api.*;
 
 import java.util.Collections;

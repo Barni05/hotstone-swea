@@ -248,8 +248,8 @@ public void shouldMinionBeInactive(){
   @Test
   public void defendingCardHealthShouldDecreaseAfterAttack(){
     //Both player plays card Uno (1,1,1)
-    setupCombatInSlotZero(2, 2);
-    assertThat(game.getCardInField(Player.PEDDERSEN, 0).getHealth(), is(1));
+    setupCombatInSlotZero(2, 3);
+    assertThat(game.getCardInField(Player.PEDDERSEN, 0), is(nullValue()));
   }
 
   @Test
@@ -265,8 +265,8 @@ public void shouldMinionBeInactive(){
   @Test
   public void attackingCardShouldTakeRetaliationDamageFromDefendingCardOnAttack(){
     //Findus plays Tres (3,3,3), Peddersen plays Uno (1,1,1)
-    setupCombatInSlotZero(0, 2);
-    assertThat(game.getCardInField(Player.FINDUS, 0).getHealth(), is(1));
+    setupCombatInSlotZero(0, 3);
+    assertThat(game.getCardInField(Player.FINDUS, 0).getHealth(), is(2));
   }
 
   @Test

@@ -3,6 +3,8 @@ package hotstone.standard.strategies.DeltaStone;
 import hotstone.framework.MutableCard;
 import hotstone.framework.strategies.DeckBuildingStrategy;
 import hotstone.framework.Player;
+import hotstone.framework.strategies.Effect;
+import hotstone.standard.CardEffects.NoEffect;
 import hotstone.standard.StandardCard;
 
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ public class DeltaDeckBuildingStrategy implements DeckBuildingStrategy {
     public Stack<MutableCard> createDeck(Player owner) {
         Stack<MutableCard> deck = new Stack<>();
         Stack<MutableCard> firstThree = new Stack<>();
+        Effect effect = new NoEffect();
         Random random = new Random();
         ArrayList<MutableCard> helperDeck = new ArrayList<>();
         Object[][] cardStats = {
@@ -38,7 +41,8 @@ public class DeltaDeckBuildingStrategy implements DeckBuildingStrategy {
                         (int) stat[2],
                         (int) stat[3],
                         false,
-                        owner
+                        owner,
+                        effect
                 ));
             }
         }

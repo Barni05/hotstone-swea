@@ -3,10 +3,12 @@ package hotstone.standard.CardEffects;
 import hotstone.framework.MutableCard;
 import hotstone.framework.MutableGame;
 import hotstone.framework.Player;
-import hotstone.framework.strategies.CardEffectStrategy;
+import hotstone.framework.Status;
+import hotstone.framework.strategies.Effect;
 
-public class NoEffect implements CardEffectStrategy {
-    public void execute(MutableGame game, Player who, MutableCard source){
-
+public class NoEffect implements Effect {
+    @Override
+    public Status execute(MutableGame game){
+        return Status.OK;
     }
 }

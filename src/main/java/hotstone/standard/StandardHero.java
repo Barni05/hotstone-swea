@@ -4,15 +4,17 @@ import hotstone.framework.Hero;
 import hotstone.framework.MutableHero;
 import hotstone.framework.Player;
 import hotstone.framework.Status;
+import hotstone.framework.strategies.Effect;
 
 public class StandardHero implements Hero, MutableHero {
     private int health, mana;
     private String type, effectDescription, effectName;
     private boolean powerAbility;
     private Player owner;
+    private Effect effect;
 
     public StandardHero (int health, int mana, String type, boolean powerAbility, Player owner,
-                         String effectName, String effectDescription) {
+                         String effectName, String effectDescription, Effect effect) {
         this.health = health;
         this.mana = mana;
         this.type = type;
@@ -20,15 +22,15 @@ public class StandardHero implements Hero, MutableHero {
         this.owner = owner;
         this.effectName = effectName;
         this.effectDescription = effectDescription;
+        this.effect = effect;
     }
     @Override
     public int getHealth() {return health; }
     @Override
     public Status deltaHealth(int damage) {
-        int newHealth = getHealth()-damage;
-        if(newHealth <= 0)
+        health += damage;
+        if(health <= 0)
             return Status.NO_MORE_HEALTH;
-        this.health = newHealth;
         return Status.OK;
     }
 
@@ -65,4 +67,7 @@ public class StandardHero implements Hero, MutableHero {
     public void setCanUsePower(boolean canUsePower){
         this.powerAbility = canUsePower;
     }
+
+    @Override
+    public Effect getEffect(){ return effect;}
 }

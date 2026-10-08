@@ -1,15 +1,15 @@
 package hotstone.standard;
 import hotstone.framework.*;
-import hotstone.framework.strategies.CardEffectStrategy;
+import hotstone.framework.strategies.Effect;
 
 public class StandardCard implements Card, MutableCard {
     private String name, effectDescription;
     private int manaCost, attack, health;
     private boolean isActive;
     private Player owner;
-    private final CardEffectStrategy cardEffectStrategy;
+    private final Effect cardEffectStrategy;
 
-    public StandardCard(String name, String effectDescription, int manaCost, int attack, int health, boolean isActive, Player owner, CardEffectStrategy cardEffectStrategy) {
+    public StandardCard(String name, String effectDescription, int manaCost, int attack, int health, boolean isActive, Player owner, Effect cardEffectStrategy) {
         this.name = name;
         this.effectDescription = effectDescription;
         this.manaCost = manaCost;
@@ -74,6 +74,6 @@ public class StandardCard implements Card, MutableCard {
 
     @Override
     public void useEffect(MutableGame game, Player who){
-        cardEffectStrategy.execute(game, who, this);
+        cardEffectStrategy.execute(game);
     }
 }
