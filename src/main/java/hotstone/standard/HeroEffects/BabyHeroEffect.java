@@ -15,7 +15,7 @@ public class BabyHeroEffect implements Effect {
     }
     @Override
     public Status execute(MutableGame game){
-        MutableHero baby = (MutableHero)game.getHero(owner);
+        MutableHero baby = game.getMutableHero(owner);
         return baby.deltaMana(-2);
     }
 }
