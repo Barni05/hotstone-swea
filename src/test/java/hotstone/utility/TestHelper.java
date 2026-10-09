@@ -16,10 +16,8 @@
 
 package hotstone.utility;
 
-import hotstone.framework.Card;
-import hotstone.framework.Game;
-import hotstone.framework.Hero;
-import hotstone.framework.Player;
+import hotstone.framework.*;
+import hotstone.framework.MutableCard;
 
 /** Useful helper functions during TDD of the
  * HotStone system. Call these methods in your
@@ -78,14 +76,14 @@ public class TestHelper {
   }
 
   // Helper method to set a few cards into the field
-  public static void fieldTresForFindusAndDosForPeddersen(Game game) {
-    Card card = game.getCardInHand(Player.FINDUS, 0);
+  /*public static void fieldTresForFindusAndDosForPeddersen(Game game) {
+    MutableCard card = game.getCardInHand(Player.FINDUS, 0);
     game.playCard(Player.FINDUS, card, 0);
     game.endTurn();
     // Remember Peddersen gets a card draw, so Dos is now at
     // index 2
-    card = game.getCardInHand(Player.PEDDERSEN, 2);
+    MutableCard = game.getCardInHand(Player.PEDDERSEN, 2);
     game.playCard(Player.PEDDERSEN, card, 0);
     game.endTurn(); // Back to Findus which draws a card
-  }
+  }*/
 }

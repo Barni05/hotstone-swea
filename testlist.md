@@ -12,6 +12,7 @@
 - Given a hands of 3 cards. When the player plays the card from index 0, the card on index 1 shifts to index 0✅
 - When a minion is placed onto the field, it remains inactive for the turn
 - Given Findus has 0 mana, and tries to play a card with >0 mana, the mana remains 0, and it doesn't get added to the field
+- Given an initialized EtaStone game, upon playing brown rice card, the heroTakeDamage function is called
 
 ## HERO 
 - Given a new game, each player has 21 health and 3 mana

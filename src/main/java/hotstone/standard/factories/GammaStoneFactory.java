@@ -3,8 +3,7 @@ package hotstone.standard.factories;
 import hotstone.framework.HotStoneFactory;
 import hotstone.framework.strategies.*;
 import hotstone.standard.strategies.Alphastone.*;
-import hotstone.standard.strategies.Gammastone.GammaHeroCreationStrategy;
-import hotstone.standard.strategies.Gammastone.GammaHeroPowerStrategy;
+import hotstone.standard.strategies.Gammastone.ThaiDanishChefHeroCreationStrategy;
 import hotstone.standard.strategies.Gammastone.GammaWinningStrategy;
 
 public class GammaStoneFactory implements HotStoneFactory {
@@ -15,12 +14,7 @@ public class GammaStoneFactory implements HotStoneFactory {
 
     @Override
     public HeroCreationStrategy createHeroCreationStrategy(){
-        return new GammaHeroCreationStrategy();
-    }
-
-    @Override
-    public HeroPowerStrategy createHeroPowerStrategy(){
-        return new GammaHeroPowerStrategy();
+        return new ThaiDanishChefHeroCreationStrategy();
     }
 
     @Override

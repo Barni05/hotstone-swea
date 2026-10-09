@@ -45,6 +45,8 @@ public interface Game {
    */
   Player getWinner();
 
+  int calculateStartRoundMana(Player who);
+
   /** Get the number of turns played. Starts at turn 0 for Findus,
    * then 1 for Peddersen, 2 for Findus, and so on.
    *
