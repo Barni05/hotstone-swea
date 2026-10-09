@@ -22,7 +22,9 @@ public interface MutableGame extends Game {
 
     MutableHero getMutableHero(Player who);
 
-    void deltaAttackOnCard(Player whose, int fieldIndex, int attack);
+    Status deltaAttackOnCard(Player whose, int fieldIndex, int attack);
+    Status deltaHealthOnCard(Player whose, int fieldIndex, int health);
+
 
 
 }

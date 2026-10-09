@@ -146,9 +146,14 @@ public class StandardHotStoneGame implements Game, MutableGame {
     public MutableHero getMutableHero(Player who) {return heroes.get(who);}
 
     @Override
-    public void deltaAttackOnCard(Player whose, int fieldIndex, int attack) {
+    public Status deltaAttackOnCard(Player whose, int fieldIndex, int attack) {
 
-        fields.get(whose).get(fieldIndex).deltaAttack(attack);
+        return fields.get(whose).get(fieldIndex).deltaAttack(attack);
+    }
+
+    @Override
+    public Status deltaHealthOnCard(Player whose, int fieldIndex, int health) {
+        return fields.get(whose).get(fieldIndex).deltaHealth(health);
     }
 
 
@@ -325,9 +330,9 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
     @Override
     public Status removeCardFromField(Player who, int atIndex) {
-        int index = fields.get(who).indexOf(atIndex);
-        if (index != -1) {
-            fields.get(who).set(index, null);
+        if(fields.get(who).get(atIndex) != null)
+        {
+            fields.get(who).set(atIndex, null);
             return Status.OK;
         }
         return Status.CARD_NOT_FOUND;
