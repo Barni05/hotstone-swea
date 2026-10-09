@@ -20,14 +20,12 @@ public class FrenchChefEffect implements Effect {
 
     @Override
     public Status execute(MutableGame game) {
-        ArrayList<MutableCard> opponentMinions = game.getPlayersMinions(Player.computeOpponent(owner));
-        if (opponentMinions.isEmpty()) return Status.NO_MORE_CARDS;
+        int fieldSize = game.getFieldSize(Player.computeOpponent(owner));
+        if (fieldSize == 0) return Status.NO_MORE_CARDS;
         int targetIndex;
-        MutableCard targetCard;
-        targetIndex = indexSelector.selectIndex(opponentMinions.size());
-        targetCard = opponentMinions.get(targetIndex);
-        if (targetCard.deltaHealth(-2) == Status.NO_MORE_HEALTH)
-            game.removeCardFromField(Player.computeOpponent(owner), targetCard);
+        targetIndex = indexSelector.selectIndex(fieldSize);
+        if (game.deltaHealthOnCard(Player.computeOpponent(owner), targetIndex, -2) == Status.NO_MORE_HEALTH)
+            return game.removeCardFromField(Player.computeOpponent(owner), targetIndex);
         return Status.OK;
     }
 }

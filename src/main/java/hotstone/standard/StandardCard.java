@@ -2,6 +2,8 @@ package hotstone.standard;
 import hotstone.framework.*;
 import hotstone.framework.strategies.Effect;
 
+import java.sql.SQLInvalidAuthorizationSpecException;
+
 public class StandardCard implements Card, MutableCard {
     private String name, effectDescription;
     private int manaCost, attack, health;
@@ -67,9 +69,13 @@ public class StandardCard implements Card, MutableCard {
     }
 
     @Override
-    public void deltaAttack(int amount){
+    public Status deltaAttack(int amount){
         if(attack+amount > 0)
+        {
             attack+=amount;
+            return Status.OK;
+        }
+        return Status.NO_MORE_HEALTH;
     }
 
     @Override

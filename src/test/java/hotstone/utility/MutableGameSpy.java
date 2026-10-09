@@ -74,9 +74,16 @@ public class MutableGameSpy implements MutableGame {
     }
 
     @Override
-    public void deltaAttackOnCard(Player whose, int fieldIndex, int attack) {
+    public Status deltaAttackOnCard(Player whose, int fieldIndex, int attack) {
         lastCall = "deltaAttackOnCard("+whose.toString()+","+fieldIndex+","+attack+")";
+        return Status.OK;
 
+    }
+
+    @Override
+    public Status deltaHealthOnCard(Player whose, int fieldIndex, int health) {
+        lastCall = "deltaHealthOnCard("+whose.toString()+","+fieldIndex+","+health+")";
+        return Status.OK;
     }
 
 
