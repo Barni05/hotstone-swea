@@ -19,13 +19,11 @@ public class BakedSalmonEffect implements Effect {
     }
     @Override
     public Status execute(MutableGame game){
-        ArrayList<MutableCard> opponentMinion = game.getPlayersMinions(Player.computeOpponent(owner));
-        if (opponentMinion.isEmpty()) return Status.NO_MORE_CARDS;
+        int fieldSize = game.getFieldSize(Player.computeOpponent(owner));
+        if (fieldSize == 0) return Status.NO_MORE_CARDS;
         int targetIndex;
-        MutableCard targetCard;
-        targetIndex = indexSelector.selectIndex(opponentMinion.size());
-        targetCard = opponentMinion.get(targetIndex);
-        targetCard.deltaAttack(2);
+        targetIndex = indexSelector.selectIndex(fieldSize);
+        game.deltaAttackOnCard(Player.computeOpponent(owner), targetIndex, 2);
         return Status.OK;
     }
 }

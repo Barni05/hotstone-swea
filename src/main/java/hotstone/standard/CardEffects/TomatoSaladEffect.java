@@ -19,13 +19,11 @@ public class TomatoSaladEffect implements Effect {
     }
     @Override
     public Status execute(MutableGame game){
-        ArrayList<MutableCard> ownMinions = game.getPlayersMinions(owner);
-        if (ownMinions.isEmpty()) return Status.NO_MORE_CARDS;
+        int fieldSize = game.getFieldSize(owner);
+        if (fieldSize == 0) return Status.NO_MORE_CARDS;
         int targetIndex;
-        MutableCard targetCard;
-        targetIndex = indexSelector.selectIndex(ownMinions.size());
-        targetCard = ownMinions.get(targetIndex);
-        targetCard.deltaAttack(1);
+        targetIndex = indexSelector.selectIndex(fieldSize);
+        game.deltaAttackOnCard(owner,targetIndex,1);
         return Status.OK;
     }
 }

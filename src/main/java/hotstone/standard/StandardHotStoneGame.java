@@ -146,6 +146,13 @@ public class StandardHotStoneGame implements Game, MutableGame {
     public MutableHero getMutableHero(Player who) {return heroes.get(who);}
 
     @Override
+    public void deltaAttackOnCard(Player whose, int fieldIndex, int attack) {
+
+        fields.get(whose).get(fieldIndex).deltaAttack(attack);
+    }
+
+
+    @Override
     //since we already know that (for this iteration) Findus will always win
     public Player getWinner() {
         return winningStrategy.calculateWinner(this);
@@ -195,7 +202,12 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
     @Override
     public int getFieldSize(Player who) {
-        return fields.get(who).size();
+        ArrayList<MutableCard> ret = new ArrayList<>();
+        for(MutableCard c : getField(who)){
+            if(c != null)
+                ret.add(c);
+        }
+        return ret.size();
     }
 
     @Override
@@ -304,6 +316,16 @@ public class StandardHotStoneGame implements Game, MutableGame {
     @Override
     public Status removeCardFromField(Player who, Card cardToRemove) {
         int index = fields.get(who).indexOf(cardToRemove);
+        if (index != -1) {
+            fields.get(who).set(index, null);
+            return Status.OK;
+        }
+        return Status.CARD_NOT_FOUND;
+    }
+
+    @Override
+    public Status removeCardFromField(Player who, int atIndex) {
+        int index = fields.get(who).indexOf(atIndex);
         if (index != -1) {
             fields.get(who).set(index, null);
             return Status.OK;

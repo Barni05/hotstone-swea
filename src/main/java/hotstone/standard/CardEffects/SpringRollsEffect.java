@@ -19,12 +19,12 @@ public class SpringRollsEffect implements Effect {
     }
     @Override
     public Status execute(MutableGame game){
-        ArrayList<MutableCard> opponentMinion = game.getPlayersMinions(Player.computeOpponent(owner));
-        if (opponentMinion.isEmpty()) return Status.NO_MORE_CARDS;
+        int fieldSize = game.getFieldSize(Player.computeOpponent(owner));
+        if(fieldSize == 0){
+            return Status.NO_MORE_CARDS;
+        }
         int targetIndex;
-        MutableCard targetCard;
-        targetIndex = indexSelector.selectIndex(opponentMinion.size());
-        targetCard = opponentMinion.get(targetIndex);
-        return game.removeCardFromField(Player.computeOpponent(owner), targetCard);
+        targetIndex = indexSelector.selectIndex(fieldSize);
+        return game.removeCardFromField(Player.computeOpponent(owner), targetIndex);
     }
 }

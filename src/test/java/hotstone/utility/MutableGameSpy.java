@@ -2,9 +2,21 @@ package hotstone.utility;
 
 import hotstone.framework.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Stack;
+
 public class MutableGameSpy implements MutableGame {
     private String lastCall = "";
-    public MutableGameSpy(){}
+    private HashMap<Player, Stack<MutableCard>> decks = new HashMap<>();
+    private HashMap<Player, ArrayList<MutableCard>> hands = new HashMap<>();
+    private HashMap<Player, ArrayList<MutableCard>> fields = new HashMap<>();
+    public MutableGameSpy(){
+        for (Player player : Player.values()) {
+            fields.put(player, new ArrayList<>(Collections.nCopies(FIELD_CAPACITY, null)));
+        }
+    }
 
     public String getLastCall(){
         return lastCall;
@@ -17,13 +29,26 @@ public class MutableGameSpy implements MutableGame {
     }
 
     @Override
+    public void executeAttacks() {
+
+    }
+
+    @Override
     public void insertCardIntoField(Player who, MutableCard card, int atIndex){
         lastCall = "insertCardIntoField("+who.toString()+","+card.getName()+","+atIndex+")";
+        fields.get(who).set(atIndex, card);
     }
 
     @Override
     public Status removeCardFromField(Player who, Card cardToRemove){
         lastCall = "removeCardFromField("+who.toString()+","+cardToRemove.getName()+")";
+
+        return Status.OK;
+    }
+
+    @Override
+    public Status removeCardFromField(Player who, int atIndex) {
+        lastCall = "removeCardFromField("+who.toString()+","+atIndex+")";
         return Status.OK;
     }
 
@@ -32,6 +57,28 @@ public class MutableGameSpy implements MutableGame {
         lastCall = "heroTakeDamage("+who.toString()+","+damageAmount+")";
         return Status.OK;
     }
+
+    @Override
+    public ArrayList<MutableCard> getPlayersMinions(Player who) {
+        return fields.get(who);
+    }
+
+    @Override
+    public MutableCard getMutableCardInField(Player who, int indexInField) {
+        return null;
+    }
+
+    @Override
+    public MutableHero getMutableHero(Player who) {
+        return null;
+    }
+
+    @Override
+    public void deltaAttackOnCard(Player whose, int fieldIndex, int attack) {
+        lastCall = "deltaAttackOnCard("+whose.toString()+","+fieldIndex+","+attack+")";
+
+    }
+
 
     @Override
     public Player getPlayerInTurn(){return null;}
@@ -88,7 +135,7 @@ public class MutableGameSpy implements MutableGame {
 
     @Override
     public int getFieldSize(Player who) {
-        return 0;
+        return 1;
     }
 
     @Override

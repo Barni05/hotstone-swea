@@ -14,7 +14,6 @@ public class PokeBowlEffect implements Effect {
     }
     @Override
     public Status execute(MutableGame game){
-        MutableHero mutableHero=  (MutableHero)game.getHero(owner);
-        return mutableHero.deltaHealth(2);
+        return game.heroTakeDamage(owner, -2);
     }
 }
