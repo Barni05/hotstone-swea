@@ -33,6 +33,7 @@ import hotstone.framework.*;
 import hotstone.standard.factories.AlphaStoneFactory;
 import hotstone.standard.strategies.Alphastone.*;
 import org.junit.jupiter.api.*;
+import wizardhub.EffectWizard;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -110,6 +111,7 @@ public class TestAlphaStone {
       assertThat(countFindus, is(EXPECTED_INITIAL_DECK_SIZE));
       int countPeddersen = game.getDeckSize(Player.PEDDERSEN);
       assertThat(countPeddersen, is(EXPECTED_INITIAL_DECK_SIZE));
+
   }
 
   @Test
