@@ -1,16 +1,24 @@
 package hotstone.standard;
 
+import hotstone.framework.MutableGame;
 import wizardhub.HotStoneGameTarget;
-
+import hotstone.framework.Player;
 public class HotstoneWizardHubAdapter implements HotStoneGameTarget {
+    MutableGame mutableGame;
+
+
+    public HotstoneWizardHubAdapter(MutableGame game){
+        this.mutableGame = game;
+    }
+
     @Override
     public int getThePlayerInTurn() {
-        return 0;
+       return mutableGame.getPlayerInTurn().ordinal();
     }
 
     @Override
     public int getSizeOfField(int playerIndex) {
-        return 0;
+        return mutableGame.getFieldSize(Player.valueOf(playerIndex));
     }
 
     @Override
