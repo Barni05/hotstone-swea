@@ -38,7 +38,7 @@ public class TestZetaStone {
     @Test
     public void peddersenWinsWhenFindusDiesInRoundSeven(){
         game.endTurn();
-        game.heroTakeDamage(Player.FINDUS, 21);
+        game.deltaHealthOnHero(Player.FINDUS, -21);
         for(int i = 0; i < 13; i++){
             game.endTurn();
         }

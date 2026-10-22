@@ -14,7 +14,7 @@ public interface MutableGame extends Game {
     Status removeCardFromField(Player who, Card cardToRemove);
     Status removeCardFromField(Player who, int atIndex);
 
-    Status heroTakeDamage(Player who, int damageAmount);
+    Status deltaHealthOnHero(Player who, int damageAmount);
 
     ArrayList<MutableCard> getPlayersMinions(Player who);
 

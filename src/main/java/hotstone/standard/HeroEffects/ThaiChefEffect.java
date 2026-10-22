@@ -13,7 +13,7 @@ public class ThaiChefEffect implements Effect {
     }
     @Override
     public Status execute(MutableGame game){
-        game.heroTakeDamage(Player.computeOpponent(owner), 2);
+        game.deltaHealthOnHero(Player.computeOpponent(owner), -2);
         return Status.OK;
     }
 }

@@ -53,7 +53,7 @@ public class MutableGameSpy implements MutableGame {
     }
 
     @Override
-    public Status heroTakeDamage(Player who, int damageAmount){
+    public Status deltaHealthOnHero(Player who, int damageAmount){
         lastCall = "heroTakeDamage("+who.toString()+","+damageAmount+")";
         return Status.OK;
     }

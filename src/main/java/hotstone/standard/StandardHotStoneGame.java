@@ -340,12 +340,12 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
     @Override
     public Status attackHero(Player playerAttacking, Card attackingCard) {
-        return heroTakeDamage(Player.computeOpponent(playerAttacking), attackingCard.getAttack());
+        return deltaHealthOnHero(Player.computeOpponent(playerAttacking), -attackingCard.getAttack());
     }
 
     @Override
-    public Status heroTakeDamage(Player who, int damageAmount) {
-        return getMutableHero(who).deltaHealth(-damageAmount);
+    public Status deltaHealthOnHero(Player who, int damageAmount) {
+        return getMutableHero(who).deltaHealth(damageAmount);
     }
     @Override
     public Status usePower(Player who) {

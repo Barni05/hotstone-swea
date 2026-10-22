@@ -13,6 +13,6 @@ public class BrownRiceEffect implements Effect {
     }
     @Override
     public Status execute(MutableGame game){
-        return game.heroTakeDamage(Player.computeOpponent(owner), 1);
+        return game.deltaHealthOnHero(Player.computeOpponent(owner), -1);
     }
 }
