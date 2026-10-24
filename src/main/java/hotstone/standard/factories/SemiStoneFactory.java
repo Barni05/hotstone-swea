@@ -10,6 +10,7 @@ import hotstone.standard.strategies.BetaStone.BetaWinningStrategy;
 import hotstone.standard.strategies.EpsilonStone.FrenchItalianChefHeroCreationStrategy;
 import hotstone.standard.strategies.EtaStone.ModifiedDishDeckBuildingStrategy;
 import hotstone.standard.strategies.Gammastone.GammaWinningStrategy;
+import hotstone.standard.strategies.SemiStone.ThaiDanishFrenchItalianRandomHeroCreation;
 import hotstone.standard.strategies.ZetaStone.ZetaWinningStrategy;
 import hotstone.standard.utils.IndexSelector;
 import hotstone.standard.utils.RandomIndexSelector;
@@ -29,7 +30,7 @@ public class SemiStoneFactory implements HotStoneFactory {
 
     @Override
     public HeroCreationStrategy createHeroCreationStrategy() {
-        return new FrenchItalianChefHeroCreationStrategy(indexSelector);
+        return new ThaiDanishFrenchItalianRandomHeroCreation(indexSelector);
     }
 
     @Override
