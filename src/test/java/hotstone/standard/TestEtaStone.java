@@ -64,7 +64,7 @@ public class TestEtaStone {
         stub.setIndex(0);
         Effect effect = new SpringRollsEffect(Player.PEDDERSEN, stub);
         effect.execute(spy);
-        assertThat(spy.getLastCall(), is("removeCardFromField(FINDUS,0)"));
+        assertThat(spy.getLastCall(), is("deltaHealthOnCard(PEDDERSEN,0,-99999)"));
     }
 
     @Test
