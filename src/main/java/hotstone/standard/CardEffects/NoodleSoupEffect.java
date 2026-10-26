@@ -5,6 +5,8 @@ import hotstone.framework.MutableHero;
 import hotstone.framework.Player;
 import hotstone.framework.Status;
 import hotstone.framework.strategies.Effect;
+import hotstone.standard.HotstoneWizardHubAdapter;
+import wizardhub.EffectWizard;
 
 public class NoodleSoupEffect implements Effect {
     private final Player owner;
@@ -14,6 +16,9 @@ public class NoodleSoupEffect implements Effect {
     }
     @Override
     public Status execute(MutableGame game){
-        return game.drawCard(owner);
+        HotstoneWizardHubAdapter adapter = new HotstoneWizardHubAdapter(game);
+        EffectWizard effectWizard = new EffectWizard(adapter);
+        effectWizard.forMe().doDrawCard();
+        return Status.OK;
     }
 }
