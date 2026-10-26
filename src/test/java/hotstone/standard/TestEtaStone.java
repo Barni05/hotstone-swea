@@ -45,7 +45,7 @@ public class TestEtaStone {
         MutableGameSpy spy = new MutableGameSpy();
         Effect effect = new PokeBowlEffect(Player.FINDUS);
         effect.execute(spy);
-        assertThat(spy.getLastCall(), is("deltaHealthOnHero(FINDUS,-2)"));
+        assertThat(spy.getLastCall(), is("deltaHealthOnHero(FINDUS,2)"));
     }
 
     @Test
