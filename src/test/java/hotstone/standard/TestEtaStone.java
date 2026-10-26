@@ -30,7 +30,7 @@ public class TestEtaStone {
         MutableGameSpy spyGame = new MutableGameSpy();
         Effect brownRice = new BrownRiceEffect(Player.FINDUS);
         brownRice.execute(spyGame);
-        assertThat(spyGame.getLastCall(), is("heroTakeDamage(PEDDERSEN,1)"));
+        assertThat(spyGame.getLastCall(), is("deltaHealthOnHero(PEDDERSEN,-1)"));
     }
     @Test
     public void tomatoSaladShouldMakeEffect(){
@@ -45,7 +45,7 @@ public class TestEtaStone {
         MutableGameSpy spy = new MutableGameSpy();
         Effect effect = new PokeBowlEffect(Player.FINDUS);
         effect.execute(spy);
-        assertThat(spy.getLastCall(), is("heroTakeDamage(FINDUS,-2)"));
+        assertThat(spy.getLastCall(), is("deltaHealthOnHero(FINDUS,-2)"));
     }
 
     @Test

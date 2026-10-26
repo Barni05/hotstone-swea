@@ -4,6 +4,8 @@ import hotstone.framework.MutableGame;
 import hotstone.framework.Player;
 import hotstone.framework.Status;
 import hotstone.framework.strategies.Effect;
+import hotstone.standard.HotstoneWizardHubAdapter;
+import wizardhub.EffectWizard;
 
 public class BrownRiceEffect implements Effect {
     private final Player owner;
@@ -13,6 +15,8 @@ public class BrownRiceEffect implements Effect {
     }
     @Override
     public Status execute(MutableGame game){
-        return game.deltaHealthOnHero(Player.computeOpponent(owner), -1);
+        HotstoneWizardHubAdapter adapter = new HotstoneWizardHubAdapter(game);
+        new EffectWizard(adapter).forOpponent().forHero().doChangeHealthOrRemove(-1);
+        return Status.OK;
     }
 }

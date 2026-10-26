@@ -41,6 +41,6 @@ public class SemiStoneFactory implements HotStoneFactory {
 
     @Override
     public WinningStrategy createWinningStrategy() {
-        return new ZetaWinningStrategy(new GammaWinningStrategy(), new BetaWinningStrategy());
+        return new BetaWinningStrategy();
     }
 }

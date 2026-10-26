@@ -13,6 +13,6 @@ public class PokeBowlEffect implements Effect {
     }
     @Override
     public Status execute(MutableGame game){
-        return game.deltaHealthOnHero(owner, 2);
+        return game.deltaHealthOnHero(owner, -2);
     }
 }
