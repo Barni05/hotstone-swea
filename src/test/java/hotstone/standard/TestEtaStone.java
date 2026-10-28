@@ -1,7 +1,9 @@
 package hotstone.standard;
 
+import hotstone.framework.MutableGame;
 import hotstone.framework.Player;
 import hotstone.framework.strategies.Effect;
+import hotstone.framework.transcribe.GameLogDecorator;
 import hotstone.standard.CardEffects.*;
 import hotstone.standard.factories.EtaStoneFactory;
 import hotstone.standard.factories.ZetaStoneFactory;
@@ -14,11 +16,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TestEtaStone {
 
-    private StandardHotStoneGame game;
+    private MutableGame game;
     private FixedIndexSelectorStub stub = new FixedIndexSelectorStub(0);
     @BeforeEach
     public void setupEtaStone(){
-        game = new StandardHotStoneGame(new EtaStoneFactory(stub));
+        game = new GameLogDecorator(new  StandardHotStoneGame(new EtaStoneFactory(stub)));
     }
 
     /*

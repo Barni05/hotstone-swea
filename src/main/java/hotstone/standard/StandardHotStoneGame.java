@@ -48,7 +48,7 @@ import java.util.Collections;
  * why it is not called 'AlphaGame'.
  */
 
-public class StandardHotStoneGame implements Game, MutableGame {
+public class StandardHotStoneGame implements MutableGame {
     private final int NO_MORE_CARD_PENALTY = 2;
 
     private HashMap<Player, Stack<MutableCard>> decks = new HashMap<>();
