@@ -5,7 +5,7 @@ import hotstone.framework.*;
 import java.util.ArrayList;
 
 public class GameLogDecorator implements MutableGame {
-    private MutableGame mutableGame;
+    private final MutableGame mutableGame;
 
     public GameLogDecorator(MutableGame mg){
         this.mutableGame = mg;
