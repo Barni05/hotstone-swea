@@ -1,6 +1,8 @@
 package hotstone.standard;
 
+import hotstone.framework.MutableGame;
 import hotstone.framework.Player;
+import hotstone.framework.transcribe.GameLogDecorator;
 import hotstone.standard.factories.ZetaStoneFactory;
 import org.junit.jupiter.api.*;
 
@@ -9,11 +11,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 
 public class TestZetaStone {
-    private StandardHotStoneGame game;
+    private MutableGame game;
 
     @BeforeEach
     public void setupZetaStone(){
-        game = new StandardHotStoneGame(new ZetaStoneFactory());
+        game = new GameLogDecorator(new StandardHotStoneGame(new ZetaStoneFactory()));
     }
 
     @Test

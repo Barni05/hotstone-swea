@@ -30,6 +30,7 @@ package hotstone.standard;
  */
 
 import hotstone.framework.*;
+import hotstone.framework.transcribe.GameLogDecorator;
 import hotstone.standard.factories.AlphaStoneFactory;
 import hotstone.standard.strategies.Alphastone.*;
 import org.junit.jupiter.api.*;
@@ -51,7 +52,7 @@ public class TestAlphaStone {
   /** Fixture for AlphaStone testing. */
   @BeforeEach
   public void setUpAlphastone() {
-    game = new StandardHotStoneGame(new AlphaStoneFactory());
+    game = new GameLogDecorator(new StandardHotStoneGame(new AlphaStoneFactory()));
   }
 
   // Example of an early, simple test case:
