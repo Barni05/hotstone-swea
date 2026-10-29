@@ -29,24 +29,22 @@ package hotstone.standard;
  *      Aarhus University
  */
 
-import hotstone.framework.Card;
-import hotstone.framework.Player;
-import hotstone.framework.Status;
+import hotstone.framework.*;
+import hotstone.framework.transcribe.GameLogDecorator;
 import hotstone.standard.factories.AlphaStoneFactory;
 import hotstone.standard.strategies.Alphastone.*;
 import org.junit.jupiter.api.*;
+import wizardhub.EffectWizard;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-
-import hotstone.framework.Game;
 
 /** Template for your own ongoing TDD process.
  * Fill it out until you have covered all
  * requirements for the alpha stone game.
  */
 public class TestAlphaStone {
-  private Game game;
+  private MutableGame game;
   private final int EXPECTED_INITIAL_DECK_SIZE = 4, EXPECTED_INITIAL_HAND_SIZE = 3, MAXIMUM_DRAW = 4,
           MAXIMUM_HEALTH = 21, EXPECTED_MANA = 3;
 
@@ -54,7 +52,7 @@ public class TestAlphaStone {
   /** Fixture for AlphaStone testing. */
   @BeforeEach
   public void setUpAlphastone() {
-    game = new StandardHotStoneGame(new AlphaStoneFactory());
+    game = new GameLogDecorator(new StandardHotStoneGame(new AlphaStoneFactory()));
   }
 
   // Example of an early, simple test case:
@@ -114,6 +112,7 @@ public class TestAlphaStone {
       assertThat(countFindus, is(EXPECTED_INITIAL_DECK_SIZE));
       int countPeddersen = game.getDeckSize(Player.PEDDERSEN);
       assertThat(countPeddersen, is(EXPECTED_INITIAL_DECK_SIZE));
+
   }
 
   @Test
@@ -139,26 +138,24 @@ public class TestAlphaStone {
   public void shouldDecreaseDeckSizeBy1AndIncreaseHand(){
     int deckSizeBefore = game.getDeckSize(Player.FINDUS);
     int handSizeBefore = game.getHandSize(Player.FINDUS);
-    StandardHotStoneGame standardGame = (StandardHotStoneGame) game;
-    standardGame.drawCard(Player.FINDUS);
-    assertThat(standardGame.getHandSize(Player.FINDUS), is(handSizeBefore+1));
-    assertThat(standardGame.getDeckSize(Player.FINDUS), is(deckSizeBefore-1));
+    game.drawCard(Player.FINDUS);
+    assertThat(game.getHandSize(Player.FINDUS), is(handSizeBefore+1));
+    assertThat(game.getDeckSize(Player.FINDUS), is(deckSizeBefore-1));
   }
 
   @Test
   public void shouldPlayedCardBeOnRightIndex(){
-    Card card = game.getCardInHand(Player.FINDUS, 0);
+    Card card =  game.getCardInHand(Player.FINDUS, 0);
     assertThat(card, not(nullValue()));
     game.playCard(Player.FINDUS, card, 1);
     assertThat(game.getCardInField(Player.FINDUS, 1), not(nullValue()));
   }
 @Test
 public void shoudReturnNoMoreCards(){
-    StandardHotStoneGame standardGame = (StandardHotStoneGame) game;
     for(int i = 0; i < MAXIMUM_DRAW; i++){
-      standardGame.drawCard(Player.FINDUS);
+      game.drawCard(Player.FINDUS);
     }
-    Status status = standardGame.drawCard(Player.FINDUS);
+    Status status = game.drawCard(Player.FINDUS);
     assertThat(status, is(Status.NO_MORE_CARDS));
 }
 
@@ -180,8 +177,7 @@ public void shouldMinionBeInactive(){
 
   @Test
   public void shouldHaveFullHealthAndMana() {
-    StandardHotStoneGame standardGame = (StandardHotStoneGame) game;
-    StandardHero baby = (StandardHero) standardGame.getHero(Player.FINDUS);
+    StandardHero baby = (StandardHero) game.getHero(Player.FINDUS);
     int healthBaby = baby.getHealth();
     int manaBaby = baby.getMana();
     assertThat(healthBaby, is(MAXIMUM_HEALTH));
@@ -190,11 +186,10 @@ public void shouldMinionBeInactive(){
 
   @Test
   public void shouldTakeDamage() {
-    StandardHotStoneGame standardGame = (StandardHotStoneGame) game;
-    Card card = standardGame.getCardInHand(Player.FINDUS, 0);
-    int health = standardGame.getHero(Player.PEDDERSEN).getHealth();
-    standardGame.attackHero(Player.FINDUS, card);
-    assertThat(standardGame.getHero(Player.PEDDERSEN).getHealth(), is(health - card.getAttack()));
+    Card card = game.getCardInHand(Player.FINDUS, 0);
+    int health = game.getHero(Player.PEDDERSEN).getHealth();
+    game.attackHero(Player.FINDUS, card);
+    assertThat(game.getHero(Player.PEDDERSEN).getHealth(), is(health - card.getAttack()));
   }
 
   @Test
@@ -256,26 +251,25 @@ public void shouldMinionBeInactive(){
   @Test
   public void defendingCardHealthShouldDecreaseAfterAttack(){
     //Both player plays card Uno (1,1,1)
-    setupCombatInSlotZero(2, 2);
-    assertThat(game.getCardInField(Player.PEDDERSEN, 0).getHealth(), is(1));
+    setupCombatInSlotZero(2, 3);
+    assertThat(game.getCardInField(Player.PEDDERSEN, 0), is(nullValue()));
   }
 
   @Test
   public void findusWinsAfter4Rounds() {
-    StandardHotStoneGame standardGame = (StandardHotStoneGame) game;
-    standardGame.endTurn();
-    standardGame.endTurn();
-    standardGame.endTurn();
-    standardGame.endTurn();
-    standardGame.endTurn();
-    assertThat(standardGame.getWinner(), is(Player.FINDUS));
+    game.endTurn();
+    game.endTurn();
+    game.endTurn();
+    game.endTurn();
+    game.endTurn();
+    assertThat(game.getWinner(), is(Player.FINDUS));
   }
 
   @Test
   public void attackingCardShouldTakeRetaliationDamageFromDefendingCardOnAttack(){
     //Findus plays Tres (3,3,3), Peddersen plays Uno (1,1,1)
-    setupCombatInSlotZero(0, 2);
-    assertThat(game.getCardInField(Player.FINDUS, 0).getHealth(), is(1));
+    setupCombatInSlotZero(0, 3);
+    assertThat(game.getCardInField(Player.FINDUS, 0).getHealth(), is(2));
   }
 
   @Test
@@ -287,11 +281,10 @@ public void shouldMinionBeInactive(){
 
   @Test
   public void heroShouldTakeDamageWhenItDoesntHaveDefendingCard(){
-    StandardHotStoneGame standardGame = (StandardHotStoneGame) game;
-    standardGame.playCard(Player.FINDUS, game.getCardInHand(Player.FINDUS, 2), 1);
-    standardGame.endTurn();
-    standardGame.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 0), 0);
-    standardGame.endTurn();
+    game.playCard(Player.FINDUS, game.getCardInHand(Player.FINDUS, 2), 1);
+    game.endTurn();
+    game.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 0), 0);
+    game.endTurn();
     assertThat(game.getHero(Player.PEDDERSEN).getHealth(), is(not(MAXIMUM_HEALTH)));
   }
 

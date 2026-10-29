@@ -1,13 +1,9 @@
 package hotstone.standard;
 import hotstone.framework.*;
+import hotstone.framework.strategies.DeckBuildingStrategy;
+import hotstone.framework.transcribe.GameLogDecorator;
 import hotstone.standard.factories.DeltaStoneFactory;
-import hotstone.standard.strategies.Alphastone.AlphaDeckBuildingStrategy;
-import hotstone.standard.strategies.Alphastone.AlphaManaProductionStrategy;
-import hotstone.standard.strategies.DeltaStone.DeltaDeckBuildingStrategy;
-import hotstone.standard.strategies.DeltaStone.DeltaManaProductionStrategy;
-import hotstone.standard.strategies.Gammastone.GammaHeroCreationStrategy;
-import hotstone.standard.strategies.Gammastone.GammaHeroPowerStrategy;
-import hotstone.standard.strategies.Gammastone.GammaWinningStrategy;
+import hotstone.standard.strategies.DeltaStone.DishDeckBuildingStrategy;
 import org.junit.jupiter.api.*;
 
 import java.util.Collections;
@@ -22,11 +18,12 @@ import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
 
 public class TestDeltaStone {
-    private StandardHotStoneGame game;
-
+    private MutableGame game;
+    DeckBuildingStrategy deckBuildingStrategy;
     @BeforeEach
     public void setupDeltaStone(){
-        game = new StandardHotStoneGame(new DeltaStoneFactory());
+        game = new GameLogDecorator(new StandardHotStoneGame(new DeltaStoneFactory()));
+        deckBuildingStrategy = new DishDeckBuildingStrategy();
     }
 
     // Mana production tests
@@ -50,10 +47,10 @@ public class TestDeltaStone {
 
     @Test
     public void eachCardShouldBeTwiceInANewDeck(){
-        Stack<Card> deck = game.deckBuildingStrategy.createDeck(Player.FINDUS);
+        Stack<MutableCard> deck = deckBuildingStrategy.createDeck(Player.FINDUS);
 
         List<String> cardNames = new ArrayList<>();
-        for (Card card : deck) {
+        for (MutableCard card : deck) {
             cardNames.add(card.getName());
         }
 
@@ -64,20 +61,20 @@ public class TestDeltaStone {
 
     @Test
     public void firstCardManaShouldBe1WhenNewDeck(){
-        Stack<Card> deck = game.deckBuildingStrategy.createDeck(Player.FINDUS);
+        Stack<MutableCard> deck = deckBuildingStrategy.createDeck(Player.FINDUS);
         assertThat(deck.pop().getManaCost(), is(1));
     }
 
     @Test
     public void secondCardManaShouldBe2orLessWhenNewDeck(){
-        Stack<Card> deck = game.deckBuildingStrategy.createDeck(Player.FINDUS);
+        Stack<MutableCard> deck = deckBuildingStrategy.createDeck(Player.FINDUS);
         deck.pop();
         assertThat(deck.pop().getManaCost(), lessThanOrEqualTo(2));
     }
 
     @Test
     public void thirdCardManaShouldBe4orLessWhenNewDeck(){
-        Stack<Card> deck = game.deckBuildingStrategy.createDeck(Player.FINDUS);
+        Stack<MutableCard> deck = deckBuildingStrategy.createDeck(Player.FINDUS);
         deck.pop();
         deck.pop();
         assertThat(deck.pop().getManaCost(), lessThanOrEqualTo(4));

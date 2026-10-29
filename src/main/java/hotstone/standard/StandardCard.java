@@ -1,15 +1,17 @@
 package hotstone.standard;
-import hotstone.framework.Player;
-import hotstone.framework.Card;
-import hotstone.framework.Status;
+import hotstone.framework.*;
+import hotstone.framework.strategies.Effect;
 
-public class StandardCard implements Card{
+import java.sql.SQLInvalidAuthorizationSpecException;
+
+public class StandardCard implements Card, MutableCard {
     private String name, effectDescription;
     private int manaCost, attack, health;
     private boolean isActive;
     private Player owner;
+    private final Effect cardEffectStrategy;
 
-    public StandardCard(String name, String effectDescription, int manaCost, int attack, int health, boolean isActive, Player owner) {
+    public StandardCard(String name, String effectDescription, int manaCost, int attack, int health, boolean isActive, Player owner, Effect cardEffectStrategy) {
         this.name = name;
         this.effectDescription = effectDescription;
         this.manaCost = manaCost;
@@ -17,6 +19,7 @@ public class StandardCard implements Card{
         this.health = health;
         this.isActive = isActive;
         this.owner = owner;
+        this.cardEffectStrategy = cardEffectStrategy;
     }
 
     @Override
@@ -44,13 +47,12 @@ public class StandardCard implements Card{
         return health;
     }
 
-    public void setHealth(int newHealth) { this.health = newHealth;}
-
-    public Status takeDamage(int dmg){
-        int newHealth = getHealth()-dmg;
-        if(newHealth <= 0)
+    @Override
+    public Status deltaHealth(int damage){
+        this.health += damage;
+        if(health <= 0){
             return Status.NO_MORE_HEALTH;
-        setHealth(newHealth);
+        }
         return Status.OK;
     }
 
@@ -62,11 +64,26 @@ public class StandardCard implements Card{
     public boolean isActive() {
         return isActive;
     }
-
+    @Override
     public void setActive(boolean newActive){ isActive = newActive;}
 
     @Override
     public Player getOwner() {
         return owner;
+    }
+
+    @Override
+    public Status deltaAttack(int amount){
+        if(attack+amount > 0)
+        {
+            attack+=amount;
+            return Status.OK;
+        }
+        return Status.NO_MORE_HEALTH;
+    }
+
+    @Override
+    public Effect getEffect(){
+        return cardEffectStrategy;
     }
 }

@@ -1,14 +1,9 @@
 package hotstone.standard;
 
+import hotstone.framework.MutableGame;
 import hotstone.framework.Player;
+import hotstone.framework.transcribe.GameLogDecorator;
 import hotstone.standard.factories.ZetaStoneFactory;
-import hotstone.standard.strategies.Alphastone.AlphaDeckBuildingStrategy;
-import hotstone.standard.strategies.Alphastone.AlphaManaProductionStrategy;
-import hotstone.standard.strategies.BetaStone.BetaWinningStrategy;
-import hotstone.standard.strategies.Gammastone.GammaHeroCreationStrategy;
-import hotstone.standard.strategies.Gammastone.GammaHeroPowerStrategy;
-import hotstone.standard.strategies.Gammastone.GammaWinningStrategy;
-import hotstone.standard.strategies.ZetaStone.ZetaWinningStrategy;
 import org.junit.jupiter.api.*;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -16,11 +11,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 
 public class TestZetaStone {
-    private StandardHotStoneGame game;
+    private MutableGame game;
 
     @BeforeEach
     public void setupZetaStone(){
-        game = new StandardHotStoneGame(new ZetaStoneFactory());
+        game = new GameLogDecorator(new StandardHotStoneGame(new ZetaStoneFactory()));
     }
 
     @Test
@@ -45,7 +40,7 @@ public class TestZetaStone {
     @Test
     public void peddersenWinsWhenFindusDiesInRoundSeven(){
         game.endTurn();
-        game.takeDamage(Player.FINDUS, 21);
+        game.deltaHealthOnHero(Player.FINDUS, -21);
         for(int i = 0; i < 13; i++){
             game.endTurn();
         }

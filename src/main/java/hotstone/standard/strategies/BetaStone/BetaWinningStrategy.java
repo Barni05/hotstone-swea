@@ -1,14 +1,14 @@
 package hotstone.standard.strategies.BetaStone;
 
 import hotstone.framework.Game;
+import hotstone.framework.MutableGame;
 import hotstone.framework.Player;
 import hotstone.framework.strategies.WinningStrategy;
 
 public class BetaWinningStrategy implements WinningStrategy {
-    private Game game;
 
     @Override
-    public Player calculateWinner(Game game) {
+    public Player calculateWinner(MutableGame game) {
         if (game == null) {
             throw new IllegalStateException("BetaWinningStrategy must be attached to a game");
         }
