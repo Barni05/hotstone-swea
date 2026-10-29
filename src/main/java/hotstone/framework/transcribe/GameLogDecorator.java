@@ -1,6 +1,7 @@
 package hotstone.framework.transcribe;
 
 import hotstone.framework.*;
+import hotstone.observer.GameObserver;
 
 import java.util.ArrayList;
 
@@ -155,5 +156,9 @@ public class GameLogDecorator implements MutableGame {
     @Override
     public Status deltaHealthOnCard(Player whose, int fieldIndex, int health) {
         return mutableGame.deltaHealthOnCard(whose, fieldIndex, health);
+    }
+    @Override
+    public void addObserver(GameObserver observer){
+
     }
 }

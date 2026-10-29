@@ -26,5 +26,4 @@ public interface MutableGame extends Game {
     Status deltaHealthOnCard(Player whose, int fieldIndex, int health);
 
 
-
 }

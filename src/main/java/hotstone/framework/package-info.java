@@ -15,7 +15,17 @@
  */
 
 /**
- * This package contains the central roles of
- * a HotStone game: card, hero, game, etc.
+ * HotStone is a Hearthstone inspired card game and
+ * serves as a mandatory project associated with
+ * the 'Flexible, Reliable Software' 2nd Edition book by
+ * Henrik Bærbak Christensen.
+ * <p>
+ * The main two packages are 'framework' having
+ * the interfaces defining the central roles of the
+ * card game expressed as interfaces, while
+ * 'standard' provides the implementations.
+ * </p>
  */
+
 package hotstone.framework;
+

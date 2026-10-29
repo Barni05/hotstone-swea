@@ -1,6 +1,7 @@
 package hotstone.utility;
 
 import hotstone.framework.*;
+import hotstone.observer.GameObserver;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -169,5 +170,8 @@ public class MutableGameSpy implements MutableGame {
     public Status usePower(Player who) {
         return null;
     }
+
+    @Override
+    public void addObserver(GameObserver observer){}
 
 }

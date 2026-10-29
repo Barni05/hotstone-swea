@@ -18,6 +18,7 @@ package hotstone.standard;
 
 import hotstone.framework.*;
 import hotstone.framework.strategies.*;
+import hotstone.observer.GameObserver;
 
 //import java.lang.foreign.PaddingLayout;
 import java.util.Stack;
@@ -104,6 +105,9 @@ public class StandardHotStoneGame implements MutableGame {
 
         //Initialize health
     }
+
+    @Override
+    public void addObserver(GameObserver observer){}
 
     private void createHeroes() {
         MutableHero[] temp = heroCreationStrategy.createHeroes(manaProductionStrategy.calculateStartRoundMana(this, Player.FINDUS), manaProductionStrategy.calculateStartRoundMana(this,Player.PEDDERSEN));
