@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 - 2026. Henrik Bærbak Christensen, Aarhus University.
+ * Copyright (C) 2022 - 2026. Henrik BÃ¦rbak Christensen, Aarhus University.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,34 +16,81 @@
 
 package hotstone.observer;
 
-import hotstone.framework.Game;
-import hotstone.framework.Player;
+import hotstone.framework.*;
+import hotstone.standard.StandardHotStoneGame;
+import hotstone.standard.factories.AlphaStoneFactory;
+import hotstone.standard.factories.GammaStoneFactory;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TestObserver {
+
+  private MutableGame game;
+  private ObserverDouble observerDouble;
+
+  @BeforeEach
+  public void setUp() {
+    HotStoneFactory factory = new AlphaStoneFactory();
+    game = new StandardHotStoneGame(factory);
+    observerDouble = new ObserverDouble();
+    game.addObserver(observerDouble);
+  }
   @Test
   public void shouldFireEventsForUsePower() {
-    // Given a test double for the game observer
-    GameObserver observerDouble = new ObserverDouble();
-    // Given a game
-    Game game = null; // TODO: replace with your game implementation of choice
-    // When Findus use the hero power
     game.usePower(Player.FINDUS);
-
-    // Then a sequence of events are triggered/fired
-    // from the game
-    /*
-      From FRS Chapter 37.6.1
-      onUsePower(FINDUS) - due to the mutator being called
-        onHeroUpdate(FINDUS) - due to hero spending mana
-        onHeroUpdate(PEDDERSEN) - due to opponent health reduced
-     */
-    // TODO: Use the double to verify the proper sequence
-    assertThat(true, is(true)); // Remove me!
+    assertThat(observerDouble.getLastCall(), is("onUsePower: FINDUS"));
   }
 
-}
+  @Test
+  public void shouldFireEventsForPlayCard() {
+    Card card = game.getHand(Player.FINDUS).iterator().next();
+    game.playCard(Player.FINDUS, card, 0);
+    assertThat(observerDouble.getLastCall(), is("onPlayCard: FINDUS, " + card.getName() + ", 0"));
+  }
 
+  @Test
+  public void shouldFireEventsForEndTurn() {
+    game.endTurn();
+    assertThat(observerDouble.getLastCall(), is("onChangeTurnTo: PEDDERSEN"));
+  }
+
+  @Test
+  public void shouldFireEventsForAttackHero() {
+    Card card = game.getHand(Player.FINDUS).iterator().next();
+    game.playCard(Player.FINDUS, card, 0);
+    game.endTurn();
+    game.endTurn();
+    game.attackHero(Player.FINDUS, card);
+    assertThat(observerDouble.getLastCall(), is("onAttackHero: FINDUS, " + card.getName()));
+  }
+
+  @Test
+  public void shouldFireEventsForDrawCard() {
+    game.drawCard(Player.FINDUS);
+    Card drawnCard = game.getCardInHand(Player.FINDUS, 0);
+    assertThat(observerDouble.getLastCall(), is("onCardDraw: FINDUS, " + drawnCard.getName()));
+  }
+
+  @Test
+  public void shouldNotifyObserverEventsWhenDanishChefUsesPowerToSummonSovs(){
+    HotStoneFactory gammaFactory = new GammaStoneFactory();
+    StandardHotStoneGame standardGame = new StandardHotStoneGame(gammaFactory);
+    ObserverDouble gammaObserver = new ObserverDouble();
+    standardGame.addObserver(gammaObserver);
+    standardGame.endTurn();
+    gammaObserver.clear();
+    standardGame.usePower(Player.PEDDERSEN);
+    assertThat(gammaObserver.getEventLog(), contains(
+            "onPlayCard: PEDDERSEN, Sovs, 0",
+            "onUsePower: PEDDERSEN"
+    ));
+
+  }
+}
