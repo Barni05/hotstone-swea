@@ -301,7 +301,7 @@ public class StandardHotStoneGame implements MutableGame {
         if (newManaValue < 0)
             return Status.NOT_ENOUGH_MANA;
         heroes.get(who).setMana(newManaValue);
-
+        observerHandler.notifyHeroUpdate(who);
         //Executes effect
         mutableCard.getEffect().execute(this);
 
@@ -393,9 +393,7 @@ public class StandardHotStoneGame implements MutableGame {
         if (!hero.canUsePower()) return Status.POWER_USE_NOT_ALLOWED_TWICE_PR_ROUND;
         hero.setCanUsePower(false);
         Status stat = hero.getEffect().execute(this);
-        if (stat == Status.OK) {
-            observerHandler.notifyUsePower(who);
-        }
+        observerHandler.notifyUsePower(who);
         return stat;
     }
 }
