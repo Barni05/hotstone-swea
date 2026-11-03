@@ -36,6 +36,9 @@ dependencies {
 
     // Maven Central dependency on WizardHub
     implementation "com.baerbak.maven:wizardhub:1.0.0"
+
+    implementation 'com.baerbak.maven:minidraw:5.0'
+
 }
 
 test {

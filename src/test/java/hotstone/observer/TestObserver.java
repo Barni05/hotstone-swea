@@ -88,6 +88,7 @@ public class TestObserver {
     gammaObserver.clear();
     standardGame.usePower(Player.PEDDERSEN);
     assertThat(gammaObserver.getEventLog(), contains(
+            "onHeroUpdate: PEDDERSEN",
             "onPlayCard: PEDDERSEN, Sovs, 0",
             "onUsePower: PEDDERSEN"
     ));
