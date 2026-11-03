@@ -456,11 +456,6 @@ public class HotStoneDrawing implements Drawing, GameObserver {
 
   @Override
   public void onCardRemove(Player who, Card card) {
-    // TODO: Remove the minion and refresh field
-    // NOTE: be SURE to use the
-    // right internal data structure manipulation method
-    // so both the figure collection AND the actorMap
-    // is updated
     addMessage(who + "'s minion " + card.getName()
             + " is killed.");
     removeActorAndUpdateMapping(card);
@@ -469,7 +464,7 @@ public class HotStoneDrawing implements Drawing, GameObserver {
 
   @Override
   public void onHeroUpdate(Player who) {
-    // TODO: Refresh the hero's stats
+      refreshHero(who);
   }
 
   @Override
