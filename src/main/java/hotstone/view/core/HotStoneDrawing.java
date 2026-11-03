@@ -313,7 +313,6 @@ public class HotStoneDrawing implements Drawing, GameObserver {
 
     Hero hero = game.getHero(playerShown);
 
-    // TODO: Add the text figure for the shown player's power
     String heroPowerText = hero.getEffectDescription();
     int effectLength = heroPowerText.length();
     Point effectPosition = new Point(GfxConstants.MY_HERO_POWER_DESCRIPTION_POSITION.x -
