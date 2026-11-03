@@ -104,8 +104,6 @@ class TriggerGameUpdateTool extends NullTool {
         break;
       }
       case 4: {
-        // TODO: keep adding cases to this 'list' until all game mutator calls
-        // have been tested and verified that the UI responds correctly.
         editor.showStatus("Peddersen placing his card");
           Card c = game.getCardInHand(Player.PEDDERSEN, 2);
           game.playCard(Player.PEDDERSEN, c, 0);
@@ -113,6 +111,13 @@ class TriggerGameUpdateTool extends NullTool {
       }
         case 5:{
             editor.showStatus("Switching turns, to FINDUS, then attacking");
+            game.endTurn();
+            HotStoneDrawing asHotStoneDrawing = (HotStoneDrawing) editor.drawing();
+            asHotStoneDrawing.endHotSeatState();
+        }
+        case 6:{
+            editor.showStatus("Switching turns twice, FINDUS now attacks Peddersen");
+            game.endTurn();
             game.endTurn();
             HotStoneDrawing asHotStoneDrawing = (HotStoneDrawing) editor.drawing();
             asHotStoneDrawing.endHotSeatState();
