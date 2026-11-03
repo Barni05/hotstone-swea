@@ -83,7 +83,10 @@ public class PlayCardTool extends NullTool {
       Card associatedCard = draggedActor.getAssociatedCard();
       // TODO: Do the actual call instead of this fake code
       System.out.println("TODO: Do the actual call to the domain code...");
-      Status status = Status.NOT_ENOUGH_MANA;
+        int index = DropZone.computeFieldIndexOfDropPosition(editor.drawing(),
+                draggedActor.displayBox().getX(),
+                draggedActor.displayBox().getY());
+        Status status = game.playCard(game.getPlayerInTurn(), associatedCard, index);
       if (status == Status.OK) {
         moveCardBack = false;
       }
