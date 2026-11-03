@@ -314,7 +314,7 @@ public class HotStoneDrawing implements Drawing, GameObserver {
     Hero hero = game.getHero(playerShown);
 
     // TODO: Add the text figure for the shown player's power
-    String heroPowerText = "(Hero power text)";
+    String heroPowerText = hero.getEffectDescription();
     int effectLength = heroPowerText.length();
     Point effectPosition = new Point(GfxConstants.MY_HERO_POWER_DESCRIPTION_POSITION.x -
             effectLength * GfxConstants.HERO_APPROXIMATE_LETTER_WIDTH_PIXEL,
@@ -328,7 +328,7 @@ public class HotStoneDrawing implements Drawing, GameObserver {
 
     // Opponent power
     hero = game.getHero(Player.computeOpponent(playerShown));
-    TextFigure oppHeroPowerText = new TextFigure("(Other hero power text)",
+    TextFigure oppHeroPowerText = new TextFigure(hero.getEffectDescription(),
             GfxConstants.OPPONENT_HERO_POWER_DESCRIPTION_POSITION,
             Color.YELLOW, GfxConstants.SMALL_FONT_SIZE);
     add(oppHeroPowerText);
@@ -427,8 +427,7 @@ public class HotStoneDrawing implements Drawing, GameObserver {
 
   @Override
   public void onUsePower(Player who) {
-    // TODO: Inform player
-    addMessage("TODO: tell about power");
+    addMessage("" + who + " used their power: " + game.getHero(who).getEffectDescription());
   }
 
   @Override
@@ -437,9 +436,10 @@ public class HotStoneDrawing implements Drawing, GameObserver {
     // refresh the hand; otherwise just update the summary
     // of the opponent player
     if (who == playerShown) {
-      // TODO: add card to hand, refresh the hand Gfx
+        createActorAndUpdateMapping(drawnCard, HotStoneFigureType.CARD_FIGURE);
+        refreshHand(who);
     } else {
-      // TODO: update opponent's summary
+        computeHeroSummary(Player.computeOpponent(who));
     }
     addMessage(who + " draws a card.");
   }
@@ -450,8 +450,7 @@ public class HotStoneDrawing implements Drawing, GameObserver {
     // Opponent cards may not have an associated actor
     // for instance if they are in the hand.
     if (actor != null) {
-      // TODO: update the stats of the card/minion
-      addMessage("TODO: update card stats");
+      actor.updateStats();
     }
   }
 
@@ -462,8 +461,10 @@ public class HotStoneDrawing implements Drawing, GameObserver {
     // right internal data structure manipulation method
     // so both the figure collection AND the actorMap
     // is updated
-    addMessage("TODO: " + who + "'s minion " + card.getName()
+    addMessage(who + "'s minion " + card.getName()
             + " is killed.");
+    removeActorAndUpdateMapping(card);
+    refreshField(who);
   }
 
   @Override

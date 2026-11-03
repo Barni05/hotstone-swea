@@ -22,6 +22,7 @@ import hotstone.framework.Game;
 import hotstone.framework.Player;
 import hotstone.standard.StandardHotStoneGame;
 import hotstone.standard.factories.AlphaStoneFactory;
+import hotstone.standard.factories.BetaStoneFactory;
 import hotstone.view.core.HotStoneDrawing;
 import hotstone.view.core.HotStoneDrawingType;
 import hotstone.view.core.HotStoneFactory;
@@ -39,7 +40,7 @@ public class ShowUpdate {
   public static void main(String[] args) {
     // TODO: Replace the below assignment into a stable and well
     // tested variant of HotStone
-    Game game = new StandardHotStoneGame(new AlphaStoneFactory());
+    Game game = new StandardHotStoneGame(new BetaStoneFactory());
 
     DrawingEditor editor =
       new MiniDrawApplication( "Click anywhere to progress in an update sequence...",
@@ -114,12 +115,34 @@ class TriggerGameUpdateTool extends NullTool {
             game.endTurn();
             HotStoneDrawing asHotStoneDrawing = (HotStoneDrawing) editor.drawing();
             asHotStoneDrawing.endHotSeatState();
+            break;
         }
         case 6:{
             editor.showStatus("Switching turns twice, FINDUS now attacks Peddersen");
             game.endTurn();
             game.endTurn();
             HotStoneDrawing asHotStoneDrawing = (HotStoneDrawing) editor.drawing();
+            asHotStoneDrawing.endHotSeatState();
+            break;
+        }
+        case 7:{
+            game.usePower(Player.FINDUS);
+            break;
+        }
+        case 8: {
+            game.endTurn();
+            Card c = game.getCardInHand(Player.PEDDERSEN, 1);
+            game.playCard(Player.PEDDERSEN, c, 1);
+            game.endTurn();
+            HotStoneDrawing asHotStoneDrawing = (HotStoneDrawing) editor.drawing();
+            asHotStoneDrawing.endHotSeatState();
+            break;
+        }
+        case 9: {
+            Card c = game.getCardInHand(Player.FINDUS, 1);
+            game.playCard(Player.FINDUS, c, 1);
+            game.endTurn();
+            HotStoneDrawing asHotStoneDrawing= (HotStoneDrawing) editor.drawing();
             asHotStoneDrawing.endHotSeatState();
         }
       default: {
