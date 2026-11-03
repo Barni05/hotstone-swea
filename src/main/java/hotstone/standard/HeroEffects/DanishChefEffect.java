@@ -17,7 +17,7 @@ public class DanishChefEffect implements Effect {
     public Status execute(MutableGame game){
         Effect effect = new NoEffect();
         StandardCard sovs = new StandardCard("Sovs", "It's a special minion", 0, 1, 1, false, owner, effect);
-        game.insertCardIntoField(owner, sovs, 0);
+        game.playCard(owner, sovs, 0);
         return Status.OK;
 
     }

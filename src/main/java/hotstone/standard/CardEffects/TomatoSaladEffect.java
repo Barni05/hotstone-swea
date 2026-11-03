@@ -5,7 +5,9 @@ import hotstone.framework.MutableGame;
 import hotstone.framework.Player;
 import hotstone.framework.Status;
 import hotstone.framework.strategies.Effect;
+import hotstone.standard.HotstoneWizardHubAdapter;
 import hotstone.standard.utils.IndexSelector;
+import wizardhub.EffectWizard;
 
 import java.util.ArrayList;
 
@@ -19,11 +21,17 @@ public class TomatoSaladEffect implements Effect {
     }
     @Override
     public Status execute(MutableGame game){
+        HotstoneWizardHubAdapter adapter = new HotstoneWizardHubAdapter(game);
+        wizardhub.EffectWizard effectWizard = new EffectWizard(adapter);
+
+        // Determining index
         int fieldSize = game.getFieldSize(owner);
         if (fieldSize == 0) return Status.NO_MORE_CARDS;
         int targetIndex;
         targetIndex = indexSelector.selectIndex(fieldSize);
-        game.deltaAttackOnCard(owner,targetIndex,1);
+
+        effectWizard.forMe().forMinionAt(targetIndex).doChangeAttack(1);
+
         return Status.OK;
     }
 }

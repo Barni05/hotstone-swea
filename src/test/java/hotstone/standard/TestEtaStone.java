@@ -1,7 +1,9 @@
 package hotstone.standard;
 
+import hotstone.framework.MutableGame;
 import hotstone.framework.Player;
 import hotstone.framework.strategies.Effect;
+import hotstone.framework.transcribe.GameLogDecorator;
 import hotstone.standard.CardEffects.*;
 import hotstone.standard.factories.EtaStoneFactory;
 import hotstone.standard.factories.ZetaStoneFactory;
@@ -14,11 +16,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TestEtaStone {
 
-    private StandardHotStoneGame game;
+    private MutableGame game;
     private FixedIndexSelectorStub stub = new FixedIndexSelectorStub(0);
     @BeforeEach
     public void setupEtaStone(){
-        game = new StandardHotStoneGame(new EtaStoneFactory(stub));
+        game = new GameLogDecorator(new  StandardHotStoneGame(new EtaStoneFactory(stub)));
     }
 
     /*
@@ -30,7 +32,7 @@ public class TestEtaStone {
         MutableGameSpy spyGame = new MutableGameSpy();
         Effect brownRice = new BrownRiceEffect(Player.FINDUS);
         brownRice.execute(spyGame);
-        assertThat(spyGame.getLastCall(), is("heroTakeDamage(PEDDERSEN,1)"));
+        assertThat(spyGame.getLastCall(), is("deltaHealthOnHero(PEDDERSEN,-1)"));
     }
     @Test
     public void tomatoSaladShouldMakeEffect(){
@@ -45,7 +47,7 @@ public class TestEtaStone {
         MutableGameSpy spy = new MutableGameSpy();
         Effect effect = new PokeBowlEffect(Player.FINDUS);
         effect.execute(spy);
-        assertThat(spy.getLastCall(), is("heroTakeDamage(FINDUS,-2)"));
+        assertThat(spy.getLastCall(), is("deltaHealthOnHero(FINDUS,2)"));
     }
 
     @Test
@@ -64,7 +66,7 @@ public class TestEtaStone {
         stub.setIndex(0);
         Effect effect = new SpringRollsEffect(Player.PEDDERSEN, stub);
         effect.execute(spy);
-        assertThat(spy.getLastCall(), is("removeCardFromField(FINDUS,0)"));
+        assertThat(spy.getLastCall(), is("deltaHealthOnCard(PEDDERSEN,0,-99999)"));
     }
 
     @Test

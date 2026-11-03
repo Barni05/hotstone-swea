@@ -30,9 +30,11 @@ public enum Status {
 
   /** Not enough mana to play card, use power, etc. */
   NOT_ENOUGH_MANA,
-  /** No more cards to be drawn from deck*/
+
+  NO_MORE_HEALTH,
+
   NO_MORE_CARDS,
-  /** Card not found in the pile*/
+
   CARD_NOT_FOUND,
   /** Trying to attack with a minion that is not active. */
   ATTACK_NOT_ALLOWED_FOR_NON_ACTIVE_MINION,
@@ -49,6 +51,4 @@ public enum Status {
 
   /** If attacking hero or non-taunt minion while taunt minion on field. */
   ATTACK_NOT_ALLOWED_ON_NON_TAUNT_MINION,
-
-  NO_MORE_HEALTH
 }

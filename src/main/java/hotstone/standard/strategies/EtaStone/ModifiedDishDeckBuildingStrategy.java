@@ -58,7 +58,7 @@ public class ModifiedDishDeckBuildingStrategy implements DeckBuildingStrategy {
         firstThree.push(helperDeck.remove(index2));
 
         // Choosing the third card (guaranteed not equal to first or second
-        int index3 = random.nextInt(11);
+        int index3 = random.nextInt(10);
         firstThree.push(helperDeck.remove(index3));
 
         Collections.shuffle(helperDeck);

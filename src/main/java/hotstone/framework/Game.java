@@ -16,11 +16,13 @@
 
 package hotstone.framework;
 
+import hotstone.observer.Observable;
+
 /** The role of a single HotStone game, allowing clients to access and
  * modify the state of a game.
  * 
  */
-public interface Game {
+public interface Game extends Observable {
   // === Accessors for Game state
 
   /** Get the player who currently can make actions (call mutators) on
@@ -44,8 +46,6 @@ public interface Game {
    * if the game has been won.
    */
   Player getWinner();
-
-  int calculateStartRoundMana(Player who);
 
   /** Get the number of turns played. Starts at turn 0 for Findus,
    * then 1 for Peddersen, 2 for Findus, and so on.
@@ -150,6 +150,9 @@ public interface Game {
    * endTurn() is never called by the player which is NOT in turn.
    */
   void endTurn();
+
+  int calculateStartRoundMana(Player who);
+
   /** Play a card from the hand to the field.
    *
    * PRECONDITION: 'who' is never null.

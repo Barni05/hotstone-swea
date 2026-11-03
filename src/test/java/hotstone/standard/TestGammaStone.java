@@ -1,7 +1,9 @@
 package hotstone.standard;
 
+import hotstone.framework.MutableGame;
 import hotstone.framework.Player;
 import hotstone.framework.Status;
+import hotstone.framework.transcribe.GameLogDecorator;
 import hotstone.standard.factories.GammaStoneFactory;
 import org.junit.jupiter.api.*;
 
@@ -9,11 +11,11 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TestGammaStone {
-    private StandardHotStoneGame game;
+    private MutableGame game;
 
     @BeforeEach
     public void setupGammaStone(){
-        game = new StandardHotStoneGame(new GammaStoneFactory());
+        game = new GameLogDecorator(new StandardHotStoneGame(new GammaStoneFactory()));
     }
 
     // Hero tests

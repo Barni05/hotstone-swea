@@ -30,9 +30,11 @@ package hotstone.standard;
  */
 
 import hotstone.framework.*;
+import hotstone.framework.transcribe.GameLogDecorator;
 import hotstone.standard.factories.AlphaStoneFactory;
 import hotstone.standard.strategies.Alphastone.*;
 import org.junit.jupiter.api.*;
+import wizardhub.EffectWizard;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -50,7 +52,7 @@ public class TestAlphaStone {
   /** Fixture for AlphaStone testing. */
   @BeforeEach
   public void setUpAlphastone() {
-    game = new StandardHotStoneGame(new AlphaStoneFactory());
+    game = new GameLogDecorator(new StandardHotStoneGame(new AlphaStoneFactory()));
   }
 
   // Example of an early, simple test case:
@@ -110,6 +112,7 @@ public class TestAlphaStone {
       assertThat(countFindus, is(EXPECTED_INITIAL_DECK_SIZE));
       int countPeddersen = game.getDeckSize(Player.PEDDERSEN);
       assertThat(countPeddersen, is(EXPECTED_INITIAL_DECK_SIZE));
+
   }
 
   @Test

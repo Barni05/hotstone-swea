@@ -5,7 +5,9 @@ import hotstone.framework.MutableGame;
 import hotstone.framework.Player;
 import hotstone.framework.Status;
 import hotstone.framework.strategies.Effect;
+import hotstone.standard.HotstoneWizardHubAdapter;
 import hotstone.standard.utils.IndexSelector;
+import wizardhub.EffectWizard;
 
 import java.util.ArrayList;
 
@@ -19,11 +21,17 @@ public class BakedSalmonEffect implements Effect {
     }
     @Override
     public Status execute(MutableGame game){
+
+        HotstoneWizardHubAdapter adapter = new HotstoneWizardHubAdapter(game);
+        EffectWizard effectWizard = new EffectWizard(adapter);
+
         int fieldSize = game.getFieldSize(Player.computeOpponent(owner));
         if (fieldSize == 0) return Status.NO_MORE_CARDS;
+
         int targetIndex;
         targetIndex = indexSelector.selectIndex(fieldSize);
-        game.deltaAttackOnCard(Player.computeOpponent(owner), targetIndex, 2);
+
+        effectWizard.forOpponent().forMinionAt(targetIndex).doChangeAttack(2);
         return Status.OK;
     }
 }

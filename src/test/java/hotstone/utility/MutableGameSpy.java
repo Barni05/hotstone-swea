@@ -1,6 +1,7 @@
 package hotstone.utility;
 
 import hotstone.framework.*;
+import hotstone.observer.GameObserver;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -53,8 +54,8 @@ public class MutableGameSpy implements MutableGame {
     }
 
     @Override
-    public Status heroTakeDamage(Player who, int damageAmount){
-        lastCall = "heroTakeDamage("+who.toString()+","+damageAmount+")";
+    public Status deltaHealthOnHero(Player who, int damageAmount){
+        lastCall = "deltaHealthOnHero("+who.toString()+","+damageAmount+")";
         return Status.OK;
     }
 
@@ -88,7 +89,7 @@ public class MutableGameSpy implements MutableGame {
 
 
     @Override
-    public Player getPlayerInTurn(){return null;}
+    public Player getPlayerInTurn(){return Player.FINDUS;}
 
     @Override
     public Hero getHero(Player who) {
@@ -169,5 +170,8 @@ public class MutableGameSpy implements MutableGame {
     public Status usePower(Player who) {
         return null;
     }
+
+    @Override
+    public void addObserver(GameObserver observer){}
 
 }

@@ -34,6 +34,14 @@ public enum Player {
   public static Player computeOpponent(Player who) {
     return who == Player.FINDUS ? Player.PEDDERSEN : Player.FINDUS;
   }
+
+  public static Player valueOf(int value){
+    for(Player p : Player.values()){
+      if(p.ordinal() == value)
+        return p;
+    }
+    throw new IllegalArgumentException("No player found for number");
+  }
 }
 // Credits: Thanks to Anders Kristoffersen, SWEA 2023 student, for pointing
 // out that the computeOpponent method belongs here.

@@ -1,6 +1,7 @@
 package hotstone.standard;
 
 import hotstone.framework.Player;
+import hotstone.framework.transcribe.GameLogDecorator;
 import hotstone.standard.factories.EpsilonStoneFactory;
 import hotstone.standard.utils.FixedIndexSelectorStub;
 import org.junit.jupiter.api.*;
@@ -10,13 +11,13 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TestEpsilonStone {
-    private StandardHotStoneGame game;
+    private MutableGame game;
     private FixedIndexSelectorStub stub;
 
     @BeforeEach
     public void setupEpsilonStone() {
         stub = new FixedIndexSelectorStub(0);
-        game = new StandardHotStoneGame(new EpsilonStoneFactory(stub));
+        game = new GameLogDecorator(new StandardHotStoneGame(new EpsilonStoneFactory(stub)));
     }
 
     @Test
