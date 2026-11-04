@@ -384,7 +384,9 @@ public class StandardHotStoneGame implements MutableGame {
 
     @Override
     public Status deltaHealthOnHero(Player who, int damageAmount) {
-        return getMutableHero(who).deltaHealth(damageAmount);
+        Status ret = getMutableHero(who).deltaHealth(damageAmount);
+        observerHandler.notifyHeroUpdate(who);
+        return ret;
     }
 
     @Override

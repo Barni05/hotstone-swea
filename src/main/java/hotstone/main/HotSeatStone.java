@@ -19,8 +19,11 @@ package hotstone.main;
 import hotstone.doubles.FakeObjectGame;
 import hotstone.framework.Game;
 import hotstone.framework.Player;
+import hotstone.standard.StandardHotStoneGame;
+import hotstone.standard.factories.*;
 import hotstone.view.core.HotStoneDrawingType;
 import hotstone.view.core.HotStoneFactory;
+import hotstone.view.tool.HotSeatStateTool;
 import minidraw.framework.DrawingEditor;
 import minidraw.standard.MiniDrawApplication;
 import minidraw.standard.SelectionTool;
@@ -30,17 +33,43 @@ import minidraw.standard.SelectionTool;
  */
 public class HotSeatStone {
   public static void main(String[] args) {
+    Game game;
 
     System.out.println("=== Starting HotSeat on game variant: " + args[0] + " ===");
-    // TODO: Do some switching on args[0] to make the right game variant
-    Game game = new FakeObjectGame();
+    switch (args[0]){
+      case "alphastone":
+        game = new StandardHotStoneGame(new AlphaStoneFactory());
+        break;
+      case "betastone":
+        game = new StandardHotStoneGame(new BetaStoneFactory());
+        break;
+      case "deltastone":
+        game = new StandardHotStoneGame(new DeltaStoneFactory());
+        break;
+      case "epsilonstone":
+        game = new StandardHotStoneGame(new EpsilonStoneFactory());
+        break;
+      case "etastone":
+        game = new StandardHotStoneGame(new EtaStoneFactory());
+        break;
+      case "gammastone":
+        game = new StandardHotStoneGame(new GammaStoneFactory());
+        break;
+      case "semistone":
+        game = new StandardHotStoneGame(new SemiStoneFactory());
+        break;
+      case "zetastone":
+        game = new StandardHotStoneGame(new ZetaStoneFactory());
+        break;
+      default:
+        throw new IllegalArgumentException("Unknown game variant: " + args[0]);
 
+    }
     DrawingEditor editor =
             new MiniDrawApplication( "HotSeat: Variant " + args[0],
                     new HotStoneFactory(game, Player.FINDUS,
                             HotStoneDrawingType.HOTSEAT_MODE) );
     editor.open();
-    // TODO: Change to the hotseat state tool
-    editor.setTool(new SelectionTool(editor));
+    editor.setTool(new HotSeatStateTool(editor, game));
   }
 }
