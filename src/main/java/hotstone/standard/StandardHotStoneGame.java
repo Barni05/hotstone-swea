@@ -258,7 +258,6 @@ public class StandardHotStoneGame implements MutableGame {
 
         observerHandler.notifyChangeTurnTo(playerInTurn);
 
-        executeAttacks();
 
         Player winner = getWinner();
         if (winner != null) {
@@ -336,6 +335,8 @@ public class StandardHotStoneGame implements MutableGame {
             //Remove card from existence
             removeCardFromField(playerAttacking, mutableAttacking);
         }
+        observerHandler.notifyCardUpdate(mutableDefending);
+        observerHandler.notifyCardUpdate(mutableAttacking);
 
         observerHandler.notifyAttackCard(playerAttacking, attackingCard, defendingCard);
         return Status.OK;
@@ -377,6 +378,7 @@ public class StandardHotStoneGame implements MutableGame {
     public Status attackHero(Player playerAttacking, Card attackingCard) {
         Status stat = deltaHealthOnHero(Player.computeOpponent(playerAttacking), -attackingCard.getAttack());
         observerHandler.notifyAttackHero(playerAttacking, attackingCard);
+        observerHandler.notifyHeroUpdate(Player.computeOpponent(playerAttacking));
         return stat;
     }
 

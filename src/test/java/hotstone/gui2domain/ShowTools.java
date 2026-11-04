@@ -21,6 +21,7 @@ import hotstone.framework.Game;
 import hotstone.framework.Player;
 import hotstone.standard.StandardHotStoneGame;
 import hotstone.standard.factories.AlphaStoneFactory;
+import hotstone.standard.factories.BetaStoneFactory;
 import hotstone.view.core.HotStoneDrawingType;
 import hotstone.view.core.HotStoneFactory;
 import hotstone.view.tool.HotSeatStateTool;
@@ -38,7 +39,7 @@ import minidraw.standard.MiniDrawApplication;
 public class ShowTools {
   public static void main(String[] args) {
 
-    Game game = new StandardHotStoneGame(new AlphaStoneFactory());
+    Game game = new StandardHotStoneGame(new BetaStoneFactory());
 
     DrawingEditor editor =
             new MiniDrawApplication( "Test-Driven Dev of Tools",
