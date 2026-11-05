@@ -111,13 +111,20 @@ class TriggerGameUpdateTool extends NullTool {
         break;
       }
         case 5:{
-            editor.showStatus("Switching turns, to FINDUS, then attacking");
             game.endTurn();
             HotStoneDrawing asHotStoneDrawing = (HotStoneDrawing) editor.drawing();
             asHotStoneDrawing.endHotSeatState();
+
+
             break;
         }
         case 6:{
+            editor.showStatus("Switching turns, to FINDUS, then attacking");
+            game.attackCard(Player.FINDUS, game.getCardInField(Player.FINDUS, 0), game.getCardInField(Player.PEDDERSEN, 0));
+
+            break;
+        }
+        case 7:{
             editor.showStatus("Switching turns twice, FINDUS now attacks Peddersen");
             game.endTurn();
             game.endTurn();
@@ -125,20 +132,22 @@ class TriggerGameUpdateTool extends NullTool {
             asHotStoneDrawing.endHotSeatState();
             break;
         }
-        case 7:{
+        case 8: {
             game.usePower(Player.FINDUS);
+
+
             break;
         }
-        case 8: {
+        case 9: {
             game.endTurn();
             Card c = game.getCardInHand(Player.PEDDERSEN, 1);
             game.playCard(Player.PEDDERSEN, c, 1);
             game.endTurn();
             HotStoneDrawing asHotStoneDrawing = (HotStoneDrawing) editor.drawing();
             asHotStoneDrawing.endHotSeatState();
-            break;
+           break;
         }
-        case 9: {
+        case 10: {
             Card c = game.getCardInHand(Player.FINDUS, 1);
             game.playCard(Player.FINDUS, c, 1);
             game.endTurn();

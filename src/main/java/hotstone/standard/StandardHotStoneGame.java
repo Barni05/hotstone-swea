@@ -316,7 +316,7 @@ public class StandardHotStoneGame implements MutableGame {
 
     @Override
     public void insertCardIntoField(Player who, MutableCard card, int atIndex) {
-        fields.get(who).set(atIndex, card);
+        fields.get(who).add(atIndex, card);
     }
 
     @Override
